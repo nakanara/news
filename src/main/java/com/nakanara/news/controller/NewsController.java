@@ -13,23 +13,39 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class NewsController {
 
+
+    private NewsService newsService;
+
+
     @Autowired
-    NewsService newsService;
+    public NewsController(NewsService newsService) {
+        this.newsService = newsService;
+    }
 
     @GetMapping("")
     public String getList(Model model){
 
         model.addAttribute("list", newsService.getList());
 
-        return "news";
+        return "/news/news";
     }
 
-    @PostMapping("/post")
-    public @ResponseBody TbNews post(@RequestBody TbNews tbNews) {
+    @GetMapping("/write")
+    public String write(Model model){
+
+        return "/news/write";
+    }
+
+
+    @PostMapping("/write")
+    public String doWrite(@ModelAttribute("news") TbNews tbNews) {
 
         log.debug("{}", tbNews.toString());
+        newsService.post(tbNews);
 
-        return newsService.post(tbNews);
+        // todo 오류.
+
+        return "redirect:/news";
     }
 
     @PutMapping("/{id}")

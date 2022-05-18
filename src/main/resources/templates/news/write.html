@@ -1,0 +1,65 @@
+
+<header th:include="/common/header.html" th:remove="tag"></header>
+
+<style>
+
+</style>
+<div class="container">
+
+  <div class="row">
+    <div class="offset-md-12">
+      <form id="f" method="post" action="/news/write">
+
+        <div class="row">
+          <div class="offset-md-12">
+            <input type="tel" name="title" class="form-control" placeholder="제목">
+          </div>
+        </div>
+        <div class="row news_editor">
+          <div class="offset-md-12">
+            <textarea id="editor" name="content"></textarea>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="offset-md-12">
+      <div class="btn btn-primary" id="btn-write">저장</div>
+      <a href="/news">
+        <div class="btn btn-primary" >목록</div>
+      </a>
+
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    (function($){
+
+      $('#btn-write').click(function(){
+        $('#f').submit();
+      });
+
+
+      ClassicEditor
+        .create( document.querySelector( '#editor' ), {
+        } )
+        .then( editor => {
+//          editor.ui.view.editable.element.style.height = '500px';
+        })
+        .catch( error => {
+          console.log( error );
+        } )
+      ;
+
+
+
+
+    })(jQuery);
+  </script>
+</div>
+
+
+<footer th:include="/common/footer.html" th:remove="tag"></footer>
