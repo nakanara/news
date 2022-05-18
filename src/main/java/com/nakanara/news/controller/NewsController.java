@@ -1,6 +1,6 @@
 package com.nakanara.news.controller;
 
-import com.nakanara.news.dto.TbNews;
+import com.nakanara.news.dto.NewsEntity;
 import com.nakanara.news.service.NewsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +38,10 @@ public class NewsController {
 
 
     @PostMapping("/write")
-    public String doWrite(@ModelAttribute("news") TbNews tbNews) {
+    public String doWrite(@ModelAttribute("news") NewsEntity newsEntity) {
 
-        log.debug("{}", tbNews.toString());
-        newsService.post(tbNews);
+        log.debug("{}", newsEntity.toString());
+        newsService.post(newsEntity);
 
         // todo 오류.
 
@@ -49,11 +49,11 @@ public class NewsController {
     }
 
     @PutMapping("/{id}")
-    public @ResponseBody TbNews put(@RequestBody TbNews tbNews) {
+    public @ResponseBody NewsEntity put(@RequestBody NewsEntity newsEntity) {
 
-        log.debug("{}", tbNews.toString());
+        log.debug("{}", newsEntity.toString());
 
-        return newsService.post(tbNews);
+        return newsService.post(newsEntity);
     }
 
     @DeleteMapping("/{id}")
