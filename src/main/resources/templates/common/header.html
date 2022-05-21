@@ -1,23 +1,23 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>[제목] - News</title>
+  <title th:title="${news.title}"></title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
   <!-- 변경 -->
   <!-- 글줄임-->
-  <meta name="description" content="글 줄임 150자자">
+  <meta name="description" th:content="${news.title}">
   <!-- 관련 이미지 -->
   <meta property="og:image" content="https://images.chosun.com/resizer/ou2k5duz3UHaGQMlw9gFEh-pepI=/1200x630/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/WQK2O5J5UBLJDCZWKN5BXTMDKI.jpg">
   <meta property="og:type" content="article">
   <!-- 기사 URL -->
-  <meta property="og:url" content="">
+  <meta property="og:url" th:content="@{/news/__${news.id}__}">
   <!-- 제목 -->
-  <meta property="og:title" content="한국, 미국 주도 경제동맹 ‘IPEF’ 참여 확정... 중국 공개 반발">
+  <meta property="og:title" th:content="${news.title}">
   <!-- 설명 -->
-  <meta property="og:description" content="한국, 미국 주도 경제동맹 IPEF 참여 확정... 중국 공개 반발">
+  <meta property="og:description" th:content="${news.title}">
   <!-- 사이트 -->
   <meta property="og:site_name" content="사이트">
   <!-- 작성자 -->
@@ -28,8 +28,8 @@
 
   <!-- twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:description" content="한국, 미국 주도 경제동맹 IPEF 참여 확정... 중국 공개 반발">
-  <meta name="twitter:title" content="한국, 미국 주도 경제동맹 ‘IPEF’ 참여 확정... 중국 공개 반발">
+  <meta name="twitter:description" th:content="${news.title}">
+  <meta name="twitter:title" th:content="${news.title}">
   <meta name="twitter:image:src" content="이미지">
   <meta name="twitter:site" content="@nakanara">
   <meta name="twitter:creator" content="@nakanara">

@@ -1,14 +1,13 @@
 package com.nakanara.news.dto;
 
 
-import com.nakanara.news.convert.NewsTagsListConverter;
-import com.nakanara.news.convert.StringListConverter;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Builder
@@ -34,6 +33,20 @@ public class NewsEntity extends BaseEntity {
     @JoinColumn(name = "news_id")
     private List<NewsTagEntity> tags;
 
+    @Column(columnDefinition = "int default 0")
+    private int viewCount = 0;
+
+    // 설명
+    @Transient
+    private String description;
+
+    // 대표 이미지
+    @Transient
+    private String orgImage;
+
+    public void toConvertSNS(){
+        setDescription(getTag().substring(1, 150));
 
 
+    }
 }

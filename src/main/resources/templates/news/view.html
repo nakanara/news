@@ -1,0 +1,70 @@
+
+<header th:include="/common/header.html" th:remove="tag"></header>
+
+<style>
+
+</style>
+<div class="container">
+    <div class="row">
+    <div class="offset-md-12">
+
+        <div th:object="${news}" class="news">
+            <input type="hidden" id="id" th:value="*{id}" />
+
+            <div class="row">
+              <div class="offset-md-12">
+                <label class="title" th:text="*{title}"></label>
+              </div>
+            </div>
+            <div class="row articlebody">
+              <div class="offset-md-12">
+                  <div th:utext="*{content}"></div>
+               </div>
+            </div>
+            <div class="row">
+              <div class="offset-md-12">
+                  <label th:text="*{tag}"></label>
+              </div>
+            </div>
+
+        </div>
+
+    </div>
+  </div>
+
+
+
+  <div class="row">
+    <div class="offset-md-12">
+      <a href="/news">
+        <div class="btn btn-primary" >목록</div>
+      </a>
+        <div class="btn btn-primary" id="btn-delete">삭제(수정필요)</div>
+        <div class="btn btn-primary" id="btn-delete">삭제</div>
+
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    (function($){
+        $('#btn-delete').click(function(){
+
+            let id = $('#id').val();
+
+            $.ajax({
+                url: '/news/' + id,
+                method: 'delete',
+                success: function(e) {
+                    // 삭제/성공
+                    window.location.href = '/news';
+                }
+
+            })
+        });
+
+    })(jQuery);
+  </script>
+</div>
+
+
+<footer th:include="/common/footer.html" th:remove="tag"></footer>

@@ -11,4 +11,5 @@ public interface NewsEntityRepogitory extends CrudRepository<NewsEntity, Long> {
     List<NewsEntity> findAll(Sort direct);
 
 
+
 }

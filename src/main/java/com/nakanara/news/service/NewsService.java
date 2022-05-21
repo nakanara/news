@@ -10,10 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class NewsService {
@@ -59,6 +56,18 @@ public class NewsService {
 
         return newsEntityRepogitory.findAll(Sort.by(direct, sort));
     }
+
+    public NewsEntity view(long id) {
+
+        NewsEntity newsEntity = newsEntityRepogitory.findById(id).orElse(null);
+
+        newsEntity.setViewCount(newsEntity.getViewCount()+1);
+        newsEntityRepogitory.save(newsEntity);
+
+        return newsEntity;
+    }
+
+
 
     public boolean delete(long id) {
 

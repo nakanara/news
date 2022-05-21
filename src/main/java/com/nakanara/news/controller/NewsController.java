@@ -4,6 +4,7 @@ import com.nakanara.news.dto.NewsEntity;
 import com.nakanara.news.service.NewsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -48,6 +49,16 @@ public class NewsController {
         return "redirect:/news";
     }
 
+    @GetMapping("/{id}")
+    public String view(Model model,
+                       @PathVariable long id) {
+
+
+        NewsEntity newsEntity = newsService.view(id);
+
+        model.addAttribute("news", newsEntity);
+        return "/news/view";
+    }
     @PutMapping("/{id}")
     public @ResponseBody NewsEntity put(@RequestBody NewsEntity newsEntity) {
 
