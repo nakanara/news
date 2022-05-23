@@ -28,7 +28,7 @@ public class NewsController {
 
         model.addAttribute("list", newsService.getList());
 
-        return "/news/news";
+        return "/news/index";
     }
 
     @GetMapping("/write")

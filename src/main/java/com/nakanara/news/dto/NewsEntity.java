@@ -36,7 +36,11 @@ public class NewsEntity extends BaseEntity {
     @Column(columnDefinition = "int default 0")
     private int viewCount = 0;
 
-    // 설명
+    @OneToMany
+    @JoinColumn(name = "journalist")
+    private List<JournalistEntity> journalist;
+
+    // 설명 - DB 미저장
     @Transient
     private String description;
 

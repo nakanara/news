@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lagn="ko" xmlns:th="http://www.thymeleaf.org">
 
-<th:block th:replace="/common/newsheader :: headFragment"></th:block>
+<th:block th:replace="/common/header :: headFragment" ></th:block>
 
 <style>
 
@@ -10,22 +10,22 @@
     <div class="row">
     <div class="offset-md-12">
 
-        <div th:object="${news}" class="news">
+        <div th:object="${journallist}" class="news">
             <input type="hidden" id="id" th:value="*{id}" />
 
             <div class="row">
               <div class="offset-md-12">
-                <label class="title" th:text="*{title}"></label>
+                <label class="title" th:text="*{name}"></label>
               </div>
             </div>
             <div class="row articlebody">
               <div class="offset-md-12">
-                  <div th:utext="*{content}"></div>
+                  <label th:text="*{email}"></label>
                </div>
             </div>
             <div class="row">
               <div class="offset-md-12">
-                  <label th:text="*{tag}"></label>
+                  <textarea th:text="*{desc}"></textarea>
               </div>
             </div>
 

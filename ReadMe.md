@@ -14,3 +14,10 @@
 - lombok 1.18.24 https://projectlombok.org
 - thymeleaf-spring5 3.0.15 http://www.thymeleaf.org
 
+### Watch
+
+- bootstrap style https://github.com/startbootstrap/startbootstrap-clean-blog-jekyll
+
+### todo
+
+1. 도메인 iinews.co.kr

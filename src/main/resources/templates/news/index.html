@@ -1,6 +1,7 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
 
-<div xmlns:th="http://www.thymeleaf.org">
-<header th:include="/common/header.html" th:remove="tag"></header>
+<th:block th:replace="/common/header :: headFragment"></th:block>
 
 <div class="container">
 
@@ -44,6 +45,5 @@
 </div>
 
 
-
-<footer th:include="/common/footer.html" th:remove="tag"></footer>
-</div>
+<th:block th:replace="/common/footer :: footerFragment"></th:block>
+</html>
