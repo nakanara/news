@@ -40,7 +40,7 @@
       <a href="/news">
         <div class="btn btn-primary" >목록</div>
       </a>
-        <div class="btn btn-primary" id="btn-delete">삭제(수정필요)</div>
+        <div class="btn btn-primary" id="btn-modify">수정</div>
         <div class="btn btn-primary" id="btn-delete">삭제</div>
 
     </div>
@@ -50,18 +50,30 @@
     (function($){
         $('#btn-delete').click(function(){
 
+          if(confirm('[[#{label.del.message}]]')) {
             let id = $('#id').val();
 
             $.ajax({
-                url: '/news/' + id,
-                method: 'delete',
-                success: function(e) {
-                    // 삭제/성공
-                    window.location.href = '/news';
-                }
+              url: '/news/' + id,
+              method: 'delete',
+              success: function (e) {
+                // 삭제/성공
+                window.location.href = '/news';
+              }
 
-            })
+            });
+          }
         });
+
+
+      $('#btn-modify').click(function(){
+
+        if(confirm('[[#{label.modify.message}]]')) {
+          let id = $('#id').val();
+
+          window.location.href ="/news/edit/" + id;
+        }
+      });
 
     })(jQuery);
   </script>

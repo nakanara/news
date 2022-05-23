@@ -59,6 +59,17 @@ public class NewsController {
         model.addAttribute("news", newsEntity);
         return "/news/view";
     }
+
+    @GetMapping("/edit/{id}")
+    public String write(Model model,
+                        @PathVariable long id){
+
+        NewsEntity newsEntity = newsService.view(id);
+
+        model.addAttribute("news", newsEntity);
+        return "/news/edit";
+    }
+
     @PutMapping("/{id}")
     public @ResponseBody NewsEntity put(@RequestBody NewsEntity newsEntity) {
 
