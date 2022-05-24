@@ -1,10 +1,9 @@
 package com.nakanara.news.controller;
 
-import com.nakanara.news.dto.NewsEntity;
+import com.nakanara.news.entity.News;
 import com.nakanara.news.service.NewsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -39,10 +38,10 @@ public class NewsController {
 
 
     @PostMapping("/write")
-    public String doWrite(@ModelAttribute("news") NewsEntity newsEntity) {
+    public String doWrite(@ModelAttribute("news") News news) {
 
-        log.debug("{}", newsEntity.toString());
-        newsService.post(newsEntity);
+        log.debug("{}", news.toString());
+        newsService.post(news);
 
         // todo 오류.
 
@@ -54,9 +53,9 @@ public class NewsController {
                        @PathVariable long id) {
 
 
-        NewsEntity newsEntity = newsService.view(id);
+        News news = newsService.view(id);
 
-        model.addAttribute("news", newsEntity);
+        model.addAttribute("news", news);
         return "/news/view";
     }
 
@@ -64,18 +63,19 @@ public class NewsController {
     public String write(Model model,
                         @PathVariable long id){
 
-        NewsEntity newsEntity = newsService.view(id);
+        News news = newsService.view(id);
 
-        model.addAttribute("news", newsEntity);
+        model.addAttribute("news", news);
         return "/news/edit";
     }
 
     @PutMapping("/{id}")
-    public @ResponseBody NewsEntity put(@RequestBody NewsEntity newsEntity) {
+    public @ResponseBody
+    News put(@RequestBody News news) {
 
-        log.debug("{}", newsEntity.toString());
+        log.debug("{}", news.toString());
 
-        return newsService.post(newsEntity);
+        return newsService.post(news);
     }
 
     @DeleteMapping("/{id}")

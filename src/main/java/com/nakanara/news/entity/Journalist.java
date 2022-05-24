@@ -1,4 +1,4 @@
-package com.nakanara.news.dto;
+package com.nakanara.news.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,18 +6,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Data
 @Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class JournalistEntity extends BaseEntity {
+public class Journalist extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long journalist_Id;
 
     @Column(nullable = false)
     private String name;

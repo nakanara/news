@@ -1,4 +1,4 @@
-package com.nakanara.news.dto;
+package com.nakanara.news.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,18 +21,16 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "TB_NEWSTAG")
-public class NewsTagEntity extends BaseEntity{
+public class NewsTag extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long news_tag_id;
 
     @Column(nullable = false)
     private String tag;
 
     @ManyToOne
-    @JoinColumn(name = "news_id", insertable = false, updatable = false)
-    private NewsEntity newsEntity;
+    private News news;
 
 }

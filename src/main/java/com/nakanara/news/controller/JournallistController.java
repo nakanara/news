@@ -1,7 +1,6 @@
 package com.nakanara.news.controller;
 
-import com.nakanara.news.dto.JournalistEntity;
-import com.nakanara.news.dto.NewsEntity;
+import com.nakanara.news.entity.Journalist;
 import com.nakanara.news.service.JournallistService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,10 +37,10 @@ public class JournallistController {
     }
 
     @PostMapping("/write")
-    public String doWrite(@ModelAttribute("journallist") JournalistEntity journalistEntity) {
+    public String doWrite(@ModelAttribute("journallist") Journalist journalist) {
 
-        log.debug("{}", journalistEntity.toString());
-        journallistService.post(journalistEntity);
+        log.debug("{}", journalist.toString());
+        journallistService.post(journalist);
 
         // todo 오류.
 
@@ -53,9 +52,9 @@ public class JournallistController {
                        @PathVariable long id) {
 
 
-        JournalistEntity journalistEntity = journallistService.view(id);
+        Journalist journalist = journallistService.view(id);
 
-        model.addAttribute("journallist", journalistEntity);
+        model.addAttribute("journallist", journalist);
         return DEF_PREFIX + "/view";
     }
 }

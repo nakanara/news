@@ -1,13 +1,14 @@
 package com.nakanara.news.service;
 
-import com.nakanara.news.dto.NewsEntity;
-import com.nakanara.news.dto.NewsTagEntity;
+import com.nakanara.news.entity.News;
+import com.nakanara.news.entity.NewsTag;
 import com.nakanara.news.repogitory.NewsEntityRepogitory;
 import com.nakanara.news.repogitory.NewsTagEntityRepogitory;
 import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -30,41 +31,43 @@ public class NewsService {
     }
 
     @Transactional
-    public NewsEntity post(@NotNull NewsEntity newsEntity) {
+    public News post(@NotNull News news) {
 
 
-        String[] tag_1 = newsEntity.getTag().split(",");
+        if(StringUtils.hasLength(news.getTag())) {
+            String[] tag_1 = news.getTag().split(",");
 
-        for(String t : tag_1) {
-            NewsTagEntity newsTagEntity = new NewsTagEntity();
-            newsTagEntity.setTag(t);
-            newsTagEntity.setNewsEntity(newsEntity);
+            for (String t : tag_1) {
+                NewsTag newsTag = new NewsTag();
+                newsTag.setTag(t);
+                newsTag.setNews(news);
 
-            newsTagEntityRepogitory.save(newsTagEntity);
+                newsTagEntityRepogitory.save(newsTag);
+            }
         }
 
-        newsEntityRepogitory.save(newsEntity);
+        newsEntityRepogitory.save(news);
 
-        return newsEntity;
+        return news;
     }
 
-    public List<NewsEntity> getList() {
-        return getList(Sort.Direction.DESC, "id");
+    public List<News> getList() {
+        return getList(Sort.Direction.DESC, "newsId");
     }
 
-    public List<NewsEntity> getList(Sort.Direction direct, String sort) {
+    public List<News> getList(Sort.Direction direct, String sort) {
 
         return newsEntityRepogitory.findAll(Sort.by(direct, sort));
     }
 
-    public NewsEntity view(long id) {
+    public News view(long id) {
 
-        NewsEntity newsEntity = newsEntityRepogitory.findById(id).orElse(null);
+        News news = newsEntityRepogitory.findById(id).orElse(null);
 
-        newsEntity.setViewCount(newsEntity.getViewCount()+1);
-        newsEntityRepogitory.save(newsEntity);
+        news.setViewCount(news.getViewCount()+1);
+        newsEntityRepogitory.save(news);
 
-        return newsEntity;
+        return news;
     }
 
 
@@ -72,7 +75,7 @@ public class NewsService {
     public boolean delete(long id) {
 
         newsEntityRepogitory.delete(
-                NewsEntity.builder().id(id).build()
+                News.builder().newsId(id).build()
         );
 
         return true;

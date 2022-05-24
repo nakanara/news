@@ -11,7 +11,7 @@
     <div class="offset-md-12">
 
         <div th:object="${news}" class="news">
-            <input type="hidden" id="id" th:value="*{id}" />
+            <input type="hidden" id="newsId" th:value="*{newsId}" />
 
             <div class="row">
               <div class="offset-md-12">
@@ -52,7 +52,7 @@
         $('#btn-delete').click(function(){
 
           if(confirm('[[#{label.del.message}]]')) {
-            let id = $('#id').val();
+            let id = $('#newsId').val();
 
             $.ajax({
               url: '/news/' + id,
@@ -70,7 +70,7 @@
       $('#btn-modify').click(function(){
 
         if(confirm('[[#{label.modify.message}]]')) {
-          let id = $('#id').val();
+          let id = $('#newsId').val();
 
           window.location.href ="/news/edit/" + id;
         }

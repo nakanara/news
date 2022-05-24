@@ -1,4 +1,4 @@
-package com.nakanara.news.dto;
+package com.nakanara.news.entity;
 
 
 import lombok.AllArgsConstructor;
@@ -14,12 +14,11 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "TB_NEWS")
-public class NewsEntity extends BaseEntity {
+public class News extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long newsId;
 
     private String title;
 
@@ -30,15 +29,13 @@ public class NewsEntity extends BaseEntity {
     private String tag;
 
     @OneToMany
-    @JoinColumn(name = "news_id")
-    private List<NewsTagEntity> tags;
+    private List<NewsTag> tags;
 
     @Column(columnDefinition = "int default 0")
     private int viewCount = 0;
 
     @OneToMany
-    @JoinColumn(name = "journalist")
-    private List<JournalistEntity> journalist;
+    private List<Journalist> journalist;
 
     // 설명 - DB 미저장
     @Transient
@@ -50,7 +47,5 @@ public class NewsEntity extends BaseEntity {
 
     public void toConvertSNS(){
         setDescription(getTag().substring(1, 150));
-
-
     }
 }

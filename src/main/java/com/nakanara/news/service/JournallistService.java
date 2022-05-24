@@ -1,6 +1,6 @@
 package com.nakanara.news.service;
 
-import com.nakanara.news.dto.JournalistEntity;
+import com.nakanara.news.entity.Journalist;
 import com.nakanara.news.repogitory.JournallistEntityRepogitory;
 import com.sun.istack.NotNull;
 import lombok.extern.slf4j.Slf4j;
@@ -21,23 +21,23 @@ public class JournallistService {
         this.journallistEntityRepogitory = journallistEntityRepogitory;
     }
 
-    public List<JournalistEntity> getList() {
+    public List<Journalist> getList() {
         return journallistEntityRepogitory.findAll();
     }
 
     @Transactional
-    public JournalistEntity post(@NotNull JournalistEntity journalistEntity) {
+    public Journalist post(@NotNull Journalist journalist) {
 
-        journallistEntityRepogitory.save(journalistEntity);
+        journallistEntityRepogitory.save(journalist);
 
-        return journalistEntity;
+        return journalist;
     }
 
-    public JournalistEntity view(long id) {
+    public Journalist view(long id) {
 
-        JournalistEntity journalistEntity = journallistEntityRepogitory.findById(id).orElse(null);
+        Journalist journalist = journallistEntityRepogitory.findById(id).orElse(null);
 
 
-        return journalistEntity;
+        return journalist;
     }
 }

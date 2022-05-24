@@ -1,6 +1,6 @@
 package com.nakanara.news.repogitory;
 
-import com.nakanara.news.dto.JournalistEntity;
+import com.nakanara.news.entity.Journalist;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -14,8 +14,8 @@ import java.util.List;
  *
  **/
 
-public interface JournallistEntityRepogitory extends CrudRepository<JournalistEntity, Long> {
+public interface JournallistEntityRepogitory extends CrudRepository<Journalist, Long> {
 
     @Override
-    List<JournalistEntity> findAll();
+    List<Journalist> findAll();
 }

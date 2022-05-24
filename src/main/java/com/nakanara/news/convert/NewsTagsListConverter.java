@@ -1,24 +1,22 @@
 package com.nakanara.news.convert;
 
-import com.nakanara.news.dto.NewsTagEntity;
+import com.nakanara.news.entity.NewsTag;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Converter
-public class NewsTagsListConverter implements AttributeConverter<List<NewsTagEntity>, String> {
+public class NewsTagsListConverter implements AttributeConverter<List<NewsTag>, String> {
     private static final String SPLIT_CHAR = ",";
 
     @Override
-    public String convertToDatabaseColumn(List<NewsTagEntity> newsTagEntities) {
+    public String convertToDatabaseColumn(List<NewsTag> newsTagEntities) {
 
         StringBuffer buf = new StringBuffer();
 
-        for(NewsTagEntity t : newsTagEntities) {
+        for(NewsTag t : newsTagEntities) {
             if(buf.length() > 0) {
                 buf.append(SPLIT_CHAR);
             }
@@ -29,19 +27,19 @@ public class NewsTagsListConverter implements AttributeConverter<List<NewsTagEnt
     }
 
     @Override
-    public List<NewsTagEntity> convertToEntityAttribute(String string) {
+    public List<NewsTag> convertToEntityAttribute(String string) {
 
-        List<NewsTagEntity> newsTagEntits = new ArrayList<>();
+        List<NewsTag> newsTagEntits = new ArrayList<>();
 
         if(string == null) return newsTagEntits;
 
         String [] token = string.split(SPLIT_CHAR);
 
         for(String t : token) {
-            NewsTagEntity newsTagEntity = new NewsTagEntity();
-            newsTagEntity.setTag(t);
+            NewsTag newsTag = new NewsTag();
+            newsTag.setTag(t);
 
-            newsTagEntits.add(newsTagEntity);
+            newsTagEntits.add(newsTag);
         }
 
 

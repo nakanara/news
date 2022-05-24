@@ -1,6 +1,6 @@
 package com.nakanara.news.controller;
 
-import com.nakanara.news.dto.NewsEntity;
+import com.nakanara.news.entity.News;
 import com.nakanara.news.service.NewsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,25 +17,27 @@ public class NewsRestController {
     NewsService newsService;
 
     @GetMapping("")
-    public @ResponseBody List<NewsEntity> getList(){
+    public @ResponseBody List<News> getList(){
 
         return newsService.getList();
     }
 
     @PostMapping("/post")
-    public @ResponseBody NewsEntity post(@RequestBody NewsEntity newsEntity) {
+    public @ResponseBody
+    News post(@RequestBody News news) {
 
-        log.debug("{}", newsEntity.toString());
+        log.debug("{}", news.toString());
 
-        return newsService.post(newsEntity);
+        return newsService.post(news);
     }
 
     @PutMapping("/{id}")
-    public @ResponseBody NewsEntity put(@RequestBody NewsEntity newsEntity) {
+    public @ResponseBody
+    News put(@RequestBody News news) {
 
-        log.debug("{}", newsEntity.toString());
+        log.debug("{}", news.toString());
 
-        return newsService.post(newsEntity);
+        return newsService.post(news);
     }
 
     @DeleteMapping("/{id}")

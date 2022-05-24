@@ -1,6 +1,6 @@
 <configuration scan="true" scanPeriod="30 seconds">
 
-    <property name="USER_HOME" value="/home/sebastien" />
+    <property name="USER_HOME" value="/home/nakanara" />
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <file>${USER_HOME}/myApp.log</file>

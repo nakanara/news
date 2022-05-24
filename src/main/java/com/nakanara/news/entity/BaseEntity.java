@@ -1,4 +1,4 @@
-package com.nakanara.news.dto;
+package com.nakanara.news.entity;
 
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;

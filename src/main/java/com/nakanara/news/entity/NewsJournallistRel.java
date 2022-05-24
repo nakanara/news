@@ -1,4 +1,4 @@
-package com.nakanara.news.dto;
+package com.nakanara.news.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,11 +16,11 @@ public class NewsJournallistRel extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private long njl_rel_id;
 
     @ManyToOne
-    private NewsEntity newsEntity;
+    private News news;
 
     @ManyToOne
-    private JournalistEntity journalistEntity;
+    private Journalist journalist;
 }
