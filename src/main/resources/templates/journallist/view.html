@@ -11,7 +11,7 @@
     <div class="offset-md-12">
 
         <div th:object="${journallist}" class="news">
-            <input type="hidden" id="journalist_id" th:value="*{journalist_id}" />
+            <input type="hidden" id="journalistId" th:value="*{journalistId}" />
 
             <div class="row">
               <div class="offset-md-12">
@@ -52,10 +52,10 @@
         $('#btn-delete').click(function(){
 
           if(confirm('[[#{label.del.message}]]')) {
-            let id = $('#id').val();
+            let id = $('#journalistId').val();
 
             $.ajax({
-              url: '/news/' + id,
+              url: '/journallist/' + id,
               method: 'delete',
               success: function (e) {
                 // 삭제/성공
@@ -70,9 +70,9 @@
       $('#btn-modify').click(function(){
 
         if(confirm('[[#{label.modify.message}]]')) {
-          let id = $('#id').val();
+          let id = $('#journalistId').val();
 
-          window.location.href ="/news/edit/" + id;
+          window.location.href ="/journallist/edit/" + id;
         }
       });
 

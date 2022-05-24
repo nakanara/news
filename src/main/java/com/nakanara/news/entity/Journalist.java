@@ -16,7 +16,7 @@ public class Journalist extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long journalist_Id;
+    private long journalistId;
 
     @Column(nullable = false)
     private String name;

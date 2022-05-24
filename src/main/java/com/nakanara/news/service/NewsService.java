@@ -39,7 +39,7 @@ public class NewsService {
 
             for (String t : tag_1) {
                 NewsTag newsTag = new NewsTag();
-                newsTag.setTag(t);
+                newsTag.setTag(StringUtils.trimAllWhitespace(t));
                 newsTag.setNews(news);
 
                 newsTagEntityRepogitory.save(newsTag);

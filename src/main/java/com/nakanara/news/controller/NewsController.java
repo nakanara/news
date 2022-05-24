@@ -1,6 +1,7 @@
 package com.nakanara.news.controller;
 
 import com.nakanara.news.entity.News;
+import com.nakanara.news.service.JournallistService;
 import com.nakanara.news.service.NewsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,17 @@ public class NewsController {
 
     private NewsService newsService;
 
+    private JournallistService journallistService;
+
 
     @Autowired
     public NewsController(NewsService newsService) {
         this.newsService = newsService;
+    }
+
+    @Autowired
+    public void setJournallistService(JournallistService journallistService) {
+        this.journallistService = journallistService;
     }
 
     @GetMapping("")
@@ -33,6 +41,7 @@ public class NewsController {
     @GetMapping("/write")
     public String write(Model model){
 
+        model.addAttribute("journalist", journallistService.getList());
         return "/news/write";
     }
 
