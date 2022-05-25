@@ -1,6 +1,7 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
 
-
-<header th:include="/common/header.html" th:remove="tag"></header>
+<th:block th:replace="/common/header :: headFragment"></th:block>
 
 <div class="container">
 
@@ -13,11 +14,12 @@
 
     <script type="text/javascript">
         (function(){
-            window.location.href = '/news';
+            // window.location.href = '/news';
         })();
     </script>
 </div>
 
 
 
-<footer th:include="/common/footer.html" th:remove="tag"></footer>
+<th:block th:replace="/common/footer :: footerFragment"></th:block>
+</html>

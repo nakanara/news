@@ -6,6 +6,7 @@
 - ckeditor5 https://ckeditor.com
 - jquery 3.x https://jquery.com
 - bootstrap 5.2.0 
+- https://www.bootstrapdash.com/bootstrap-news-website-templates/
 
 ### Backend
 

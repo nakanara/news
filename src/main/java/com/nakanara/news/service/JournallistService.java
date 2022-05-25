@@ -1,7 +1,7 @@
 package com.nakanara.news.service;
 
 import com.nakanara.news.entity.Journalist;
-import com.nakanara.news.repogitory.JournallistEntityRepogitory;
+import com.nakanara.news.repogitory.JournallistRepogitory;
 import com.sun.istack.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,28 +14,28 @@ import java.util.List;
 @Slf4j
 public class JournallistService {
 
-    private JournallistEntityRepogitory journallistEntityRepogitory;
+    private JournallistRepogitory journallistRepogitory;
 
     @Autowired
-    public void setJournallistEntityRepogitory(JournallistEntityRepogitory journallistEntityRepogitory) {
-        this.journallistEntityRepogitory = journallistEntityRepogitory;
+    public void setJournallistRepogitory(JournallistRepogitory journallistRepogitory) {
+        this.journallistRepogitory = journallistRepogitory;
     }
 
     public List<Journalist> getList() {
-        return journallistEntityRepogitory.findAll();
+        return journallistRepogitory.findAll();
     }
 
     @Transactional
     public Journalist post(@NotNull Journalist journalist) {
 
-        journallistEntityRepogitory.save(journalist);
+        journallistRepogitory.save(journalist);
 
         return journalist;
     }
 
     public Journalist view(long id) {
 
-        Journalist journalist = journallistEntityRepogitory.findById(id).orElse(null);
+        Journalist journalist = journallistRepogitory.findById(id).orElse(null);
 
 
         return journalist;

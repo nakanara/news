@@ -2,8 +2,8 @@ package com.nakanara.news.service;
 
 import com.nakanara.news.entity.News;
 import com.nakanara.news.entity.NewsTag;
-import com.nakanara.news.repogitory.NewsEntityRepogitory;
-import com.nakanara.news.repogitory.NewsTagEntityRepogitory;
+import com.nakanara.news.repogitory.NewsRepogitory;
+import com.nakanara.news.repogitory.NewsTagRepogitory;
 import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -16,18 +16,18 @@ import java.util.*;
 @Service
 public class NewsService {
 
-    private NewsEntityRepogitory newsEntityRepogitory;
-    private NewsTagEntityRepogitory newsTagEntityRepogitory;
+    private NewsRepogitory newsRepogitory;
+    private NewsTagRepogitory newsTagRepogitory;
 
 
     @Autowired
-    public void setNewsEntityRepogitory(NewsEntityRepogitory newsEntityRepogitory) {
-        this.newsEntityRepogitory = newsEntityRepogitory;
+    public void setNewsRepogitory(NewsRepogitory newsRepogitory) {
+        this.newsRepogitory = newsRepogitory;
     }
 
     @Autowired
-    public void setNewsTagEntityRepogitory(NewsTagEntityRepogitory newsTagEntityRepogitory) {
-        this.newsTagEntityRepogitory = newsTagEntityRepogitory;
+    public void setNewsTagRepogitory(NewsTagRepogitory newsTagRepogitory) {
+        this.newsTagRepogitory = newsTagRepogitory;
     }
 
     @Transactional
@@ -42,11 +42,11 @@ public class NewsService {
                 newsTag.setTag(StringUtils.trimAllWhitespace(t));
                 newsTag.setNews(news);
 
-                newsTagEntityRepogitory.save(newsTag);
+                newsTagRepogitory.save(newsTag);
             }
         }
 
-        newsEntityRepogitory.save(news);
+        newsRepogitory.save(news);
 
         return news;
     }
@@ -57,15 +57,15 @@ public class NewsService {
 
     public List<News> getList(Sort.Direction direct, String sort) {
 
-        return newsEntityRepogitory.findAll(Sort.by(direct, sort));
+        return newsRepogitory.findAll(Sort.by(direct, sort));
     }
 
     public News view(long id) {
 
-        News news = newsEntityRepogitory.findById(id).orElse(null);
+        News news = newsRepogitory.findById(id).orElse(null);
 
         news.setViewCount(news.getViewCount()+1);
-        newsEntityRepogitory.save(news);
+        newsRepogitory.save(news);
 
         return news;
     }
@@ -74,7 +74,7 @@ public class NewsService {
 
     public boolean delete(long id) {
 
-        newsEntityRepogitory.delete(
+        newsRepogitory.delete(
                 News.builder().newsId(id).build()
         );
 

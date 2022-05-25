@@ -14,7 +14,7 @@ import java.util.List;
  *
  **/
 
-public interface JournallistEntityRepogitory extends CrudRepository<Journalist, Long> {
+public interface JournallistRepogitory extends CrudRepository<Journalist, Long> {
 
     @Override
     List<Journalist> findAll();

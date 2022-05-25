@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface NewsEntityRepogitory extends CrudRepository<News, Long> {
+public interface NewsRepogitory extends CrudRepository<News, Long> {
     List<News> findAll(Sort direct);
 
 
