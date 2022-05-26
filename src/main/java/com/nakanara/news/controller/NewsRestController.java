@@ -1,5 +1,6 @@
 package com.nakanara.news.controller;
 
+import com.nakanara.news.entity.Comment;
 import com.nakanara.news.entity.News;
 import com.nakanara.news.service.NewsService;
 import lombok.extern.slf4j.Slf4j;
@@ -16,35 +17,19 @@ public class NewsRestController {
     @Autowired
     NewsService newsService;
 
-    @GetMapping("")
-    public @ResponseBody List<News> getList(){
 
-        return newsService.getList();
+    @GetMapping("/comments/{newsId}")
+    public @ResponseBody News getComments(@PathVariable("newsId") long newsId) {
+
+        // return newsService.getCommentList(newsId);
+        return newsService.view(newsId);
     }
 
-    @PostMapping("/post")
-    public @ResponseBody
-    News post(@RequestBody News news) {
+    public @ResponseBody List<Comment> saveComment(Comment comment) {
 
-        log.debug("{}", news.toString());
+        newsService.saveComment(comment);
 
-        return newsService.post(news);
-    }
-
-    @PutMapping("/{id}")
-    public @ResponseBody
-    News put(@RequestBody News news) {
-
-        log.debug("{}", news.toString());
-
-        return newsService.post(news);
-    }
-
-    @DeleteMapping("/{id}")
-    public @ResponseBody String delete(@PathVariable long id) {
-
-        newsService.delete(id);
-
-        return ""+id;
+return null;
+        //return newsService.getCommentList(comment.getNews().getNewsId());
     }
 }

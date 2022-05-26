@@ -1,7 +1,9 @@
 package com.nakanara.news.service;
 
+import com.nakanara.news.entity.Comment;
 import com.nakanara.news.entity.News;
 import com.nakanara.news.entity.NewsTag;
+import com.nakanara.news.repogitory.CommentRepogitory;
 import com.nakanara.news.repogitory.NewsRepogitory;
 import com.nakanara.news.repogitory.NewsTagRepogitory;
 import com.sun.istack.NotNull;
@@ -11,13 +13,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class NewsService {
 
     private NewsRepogitory newsRepogitory;
     private NewsTagRepogitory newsTagRepogitory;
+
+    private CommentRepogitory commentRepogitory;
 
 
     @Autowired
@@ -28,6 +33,11 @@ public class NewsService {
     @Autowired
     public void setNewsTagRepogitory(NewsTagRepogitory newsTagRepogitory) {
         this.newsTagRepogitory = newsTagRepogitory;
+    }
+
+    @Autowired
+    public void setCommentRepogitory(CommentRepogitory commentRepogitory) {
+        this.commentRepogitory = commentRepogitory;
     }
 
     @Transactional
@@ -80,4 +90,36 @@ public class NewsService {
 
         return true;
     }
+
+    public boolean saveComment(Comment comment) {
+
+        commentRepogitory.save(comment);
+
+        return true;
+    }
+
+    public List<Comment> getCommentList(Long newsId) {
+
+//        Map<String, Object> params = new HashMap<>();
+//
+//        params.put("newsId", newsId);
+//
+//        return commentRepogitory.findAll(getMultiSpec(params));
+
+        return null;
+    }
+/*
+    private Specification<Comment> getMultiSpec(Map<String, Object> map) {
+        return new Specification<Comment>() {
+            @Override
+            public Predicate toPredicate(Root<Comment> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                Predicate p = criteriaBuilder.conjunction();
+
+                p = criteriaBuilder.equal(root.get("newsId"), map.get("newsId"));
+
+                return p;
+            }
+        };
+    }
+    */
 }

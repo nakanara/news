@@ -9,6 +9,16 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * @package: com.nakanara.news.entity
+ * @name: News.java
+ * @date: 2022-05-26 오후 12:19
+ * @author: nakan
+ * @version: 1.0.0
+ * @modifyed:
+ * 
+ * 뉴스 엔터티
+ **/ 
 @Data
 @Builder
 @Entity

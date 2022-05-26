@@ -35,6 +35,13 @@
   </div>
 
 
+  <!-- 댓글 -->
+  <div class="row">
+    <div class="offset-md-12 wf-comment">
+      <textarea name="comment" class="comment" placeholder="댓글을 입력해 주세요."></textarea>
+      <div class="btn btn-primary" id="btn-add-comment">등록</div>
+    </div>
+  </div>
 
   <div class="row">
     <div class="offset-md-12">
@@ -76,6 +83,19 @@
         }
       });
 
+      $('#btn-add-comment').click(function(){
+
+      })
+
+
+      function init(){
+
+        $.ajax({
+          url: '/api/news/comments/3'
+        })
+      }
+
+      init();
     })(jQuery);
   </script>
 </div>
