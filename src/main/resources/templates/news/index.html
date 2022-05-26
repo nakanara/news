@@ -11,14 +11,20 @@
             <table class="table">
                 <thead>
                     <th>제목</th>
+                    <th>등록일</th>
+                    <th>View</th>
                 </thead>
                 <tbody>
                     <tr th:each="item: ${list}" class="news-link">
                         <td>
                             <a th:href="@{/news/__${item.newsId}__}">
-                                <span th:text="${item.title}"></span>
+                                <span th:text="${item.title} == null? '<무제>': ${item.title}+'a'"></span>
                             </a>
                         </td>
+                        <td>
+                            <label th:text="${item.regDttm}" />
+                        </td>
+                        <td th:text="${item.viewCount}" />
                     </tr>
                 </tbody>
             </table>

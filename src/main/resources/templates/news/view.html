@@ -13,21 +13,36 @@
         <div th:object="${news}" class="news">
             <input type="hidden" id="newsId" th:value="*{newsId}" />
 
-            <div class="row">
-              <div class="offset-md-12">
-                <label class="title" th:text="*{title}"></label>
-              </div>
+            <div class="news-article-head">
+                <div class="row news-view-title-area">
+                    <div class="offset-md-12">
+                        <label class="news-view-title" th:text="*{title}"></label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="offset-md-12 news-view-journallist">
+                        <label th:each="item : ${news.newsJournallistRels}"
+                               th:text="${item.nickname} + '기자'"></label>
+                    </div>
+                </div>
             </div>
-            <div class="row articlebody">
-              <div class="offset-md-12">
-                  <div th:utext="*{content}"></div>
-               </div>
+
+            <!-- 본문 -->
+            <div class="news-article-body">
+                <div class="row">
+                    <div class="offset-md-12">
+                        <div th:utext="*{content}"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="offset-md-12">
+                        <label th:text="*{tag}"></label>
+                    </div>
+                </div>
+
             </div>
-            <div class="row">
-              <div class="offset-md-12">
-                  <label th:text="*{tag}"></label>
-              </div>
-            </div>
+            <!-- //본문 -->
 
         </div>
 
@@ -45,9 +60,7 @@
 
   <div class="row">
     <div class="offset-md-12">
-      <a href="/news">
-        <div class="btn btn-primary" >목록</div>
-      </a>
+        <div class="btn btn-primary news-btn-link" data-href="/news" >목록</div>
         <div class="btn btn-primary" id="btn-modify">수정</div>
         <div class="btn btn-primary" id="btn-delete">삭제</div>
 
@@ -56,6 +69,9 @@
 
   <script type="text/javascript">
     (function($){
+
+        $news.initForm();
+
         $('#btn-delete').click(function(){
 
           if(confirm('[[#{label.del.message}]]')) {
@@ -103,7 +119,7 @@
       function init(){
 
         $.ajax({
-          url: '/api/news/comments/3'
+          url: '/api/news/comments/' + $('#newsId').val()
         })
       }
 

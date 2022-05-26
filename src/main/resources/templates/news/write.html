@@ -15,13 +15,17 @@
 
         <div class="row">
           <div class="offset-md-12">
-            <input type="text" name="title" class="form-control" placeholder="제목">
+            <label for="frm-title">제목</label>
+            <input type="text" class="form-control" id="frm-title" name="title" aria-describedby="helpTitle" placeholder="제목을 입력하세요">
+            <small id="helpTitle" class="form-text text-muted">기자 제목입니다.</small>
+
           </div>
         </div>
 
         <div class="row">
           <div class="offset-md-12">
-            <select name="journalist[]" class="form-control" >
+            <label for="frm-journalist">기자</label>
+            <select id="frm-journalist" name="journalist[]" class="form-control" >
               <option value="">기자 선택</option>
               <option th:each="item : ${journalist}"
                       th:value="${item.journalistId}"
@@ -32,12 +36,15 @@
 
         <div class="row news_editor">
           <div class="offset-md-12">
-            <textarea id="editor" name="content"></textarea>
+            <label for="frm-content">기자</label>
+            <textarea id="frm-content" name="content"></textarea>
           </div>
         </div>
         <div class="row">
           <div class="offset-md-12">
-            <input type="text" name="tag" class="form-control" placeholder="태그">
+            <label for="frm-tag">태그</label>
+            <input type="text" id="frm-tag" name="tag" class="form-control" aria-describedby="helpTag" placeholder="태그를 입력하세요">
+            <small id="helpTag" class="form-text text-muted">기자 태그입니다.</small>
           </div>
         </div>
       </form>
@@ -47,9 +54,7 @@
   <div class="row">
     <div class="offset-md-12">
       <div class="btn btn-primary" id="btn-write">저장</div>
-      <a href="/news">
-        <div class="btn btn-primary" >목록</div>
-      </a>
+      <div class="btn btn-primary news-btn-link" data-href="/news" >목록</div>
 
     </div>
   </div>
@@ -63,7 +68,7 @@
 
 
       ClassicEditor
-        .create( document.querySelector( '#editor' ), {
+        .create( document.querySelector( '#frm-content' ), {
         } )
         .then( editor => {
 //          editor.ui.view.editable.element.style.height = '500px';

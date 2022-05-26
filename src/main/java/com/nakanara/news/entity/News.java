@@ -45,7 +45,7 @@ public class News extends BaseEntity {
     private int viewCount = 0;
 
     @OneToMany
-    private List<Journalist> journalist;
+    private List<NewsJournallistRel> newsJournallistRels;
 
     // 설명 - DB 미저장
     @Transient

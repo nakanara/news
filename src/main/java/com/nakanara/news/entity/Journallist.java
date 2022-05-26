@@ -6,13 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Journalist extends BaseEntity {
+public class Journallist extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,5 +30,6 @@ public class Journalist extends BaseEntity {
 
     @Column(length = 1024)
     private String desc;
+
 
 }

@@ -13,20 +13,33 @@
 
         <div class="row">
           <div class="offset-md-12">
-            <input type="text" name="name" class="form-control" placeholder="이름">
+
+            <label for="frm-name">이름</label>
+            <input type="text" class="form-control" id="frm-name" name="name" placeholder="이름을 입력하세요">
+
           </div>
         </div>
 
         <div class="row">
           <div class="offset-md-12">
-            <input type="text" name="email" class="form-control" placeholder="email">
+            <label for="frm-email">이메일</label>
+            <input type="email" class="form-control" id="frm-email" name="email" placeholder="이메일을 입력하세요">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="offset-md-12">
+            <label for="frm-nickname">별명</label>
+            <input type="text" class="form-control" id="frm-nickname" name="nickname" aria-describedby="helpNickName" placeholder="별명을 입력하세요">
+            <small id="helpNickName" class="form-text text-muted">화면에 표시될 이름입니다.</small>
           </div>
         </div>
 
 
         <div class="row">
           <div class="offset-md-12">
-            <textarea type="text" name="desc" class="form-control" placeholder="설명"></textarea>
+            <label for="frm-desc">소개 글</label>
+            <textarea type="text" name="desc" class="form-control" id="frm-desc" placeholder="소개글을 입력하세요"></textarea>
           </div>
         </div>
 
@@ -36,7 +49,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row new-btn-group">
     <div class="offset-md-12">
       <div class="btn btn-primary" id="btn-write">저장</div>
       <a href="/news">

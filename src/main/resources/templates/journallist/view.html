@@ -11,22 +11,35 @@
     <div class="offset-md-12">
 
         <div th:object="${journallist}" class="news">
+
             <input type="hidden" id="journalistId" th:value="*{journalistId}" />
 
             <div class="row">
-              <div class="offset-md-12">
-                <label class="title" th:text="*{name}"></label>
-              </div>
+                <div class="offset-md-12">
+                    <label class="frm-label">이름</label>
+                    <label class="frm-value" th:text="*{name}"></label>
+                </div>
             </div>
-            <div class="row articlebody">
-              <div class="offset-md-12">
-                  <label th:text="*{email}"></label>
-               </div>
-            </div>
+
             <div class="row">
-              <div class="offset-md-12">
-                  <textarea th:text="*{desc}"></textarea>
-              </div>
+                <div class="offset-md-12">
+                    <label class="frm-label">이메일</label>
+                    <label class="frm-value" th:text="*{email}"></label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="offset-md-12">
+                    <label class="frm-label">별명</label>
+                    <label class="frm-value" th:text="*{nickname}"></label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="offset-md-12">
+                    <label class="frm-label">소개 글</label>
+                    <pre class="frm-value" th:text="*{desc}"/>
+                </div>
             </div>
 
         </div>
@@ -38,9 +51,8 @@
 
   <div class="row">
     <div class="offset-md-12">
-      <a href="/news">
-        <div class="btn btn-primary" >목록</div>
-      </a>
+
+        <div class="btn btn-primary news-btn-link" data-href="/journallist">목록</div>
         <div class="btn btn-primary" id="btn-modify">수정</div>
         <div class="btn btn-primary" id="btn-delete">삭제</div>
 
@@ -49,6 +61,9 @@
 
   <script type="text/javascript">
     (function($){
+
+        $news.initForm();
+
         $('#btn-delete').click(function(){
 
           if(confirm('[[#{label.del.message}]]')) {

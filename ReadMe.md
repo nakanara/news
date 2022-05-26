@@ -7,6 +7,7 @@
 - jquery 3.x https://jquery.com
 - bootstrap 5.2.0 
 - https://www.bootstrapdash.com/bootstrap-news-website-templates/
+- https://www.bootstrapdash.com/demo/world-time/index.html
 
 ### Backend
 

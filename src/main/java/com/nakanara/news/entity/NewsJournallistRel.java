@@ -1,5 +1,6 @@
 package com.nakanara.news.entity;
 
+import com.nakanara.news.service.JournallistService;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +22,6 @@ public class NewsJournallistRel extends BaseEntity {
     @ManyToOne
     private News news;
 
-    @ManyToOne
-    private Journalist journalist;
+    @OneToOne
+    private Journallist journallist;
 }
