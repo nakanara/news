@@ -25,11 +25,16 @@ public class NewsRestController {
         return newsService.view(newsId);
     }
 
-    public @ResponseBody List<Comment> saveComment(Comment comment) {
+    @PostMapping("/comment/{newsId}")
+    public @ResponseBody List<Comment> saveComment(@PathVariable("newsId") long newsId,
+                                                   @RequestBody Comment comment,
+                                                   Error error) {
+
+        log.error(error.getMessage());
+        comment.setNews(newsService.getNews(newsId));
 
         newsService.saveComment(comment);
 
-return null;
-        //return newsService.getCommentList(comment.getNews().getNewsId());
+        return newsService.getCommentList(comment.getNews());
     }
 }

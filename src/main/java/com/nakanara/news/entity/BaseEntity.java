@@ -1,5 +1,6 @@
 package com.nakanara.news.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -21,11 +22,13 @@ public abstract class BaseEntity {
     private String regEmpId;
 
     @CreatedDate
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date regDttm;
 
     @LastModifiedBy
     private String modEmpId;
 
     @LastModifiedDate
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date modDttm;
 }

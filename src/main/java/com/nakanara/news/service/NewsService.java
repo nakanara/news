@@ -72,12 +72,16 @@ public class NewsService {
 
     public News view(long id) {
 
-        News news = newsRepogitory.findById(id).orElse(null);
+        News news = getNews(id);
 
         news.setViewCount(news.getViewCount()+1);
         newsRepogitory.save(news);
 
         return news;
+    }
+
+    public News getNews(long id) {
+        return newsRepogitory.findById(id).orElse(new News());
     }
 
 
@@ -98,7 +102,7 @@ public class NewsService {
         return true;
     }
 
-    public List<Comment> getCommentList(Long newsId) {
+    public List<Comment> getCommentList(News news) {
 
 //        Map<String, Object> params = new HashMap<>();
 //
@@ -106,7 +110,9 @@ public class NewsService {
 //
 //        return commentRepogitory.findAll(getMultiSpec(params));
 
-        return null;
+
+
+        return commentRepogitory.findAllByNews(news);
     }
 /*
     private Specification<Comment> getMultiSpec(Map<String, Object> map) {
