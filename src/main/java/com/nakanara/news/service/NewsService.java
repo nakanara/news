@@ -7,6 +7,7 @@ import com.nakanara.news.repogitory.CommentRepogitory;
 import com.nakanara.news.repogitory.NewsRepogitory;
 import com.nakanara.news.repogitory.NewsTagRepogitory;
 import com.sun.istack.NotNull;
+import lombok.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -102,18 +103,20 @@ public class NewsService {
         return true;
     }
 
-    public List<Comment> getCommentList(News news) {
+    public List<Comment> getCommentList(long newsId) {
 
-//        Map<String, Object> params = new HashMap<>();
-//
-//        params.put("newsId", newsId);
-//
-//        return commentRepogitory.findAll(getMultiSpec(params));
-
-
-
-        return commentRepogitory.findAllByNews(news);
+        return getCommentList(newsId, "asc");
     }
+
+    public List<Comment> getCommentList(long newsId, String orderby) {
+
+        if("asc".equalsIgnoreCase(orderby))
+            return commentRepogitory.findAllByNewsOrderByRegDttmAsc(getNews(newsId));
+        else {
+            return commentRepogitory.findAllByNewsOrderByRegDttmDesc(getNews(newsId));
+        }
+    }
+
 /*
     private Specification<Comment> getMultiSpec(Map<String, Object> map) {
         return new Specification<Comment>() {

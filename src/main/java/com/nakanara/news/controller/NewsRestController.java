@@ -19,10 +19,11 @@ public class NewsRestController {
 
 
     @GetMapping("/comments/{newsId}")
-    public @ResponseBody News getComments(@PathVariable("newsId") long newsId) {
+    public @ResponseBody List<Comment> getComments(@PathVariable("newsId") long newsId,
+                                                   @RequestParam(name = "orderby", defaultValue = "asc") String orderby) {
 
-        // return newsService.getCommentList(newsId);
-        return newsService.view(newsId);
+         return newsService.getCommentList(newsId, orderby);
+//        return newsService.view(newsId);
     }
 
     @PostMapping("/comment/{newsId}")
@@ -35,6 +36,6 @@ public class NewsRestController {
 
         newsService.saveComment(comment);
 
-        return newsService.getCommentList(comment.getNews());
+        return newsService.getCommentList(newsId);
     }
 }

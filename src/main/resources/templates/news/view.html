@@ -58,6 +58,9 @@
     </div>
   </div>
 
+    <!-- 댓글 View -->
+
+
   <div class="row">
     <div class="offset-md-12">
         <div class="btn btn-primary news-btn-link" data-href="/news" >목록</div>
@@ -103,11 +106,13 @@
 
         var newsId = $('#newsId').val();
         $.ajax({
-          url: '/api/news/comment/' + newsId,
-          type: 'POST',
-          data: {
-            comment: $('#news-comment').val(),
-          },
+            url: '/api/news/comment/' + newsId,
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+          data: JSON.stringify ({
+              comment: $('#news-comment').val(),
+          }),
           success: function(e){
             console.log(e);
             // 새로고침
@@ -119,7 +124,11 @@
       function init(){
 
         $.ajax({
-          url: '/api/news/comments/' + $('#newsId').val()
+            url: '/api/news/comments/' + $('#newsId').val(),
+            contentType: 'application/json',
+            success: function(e) {
+              console.log(e);
+            }
         })
       }
 
