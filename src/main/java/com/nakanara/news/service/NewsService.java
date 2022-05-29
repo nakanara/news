@@ -131,4 +131,26 @@ public class NewsService {
         };
     }
     */
+
+    public List<NewsTag> getTagList(String tag) {
+        return newsTagRepogitory.findAllByTag(tag);
+    }
+
+    public void getTagcount(){
+
+//        JPAQueryFactory qf = new JPAQueryFactory(entityManager);
+//
+//        JPAQuery<YearReportSum> query = qf.from(qReport)
+//                .groupBy(qReport.year)
+//                .select(
+//                        Projections.bean(
+//                                YearReportSum.class,
+//                                qReport.year,
+//                                qReport.loanSmall.sum().as("smallSum"),
+//                                qReport.loanMajor.sum().as("majorSum"),
+//                                qReport.loanTotal.sum().as("totalSum")
+//                        )
+//                );
+//        return query.fetch();
+    }
 }

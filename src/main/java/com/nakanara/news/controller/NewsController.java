@@ -1,6 +1,7 @@
 package com.nakanara.news.controller;
 
 import com.nakanara.news.entity.News;
+import com.nakanara.news.entity.NewsTag;
 import com.nakanara.news.service.JournallistService;
 import com.nakanara.news.service.NewsService;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/news")
@@ -93,5 +96,11 @@ public class NewsController {
         newsService.delete(id);
 
         return ""+id;
+    }
+
+    @GetMapping("/tag/{tag}")
+    public @ResponseBody
+    List<NewsTag> getTagList(@PathVariable(name = "tag") String tag) {
+        return newsService.getTagList(tag);
     }
 }

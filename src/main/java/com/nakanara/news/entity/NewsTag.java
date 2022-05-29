@@ -21,6 +21,9 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(
+        indexes = @Index(columnList = "tag, srcNewsId")
+)
 public class NewsTag extends BaseEntity{
 
     @Id
@@ -31,6 +34,7 @@ public class NewsTag extends BaseEntity{
     private String tag;
 
     @ManyToOne
+    @JoinColumn(name = "srcNewsId")
     private News news;
 
 }
