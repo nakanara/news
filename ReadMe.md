@@ -24,3 +24,7 @@
 ### todo
 
 1. 도메인 iinews.co.kr
+
+### 참고
+
+mvnw spring-boot:run -Dspring.profiles.active=real
