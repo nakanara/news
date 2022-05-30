@@ -23,7 +23,6 @@ public class NewsRestController {
                                                    @RequestParam(name = "orderby", defaultValue = "asc") String orderby) {
 
          return newsService.getCommentList(newsId, orderby);
-//        return newsService.view(newsId);
     }
 
     @PostMapping("/comment/{newsId}")

@@ -22,17 +22,6 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="offset-md-12">
-            <label for="frm-journalist">기자</label>
-            <select id="frm-journalist" name="journalist[]" class="form-control" >
-              <option value="">기자 선택</option>
-              <option th:each="item : ${journalist}"
-                      th:value="${item.journalistId}"
-                      th:text="${item.name}"></option>
-            </select>
-          </div>
-        </div>
 
         <div class="row news_editor">
           <div class="offset-md-12">
@@ -40,13 +29,8 @@
             <textarea id="frm-content" name="content"></textarea>
           </div>
         </div>
-        <div class="row">
-          <div class="offset-md-12">
-            <label for="frm-tag">태그</label>
-            <input type="text" id="frm-tag" name="tag" class="form-control" aria-describedby="helpTag" placeholder="태그를 입력하세요">
-            <small id="helpTag" class="form-text text-muted">기자 태그입니다.</small>
-          </div>
-        </div>
+
+
       </form>
     </div>
   </div>

@@ -20,12 +20,6 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="offset-md-12 news-view-journallist">
-                        <label th:each="item : ${news.newsJournallistRels}"
-                               th:text="${item.nickname} + '기자'"></label>
-                    </div>
-                </div>
             </div>
 
             <!-- 본문 -->
@@ -58,7 +52,10 @@
     </div>
   </div>
 
-    <!-- 댓글 View -->
+<!-- 댓글 View -->
+    <div class="row">
+        <div id="news-comment-list"></div>
+    </div>
 
 
   <div class="row">
@@ -78,7 +75,7 @@
         $('#btn-delete').click(function(){
 
           if(confirm('[[#{label.del.message}]]')) {
-            let id = $('#newsId').val();
+            var id = $('#newsId').val();
 
             $.ajax({
               url: '/news/' + id,
@@ -93,46 +90,54 @@
         });
 
 
-      $('#btn-modify').click(function(){
+        $('#btn-modify').click(function(){
 
-        if(confirm('[[#{label.modify.message}]]')) {
-          let id = $('#newsId').val();
-
-          window.location.href ="/news/edit/" + id;
-        }
-      });
-
-      $('#btn-add-comment').click(function(){
-
-        var newsId = $('#newsId').val();
-        $.ajax({
-            url: '/api/news/comment/' + newsId,
-            type: 'POST',
-            dataType: 'json',
-            contentType: 'application/json',
-          data: JSON.stringify ({
-              comment: $('#news-comment').val(),
-          }),
-          success: function(e){
-            console.log(e);
-            // 새로고침
-          }
-        })
-      })
-
-
-      function init(){
-
-        $.ajax({
-            url: '/api/news/comments/' + $('#newsId').val(),
-            contentType: 'application/json',
-            success: function(e) {
-              console.log(e);
+            if(confirm('[[#{label.modify.message}]]')) {
+                var id = $('#newsId').val();
+                window.location.href ="/news/edit/" + id;
             }
-        })
-      }
+        });
 
-      init();
+        $('#btn-add-comment').click(function(){
+
+            var newsId = $('#newsId').val();
+            $.ajax({
+                url: '/api/news/comment/' + newsId,
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify ({
+                    comment: $('#news-comment').val(),
+                }),
+                success: function(e){
+                    $('#news-comment').val('');
+                    loadComment();
+                }
+            })
+        })
+
+        function loadComment(){
+
+            $.ajax({
+                url: '/api/news/comments/' + $('#newsId').val(),
+                contentType: 'application/json',
+                success: function(e) {
+                    var $el = $('#news-comment-list');
+                    $el.empty();
+
+                    for(var i =0; i < e.length; i++ ) {
+                        var item = e[i];
+                        $el.append('<p>' + item.comment + '</p>');
+                    }
+                }
+            })
+        }
+
+        function init(){
+            loadComment();
+        }
+
+        init();
     })(jQuery);
   </script>
 </div>

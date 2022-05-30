@@ -2,26 +2,20 @@ package com.nakanara.news.service;
 
 import com.nakanara.news.entity.Comment;
 import com.nakanara.news.entity.News;
-import com.nakanara.news.entity.NewsTag;
 import com.nakanara.news.repogitory.CommentRepogitory;
 import com.nakanara.news.repogitory.NewsRepogitory;
-import com.nakanara.news.repogitory.NewsTagRepogitory;
 import com.sun.istack.NotNull;
-import lombok.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class NewsService {
 
     private NewsRepogitory newsRepogitory;
-    private NewsTagRepogitory newsTagRepogitory;
 
     private CommentRepogitory commentRepogitory;
 
@@ -31,10 +25,6 @@ public class NewsService {
         this.newsRepogitory = newsRepogitory;
     }
 
-    @Autowired
-    public void setNewsTagRepogitory(NewsTagRepogitory newsTagRepogitory) {
-        this.newsTagRepogitory = newsTagRepogitory;
-    }
 
     @Autowired
     public void setCommentRepogitory(CommentRepogitory commentRepogitory) {
@@ -43,19 +33,6 @@ public class NewsService {
 
     @Transactional
     public News post(@NotNull News news) {
-
-
-        if(StringUtils.hasLength(news.getTag())) {
-            String[] tag_1 = news.getTag().split(",");
-
-            for (String t : tag_1) {
-                NewsTag newsTag = new NewsTag();
-                newsTag.setTag(StringUtils.trimAllWhitespace(t));
-                newsTag.setNews(news);
-
-                newsTagRepogitory.save(newsTag);
-            }
-        }
 
         newsRepogitory.save(news);
 
@@ -115,42 +92,5 @@ public class NewsService {
         else {
             return commentRepogitory.findAllByNewsOrderByRegDttmDesc(getNews(newsId));
         }
-    }
-
-/*
-    private Specification<Comment> getMultiSpec(Map<String, Object> map) {
-        return new Specification<Comment>() {
-            @Override
-            public Predicate toPredicate(Root<Comment> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-                Predicate p = criteriaBuilder.conjunction();
-
-                p = criteriaBuilder.equal(root.get("newsId"), map.get("newsId"));
-
-                return p;
-            }
-        };
-    }
-    */
-
-    public List<NewsTag> getTagList(String tag) {
-        return newsTagRepogitory.findAllByTag(tag);
-    }
-
-    public void getTagcount(){
-
-//        JPAQueryFactory qf = new JPAQueryFactory(entityManager);
-//
-//        JPAQuery<YearReportSum> query = qf.from(qReport)
-//                .groupBy(qReport.year)
-//                .select(
-//                        Projections.bean(
-//                                YearReportSum.class,
-//                                qReport.year,
-//                                qReport.loanSmall.sum().as("smallSum"),
-//                                qReport.loanMajor.sum().as("majorSum"),
-//                                qReport.loanTotal.sum().as("totalSum")
-//                        )
-//                );
-//        return query.fetch();
     }
 }

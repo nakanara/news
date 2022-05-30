@@ -16,6 +16,7 @@ public class Comment extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long commId;
 
+    // 1 - N 관계
     @ManyToOne
     private News news;
 

@@ -9,33 +9,6 @@
 
   <!-- 변경 -->
   <!-- 글줄임-->
-  <meta name="description" th:content="${news.title}">
-  <!-- 관련 이미지 -->
-  <meta property="og:image" content="https://images.chosun.com/resizer/ou2k5duz3UHaGQMlw9gFEh-pepI=/1200x630/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/WQK2O5J5UBLJDCZWKN5BXTMDKI.jpg">
-  <meta property="og:type" content="article">
-  <!-- 기사 URL -->
-  <meta property="og:url" th:content="@{/news/__${news.newsId}__}">
-  <!-- 제목 -->
-  <meta property="og:title" th:content="${news.title}">
-  <!-- 설명 -->
-  <meta property="og:description" th:content="${news.title}">
-  <!-- 사이트 -->
-  <meta property="og:site_name" content="사이트">
-  <!-- 작성자 -->
-  <meta property="article:author" content="사이트">
-
-  <!-- fb id -->
-  <meta property="fb:app_id" content="">
-
-  <!-- twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:description" th:content="${news.title}">
-  <meta name="twitter:title" th:content="${news.title}">
-  <meta name="twitter:image:src" content="이미지">
-  <meta name="twitter:site" content="@nakanara">
-  <meta name="twitter:creator" content="@nakanara">
-  <meta name="robots" content="max-image-preview:large">
-
   <!-- CSS only -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   <link href="/css/news.css" rel="stylesheet">
@@ -48,6 +21,5 @@
   <script src="/js/news.js"></script>
 </head>
 <body>
-
 
 <!-- // Head -->

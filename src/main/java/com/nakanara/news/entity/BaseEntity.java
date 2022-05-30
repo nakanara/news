@@ -14,8 +14,8 @@ import java.util.Date;
 
 @Setter
 @Getter
-@MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
+@MappedSuperclass // Super 클래스로 별도 Table 생성되지 않는 옵션
+@EntityListeners(AuditingEntityListener.class)  // Audit 기능을 줄 경우 자동으로 @Create @LastModify 값 설정
 public abstract class BaseEntity {
 
     @CreatedBy

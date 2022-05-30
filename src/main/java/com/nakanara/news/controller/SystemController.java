@@ -14,6 +14,7 @@ import javax.annotation.PostConstruct;
 @Profile("!real")
 public class SystemController {
 
+    // 설정된 변수를 가져올 수 있는 ㅣㄱ능
     @Value("${app.testmode}")
     private String testmode;
 

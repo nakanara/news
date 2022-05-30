@@ -1,16 +1,12 @@
 package com.nakanara.news.controller;
 
 import com.nakanara.news.entity.News;
-import com.nakanara.news.entity.NewsTag;
-import com.nakanara.news.service.JournallistService;
 import com.nakanara.news.service.NewsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/news")
@@ -20,19 +16,16 @@ public class NewsController {
 
     private NewsService newsService;
 
-    private JournallistService journallistService;
-
-
     @Autowired
     public NewsController(NewsService newsService) {
         this.newsService = newsService;
     }
 
-    @Autowired
-    public void setJournallistService(JournallistService journallistService) {
-        this.journallistService = journallistService;
-    }
-
+    /**
+     * News 조회
+     * @param model
+     * @return
+     */
     @GetMapping("")
     public String getList(Model model){
 
@@ -44,7 +37,6 @@ public class NewsController {
     @GetMapping("/write")
     public String write(Model model){
 
-        model.addAttribute("journalist", journallistService.getList());
         return "/news/write";
     }
 
@@ -98,9 +90,4 @@ public class NewsController {
         return ""+id;
     }
 
-    @GetMapping("/tag/{tag}")
-    public @ResponseBody
-    List<NewsTag> getTagList(@PathVariable(name = "tag") String tag) {
-        return newsService.getTagList(tag);
-    }
 }

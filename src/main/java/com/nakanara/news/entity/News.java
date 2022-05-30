@@ -32,20 +32,15 @@ public class News extends BaseEntity {
 
     private String title;
 
+    // CLob
     @Lob
     private String content;
 
     @Column(length = 512)
     private String tag;
 
-    @OneToMany
-    private List<NewsTag> tags;
-
     @Column(columnDefinition = "int default 0")
     private int viewCount = 0;
-
-    @OneToMany
-    private List<NewsJournallistRel> newsJournallistRels;
 
     // 설명 - DB 미저장
     @Transient
