@@ -41,6 +41,7 @@ public class NewsController {
         return "/news/index";
     }
 
+
     @GetMapping("/write")
     public String write(Model model){
 
@@ -55,8 +56,6 @@ public class NewsController {
         log.debug("{}", news.toString());
         newsService.post(news);
 
-        // todo 오류.
-
         return "redirect:/news";
     }
 
@@ -66,8 +65,9 @@ public class NewsController {
 
 
         News news = newsService.view(id);
-
         model.addAttribute("news", news);
+        model.addAttribute("journallistRels", newsService.getNewsJournallist(news));
+
         return "/news/view";
     }
 

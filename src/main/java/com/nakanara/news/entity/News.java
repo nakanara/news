@@ -38,14 +38,12 @@ public class News extends BaseEntity {
     @Column(length = 512)
     private String tag;
 
-    @OneToMany
-    private List<NewsTag> tags;
 
     @Column(columnDefinition = "int default 0")
     private int viewCount = 0;
 
-    @OneToMany
-    private List<NewsJournallistRel> newsJournallistRels;
+    @Transient
+    private List<Long> journallist;
 
     // 설명 - DB 미저장
     @Transient

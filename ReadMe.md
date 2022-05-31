@@ -28,3 +28,6 @@
 ### 참고
 
 mvnw spring-boot:run -Dspring.profiles.active=real
+
+- 테이블 삭제
+drop table tab CASCADE CONSTRAINTS

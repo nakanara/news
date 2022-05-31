@@ -1,13 +1,9 @@
 package com.nakanara.news.service;
 
-import com.nakanara.news.entity.Comment;
-import com.nakanara.news.entity.News;
-import com.nakanara.news.entity.NewsTag;
-import com.nakanara.news.repogitory.CommentRepogitory;
-import com.nakanara.news.repogitory.NewsRepogitory;
-import com.nakanara.news.repogitory.NewsTagRepogitory;
+import com.nakanara.news.entity.*;
+import com.nakanara.news.repogitory.*;
 import com.sun.istack.NotNull;
-import lombok.Value;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -15,33 +11,43 @@ import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Map;
 
 @Service
+@Slf4j
 public class NewsService {
 
-    private NewsRepogitory newsRepogitory;
-    private NewsTagRepogitory newsTagRepogitory;
-
-    private CommentRepogitory commentRepogitory;
+    private NewsRepository newsRepository;
+    private NewsTagRepository newsTagRepository;
+    private CommentRepository commentRepository;
+    private NewsJournallistRelRepository newsJournallistRelRepository;
+    private JournallistRepository journallistRepository;
 
 
     @Autowired
-    public void setNewsRepogitory(NewsRepogitory newsRepogitory) {
-        this.newsRepogitory = newsRepogitory;
+    public void setJournallistRepository(JournallistRepository journallistRepository) {
+        this.journallistRepository = journallistRepository;
     }
 
     @Autowired
-    public void setNewsTagRepogitory(NewsTagRepogitory newsTagRepogitory) {
-        this.newsTagRepogitory = newsTagRepogitory;
+    public void setNewsRepository(NewsRepository newsRepository) {
+        this.newsRepository = newsRepository;
     }
 
     @Autowired
-    public void setCommentRepogitory(CommentRepogitory commentRepogitory) {
-        this.commentRepogitory = commentRepogitory;
+    public void setNewsTagRepository(NewsTagRepository newsTagRepository) {
+        this.newsTagRepository = newsTagRepository;
     }
 
-    @Transactional
+    @Autowired
+    public void setCommentRepository(CommentRepository commentRepository) {
+        this.commentRepository = commentRepository;
+    }
+
+    @Autowired
+    public void setNewsJournallistRelRepository(NewsJournallistRelRepository newsJournallistRelRepository) {
+        this.newsJournallistRelRepository = newsJournallistRelRepository;
+    }
+
     public News post(@NotNull News news) {
 
 
@@ -53,11 +59,26 @@ public class NewsService {
                 newsTag.setTag(StringUtils.trimAllWhitespace(t));
                 newsTag.setNews(news);
 
-                newsTagRepogitory.save(newsTag);
+                newsTagRepository.save(newsTag);
             }
         }
 
-        newsRepogitory.save(news);
+
+        newsRepository.save(news);
+
+        for(long id: news.getJournallist()) {
+
+            newsJournallistRelRepository.save(
+                    NewsJournallistRel.builder()
+                    .news(news)
+                    .journallist(journallistRepository.findById(id).orElse(null))
+                    .build()
+            );
+
+        }
+
+
+
 
         return news;
     }
@@ -68,7 +89,7 @@ public class NewsService {
 
     public List<News> getList(Sort.Direction direct, String sort) {
 
-        return newsRepogitory.findAll(Sort.by(direct, sort));
+        return newsRepository.findAll(Sort.by(direct, sort));
     }
 
     public News view(long id) {
@@ -76,20 +97,25 @@ public class NewsService {
         News news = getNews(id);
 
         news.setViewCount(news.getViewCount()+1);
-        newsRepogitory.save(news);
+        newsRepository.save(news);
 
         return news;
     }
 
     public News getNews(long id) {
-        return newsRepogitory.findById(id).orElse(new News());
+        return newsRepository.findById(id).orElse(new News());
     }
 
 
 
+    @Transactional
     public boolean delete(long id) {
 
-        newsRepogitory.delete(
+        News news = newsRepository.findById(id).orElse(null);
+
+        newsJournallistRelRepository.deleteAllByNews(news);
+
+        newsRepository.delete(
                 News.builder().newsId(id).build()
         );
 
@@ -98,7 +124,7 @@ public class NewsService {
 
     public boolean saveComment(Comment comment) {
 
-        commentRepogitory.save(comment);
+        commentRepository.save(comment);
 
         return true;
     }
@@ -111,9 +137,9 @@ public class NewsService {
     public List<Comment> getCommentList(long newsId, String orderby) {
 
         if("asc".equalsIgnoreCase(orderby))
-            return commentRepogitory.findAllByNewsOrderByRegDttmAsc(getNews(newsId));
+            return commentRepository.findAllByNewsOrderByRegDttmAsc(getNews(newsId));
         else {
-            return commentRepogitory.findAllByNewsOrderByRegDttmDesc(getNews(newsId));
+            return commentRepository.findAllByNewsOrderByRegDttmDesc(getNews(newsId));
         }
     }
 
@@ -133,24 +159,15 @@ public class NewsService {
     */
 
     public List<NewsTag> getTagList(String tag) {
-        return newsTagRepogitory.findAllByTag(tag);
+        return newsTagRepository.findAllByTag(tag);
     }
 
-    public void getTagcount(){
+    public List<News> getSearchNews(String keyword) {
+        return newsRepository.findByTitleContainingIgnoreCase(keyword);
+    }
 
-//        JPAQueryFactory qf = new JPAQueryFactory(entityManager);
-//
-//        JPAQuery<YearReportSum> query = qf.from(qReport)
-//                .groupBy(qReport.year)
-//                .select(
-//                        Projections.bean(
-//                                YearReportSum.class,
-//                                qReport.year,
-//                                qReport.loanSmall.sum().as("smallSum"),
-//                                qReport.loanMajor.sum().as("majorSum"),
-//                                qReport.loanTotal.sum().as("totalSum")
-//                        )
-//                );
-//        return query.fetch();
+
+    public List<NewsJournallistRel> getNewsJournallist(News news) {
+        return newsJournallistRelRepository.getAllByNews(news);
     }
 }

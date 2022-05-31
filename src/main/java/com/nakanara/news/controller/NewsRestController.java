@@ -38,4 +38,9 @@ public class NewsRestController {
 
         return newsService.getCommentList(newsId);
     }
+
+    @GetMapping("/search")
+    public @ResponseBody List<News> searchNews(@RequestParam(name = "keyword", defaultValue = "") String keyword) {
+        return newsService.getSearchNews(keyword);
+    }
 }

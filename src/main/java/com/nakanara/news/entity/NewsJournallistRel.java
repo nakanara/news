@@ -17,7 +17,7 @@ public class NewsJournallistRel extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long njl_rel_id;
+    private long njlRelId;
 
     @ManyToOne
     private News news;

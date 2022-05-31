@@ -25,11 +25,11 @@
         <div class="row">
           <div class="offset-md-12">
             <label for="frm-journalist">기자</label>
-            <select id="frm-journalist" name="journalist[]" class="form-control" >
+            <select id="frm-journalist" name="journallist[]" class="form-control" >
               <option value="">기자 선택</option>
               <option th:each="item : ${journalist}"
                       th:value="${item.journalistId}"
-                      th:text="${item.name}"></option>
+                      th:text="${item.nickname}"></option>
             </select>
           </div>
         </div>

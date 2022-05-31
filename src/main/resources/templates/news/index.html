@@ -18,7 +18,7 @@
                     <tr th:each="item: ${list}" class="news-link">
                         <td>
                             <a th:href="@{/news/__${item.newsId}__}">
-                                <span th:text="${item.title} == null? '<무제>': ${item.title}+'a'"></span>
+                                <span th:text="${item.title} == null? '<무제>': ${item.title}"></span>
                             </a>
                         </td>
                         <td>

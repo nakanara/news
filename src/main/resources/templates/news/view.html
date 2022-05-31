@@ -22,8 +22,8 @@
 
                 <div class="row">
                     <div class="offset-md-12 news-view-journallist">
-                        <label th:each="item : ${news.newsJournallistRels}"
-                               th:text="${item.nickname} + '기자'"></label>
+                        <label th:each="item : ${journallistRels}"
+                               th:text="${item.journallist.nickname} + '기자'"></label>
                     </div>
                 </div>
             </div>
