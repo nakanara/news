@@ -30,11 +30,18 @@ public class NewsRestController {
                                                    @RequestBody Comment comment,
                                                    Error error) {
 
+        // 보안, ...~
+
         log.error(error.getMessage());
         comment.setNews(newsService.getNews(newsId));
 
         newsService.saveComment(comment);
 
         return newsService.getCommentList(newsId);
+    }
+
+    @GetMapping("/search")
+    public @ResponseBody List<News> searchNews(@RequestParam(name = "keyword", defaultValue = "") String keyword) {
+        return newsService.getSearchNews(keyword);
     }
 }

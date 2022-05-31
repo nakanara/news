@@ -1,10 +1,7 @@
 package com.nakanara.news.entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,9 +16,10 @@ import java.util.List;
  * 
  * 뉴스 엔터티
  **/ 
-@Data
+// @Data
+@Getter @Setter @ToString
 @Builder
-@Entity
+@Entity(name = "eso_news")
 @NoArgsConstructor
 @AllArgsConstructor
 public class News extends BaseEntity {
@@ -31,6 +29,9 @@ public class News extends BaseEntity {
     private long newsId;
 
     private String title;
+
+    // 설명
+    private String desc;
 
     // CLob
     @Lob
@@ -50,7 +51,4 @@ public class News extends BaseEntity {
     @Transient
     private String orgImage;
 
-    public void toConvertSNS(){
-        setDescription(getTag().substring(1, 150));
-    }
 }

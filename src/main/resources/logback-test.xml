@@ -1,4 +1,4 @@
-<configuration>
+<configuration scan="true" scanPeriod="30 seconds">
 
     <property name="USER_HOME" value="/home/nakanara" />
 
@@ -22,9 +22,10 @@
         <appender-ref ref="STDOUT" />
     </root>
 
-    <logger name="com.nakanara" level="debug">
+    <logger name="com.nakanara" level="info">
         <appender-ref ref="STDOUT" />
     </logger>
+
 
 
 </configuration>

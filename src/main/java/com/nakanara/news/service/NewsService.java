@@ -63,7 +63,6 @@ public class NewsService {
     }
 
 
-
     public boolean delete(long id) {
 
         newsRepogitory.delete(
@@ -73,8 +72,11 @@ public class NewsService {
         return true;
     }
 
+    @Transactional
     public boolean saveComment(Comment comment) {
 
+        //~
+        // ~
         commentRepogitory.save(comment);
 
         return true;
@@ -92,5 +94,9 @@ public class NewsService {
         else {
             return commentRepogitory.findAllByNewsOrderByRegDttmDesc(getNews(newsId));
         }
+    }
+
+    public List<News> getSearchNews(String news) {
+        return newsRepogitory.findByTitleLike("%"+news+"%");
     }
 }

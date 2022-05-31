@@ -1,5 +1,6 @@
 package com.nakanara.news.controller;
 
+import com.nakanara.news.entity.Comment;
 import com.nakanara.news.entity.News;
 import com.nakanara.news.service.NewsService;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/news")
@@ -38,6 +41,21 @@ public class NewsController {
     public String write(Model model){
 
         return "/news/write";
+    }
+
+
+    @PostMapping("/comment/{newsId}")
+    public @ResponseBody
+    List<Comment> saveComment(@PathVariable("newsId") long newsId,
+                              @RequestBody Comment comment,
+                              Error error) {
+
+        log.error(error.getMessage());
+        comment.setNews(newsService.getNews(newsId));
+
+        newsService.saveComment(comment);
+
+        return newsService.getCommentList(newsId);
     }
 
 

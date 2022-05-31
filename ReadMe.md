@@ -17,13 +17,6 @@
 - thymeleaf-spring5 3.0.15 http://www.thymeleaf.org
 - hibernate https://docs.jboss.org/hibernate/stable/search/reference/en-US/html_single/#getting-started-mapping
 
-### Watch
-
-- bootstrap style https://github.com/startbootstrap/startbootstrap-clean-blog-jekyll
-
-### todo
-
-1. 도메인 iinews.co.kr
 
 ### 참고
 
