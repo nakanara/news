@@ -4,6 +4,7 @@
 <th:block th:replace="/common/header :: headFragment"></th:block>
 
 <div class="container">
+<!--    <textarea th:text="${resultVo}"></textarea>-->
 
     <div class="row">
         <div class="col-md-12">
@@ -15,19 +16,29 @@
                     <th>View</th>
                 </thead>
                 <tbody>
-                    <tr th:each="item: ${list}" class="news-link">
-                        <td>
-                            <a th:href="@{/news/__${item.newsId}__}">
-                                <span th:text="${item.title} == null? '<무제>': ${item.title}"></span>
-                            </a>
-                        </td>
-                        <td>
-                            <label th:text="${item.regDttm}" />
-                        </td>
-                        <td th:text="${item.viewCount}" />
-                    </tr>
+                <tr th:each="item: ${resultVo.data}" class="news-link">
+                    <td>
+                        <a th:href="@{/news/__${item.newsId}__}">
+                            <span th:text="${item.title} == null? '<무제>': ${item.title}"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <label th:text="${item.regDttm}" />
+                    </td>
+                    <td th:text="${item.viewCount}" />
+                </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <div>
+        <div class="news-pagination">
+            <th:block th:each="i : ${#numbers.sequence(1, 10)}">
+
+                <a th:if="${resultVo.curPage == i}" class="active" th:href="@{/news?page=__${i}__}" th:text="${i}"></a>
+                <a th:if="${resultVo.curPage != i}" class="" th:href="@{/news?page=__${i}__}" th:text="${i}"></a>
+            </th:block>
         </div>
     </div>
 

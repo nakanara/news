@@ -19,7 +19,7 @@ public class NewsJournallistRel extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long njlRelId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private News news;
 
     @OneToOne

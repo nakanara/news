@@ -19,6 +19,24 @@ div.news {
 
 }
 
+.news-pagination {
+    display: inline-block;
+}
+
+.news-pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.news-pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.news-pagination a:hover:not(.active) {background-color: #ddd;}
+
 
 
 /* News View */

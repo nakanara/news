@@ -12,14 +12,29 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * package : com.nakanara.news.controller
+ * class : NewsController.java
+ * date: 2022-06-01 오후 11:50
+ * user : jwpark
+ * descr :
+ *  뉴스 서비스
+ **/
+
 @Controller
 @RequestMapping("/news")
 @Slf4j
 public class NewsController {
 
 
+    /**
+     * 뉴스 조회
+     */
     private NewsService newsService;
 
+    /**
+     * 기자 조회
+     */
     private JournallistService journallistService;
 
 
@@ -33,25 +48,28 @@ public class NewsController {
         this.journallistService = journallistService;
     }
 
-    @GetMapping("")
-    public String getList(Model model){
 
-        model.addAttribute("list", newsService.getList());
+    @GetMapping("")
+    public String getList(Model model,
+                          @RequestParam(name = "page", defaultValue = "1") int page,
+                          @RequestParam(name = "size", defaultValue = "10") int size){
+
+
+        model.addAttribute("resultVo", newsService.getNewsPage(page, size));
 
         return "/news/index";
     }
 
 
     @GetMapping("/write")
-    public String write(Model model){
-
+    public String goNewsWrite(Model model){
         model.addAttribute("journalist", journallistService.getList());
         return "/news/write";
     }
 
 
     @PostMapping("/write")
-    public String doWrite(@ModelAttribute("news") News news) {
+    public String saveNews(@ModelAttribute("news") News news) {
 
         log.debug("{}", news.toString());
         newsService.post(news);
@@ -60,7 +78,7 @@ public class NewsController {
     }
 
     @GetMapping("/{id}")
-    public String view(Model model,
+    public String viewNews(Model model,
                        @PathVariable long id) {
 
 
@@ -72,7 +90,7 @@ public class NewsController {
     }
 
     @GetMapping("/edit/{id}")
-    public String write(Model model,
+    public String editNews(Model model,
                         @PathVariable long id){
 
         News news = newsService.view(id);
@@ -83,7 +101,7 @@ public class NewsController {
 
     @PutMapping("/{id}")
     public @ResponseBody
-    News put(@RequestBody News news) {
+    News updateNews(@RequestBody News news) {
 
         log.debug("{}", news.toString());
 
@@ -91,12 +109,14 @@ public class NewsController {
     }
 
     @DeleteMapping("/{id}")
-    public @ResponseBody String delete(@PathVariable long id) {
+    public @ResponseBody String deleteNews(@PathVariable long id) {
 
         newsService.delete(id);
 
         return ""+id;
     }
+
+
 
     @GetMapping("/tag/{tag}")
     public @ResponseBody

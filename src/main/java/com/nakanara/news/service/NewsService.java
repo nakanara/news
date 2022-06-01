@@ -1,15 +1,22 @@
 package com.nakanara.news.service;
 
-import com.nakanara.news.entity.*;
+import com.nakanara.news.entity.Comment;
+import com.nakanara.news.entity.News;
+import com.nakanara.news.entity.NewsJournallistRel;
+import com.nakanara.news.entity.NewsTag;
 import com.nakanara.news.repogitory.*;
+import com.nakanara.news.vo.ResultVO;
 import com.sun.istack.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -77,9 +84,6 @@ public class NewsService {
 
         }
 
-
-
-
         return news;
     }
 
@@ -89,9 +93,40 @@ public class NewsService {
 
     public List<News> getList(Sort.Direction direct, String sort) {
 
+
         return newsRepository.findAll(Sort.by(direct, sort));
     }
 
+    public ResultVO getNewsPage(int page, int size){
+//
+//        Page<EmployeeEntity> pagedResult = repository.findAll(paging);
+//
+//        if(pagedResult.hasContent()) {
+//            return pagedResult.getContent();
+//        } else {
+//            return new ArrayList<EmployeeEntity>();
+//        }
+
+
+        Page<News> pagedResult = newsRepository.findAll(PageRequest.of(page-1, size, Sort.by("regDttm").descending()));
+
+        log.debug("{}", pagedResult);
+
+        if(pagedResult.hasContent()) {
+            return ResultVO.builder().data(pagedResult.getContent())
+                    .totalPage(pagedResult.getTotalPages())
+                    .curPage(page)
+                    .build();
+
+        } else {
+            return ResultVO.builder().data(new ArrayList<News>())
+                    .totalPage(0)
+                    .curPage(0)
+                    .build();
+        }
+
+
+    }
     public News view(long id) {
 
         News news = getNews(id);

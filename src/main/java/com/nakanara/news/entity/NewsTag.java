@@ -33,7 +33,7 @@ public class NewsTag extends BaseEntity{
     @Column(nullable = false)
     private String tag;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "srcNewsId")
     private News news;
 

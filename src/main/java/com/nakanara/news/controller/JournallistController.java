@@ -8,6 +8,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * package : com.nakanara.news.controller
+ * class : JournallistController.java
+ * date: 2022-06-01 오후 11:54
+ * user : jwpark
+ * descr : 기자 조회
+ *
+ **/
+
 @Slf4j
 @Controller
 @RequestMapping("/journallist")
@@ -22,6 +31,11 @@ public class JournallistController {
         this.journallistService = journallistService;
     }
 
+    /**
+     * 기자 리스트 Main
+     * @param model
+     * @return
+     */
     @GetMapping("")
     public String getHome(Model model){
 
@@ -31,13 +45,13 @@ public class JournallistController {
 
 
     @GetMapping("/write")
-    public String write(Model model){
+    public String goJournallistWrite(Model model){
 
         return DEF_PREFIX + "/write";
     }
 
     @PostMapping("/write")
-    public String doWrite(@ModelAttribute("journallist") Journallist journallist) {
+    public String saveJournallist(@ModelAttribute("journallist") Journallist journallist) {
 
         log.debug("{}", journallist.toString());
         journallistService.post(journallist);
@@ -48,9 +62,8 @@ public class JournallistController {
     }
 
     @GetMapping("/{id}")
-    public String view(Model model,
+    public String saveJournallist(Model model,
                        @PathVariable long id) {
-
 
         Journallist journallist = journallistService.view(id);
 

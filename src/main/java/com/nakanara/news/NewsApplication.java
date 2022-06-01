@@ -12,9 +12,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
@@ -29,6 +31,7 @@ import java.util.Properties;
 @EnableJpaAuditing
 @SpringBootApplication
 @Slf4j
+@ComponentScan(value = "com.nakanara.*")
 public class NewsApplication {
 
     private static final int TX_METHOD_TIMEOUT = 3;
