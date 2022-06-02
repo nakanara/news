@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="/common/header :: headFragment"></th:block>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <h1>Index.html</h1>
+
+            <ul>
+                <li>댓글 스타일</li>
+                <li>로그인</li>
+                <li>tag 스타일</li>
+                <li>메인화면</li>
+                <li>페이징</li>
+                <li>하브리타 독서법 -> 독서, 후기,</li>
+            </ul>
+
+            <a href="/news">뉴스</a>
+            <a href="/journallist">기자</a>
+            <a href="/h2-console">DB</a>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        (function(){
+            // window.location.href = '/news';
+        })();
+    </script>
+</div>
+
+
+
+<th:block th:replace="/common/footer :: footerFragment"></th:block>
+</html>
