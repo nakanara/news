@@ -1,5 +1,6 @@
 package com.nakanara.news.entity;
 
+import com.nakanara.core.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,7 +25,7 @@ import javax.persistence.*;
 @Table(
         indexes = @Index(columnList = "tag, srcNewsId")
 )
-public class NewsTag extends BaseEntity{
+public class NewsTag extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

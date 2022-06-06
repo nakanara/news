@@ -1,6 +1,7 @@
 package com.nakanara.news.entity;
 
 
+import com.nakanara.core.entity.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Comment extends BaseEntity{
+public class Comment extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

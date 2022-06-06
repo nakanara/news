@@ -1,4 +1,4 @@
-package com.nakanara.news.entity;
+package com.nakanara.core.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
