@@ -60,12 +60,17 @@
 
     <!-- 댓글 View -->
     <div class="row">
-        <div class="offset-md-12 wf-comment">
-            <div id="commentTable">
-                <label>aaa</label>
-                <div th:each="item : ${comments}">
-                    <label th:text="${item.comment}"></label>
-                </div>
+        <div class="offset-md-12 wf-comment news-comment">
+            <div id="commentTable" class="news-commnet-list ">
+                <ul>
+                    <li th:each="item : ${comments}" >
+                        <div class="news-comment-meta">
+                            <span class="nickname">NickName</span>
+                        </div>
+                        <p th:utext="${#strings.replace(#strings.escapeXml(item.comment),'&#10;','<br>')}"></p>
+
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
