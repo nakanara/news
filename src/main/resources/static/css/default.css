@@ -52,3 +52,79 @@ img, fieldset {
 hr {
     display: none;
 }
+
+a {
+    text-decoration: none;
+}
+
+
+.box-article-head {
+    position: relative;
+    width: 100%;
+    padding: 10px 0;
+    background-color: #fff;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.box-view-title-area {
+    display: table;
+    height: 100px;
+    padding: 10px 0 30px;
+    letter-spacing: -1px;
+}
+
+/** Comment **/
+
+.box-comment {
+    margin: 0 auto;
+    /*border-bottom: 1px solid #e6e6e6;*/
+}
+
+.box-comment-list {
+    font-size: 16px;
+    margin-bottom: 6px;
+    overflow: hidden;
+}
+
+.box-comment-list ul li {
+    padding: 30px 0 25px;
+    border-top: 1px solid #e6e6e6;
+    position: relative;
+    min-height: 48px;
+}
+
+.box-comment-list ul li:first-child {
+    border: none;
+}
+
+.box-comment-list ul li p {
+    position:relative;
+    margin: 29px 0 0 60px;
+    font-size: 0.875em;
+    line-height: 1.5714;
+    color: #666;
+}
+.box-comment-meta {
+    position: absolute;
+    overflow: hidden;
+    top: 30px;
+    height: 48px;
+    left: 0;
+    right: 0;
+    padding: 4px 0 0 60px;
+}
+
+.box-comment-meta .nickname {
+    float: left;
+    font-size: 0.875em;
+    line-height: 20px;
+}
+
+.box-comment-meta .date{
+    float: left;
+    margin-left: 10px;
+    font-size: 0.75em;
+    color: #999;
+    line-height: 20px;
+}
+

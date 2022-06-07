@@ -24,6 +24,9 @@ public class Book extends BaseEntity {
     @Column(length = 2000)
     private String title;
 
+    @Column(length = 1000)
+    private String link;
+
     /**
      * 썸네일
      */

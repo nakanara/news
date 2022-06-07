@@ -1,6 +1,7 @@
 package com.nakanara.book.controller;
 
 import com.nakanara.book.entity.Book;
+import com.nakanara.book.entity.BookQuestion;
 import com.nakanara.book.service.BookService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,7 @@ public class BookController {
 
         Book book = bookService.getBook(id);
         model.addAttribute("book", book);
+        model.addAttribute("questions", bookService.getQuestion(book));
 
         return PREFIX + "/view";
     }
@@ -65,11 +67,50 @@ public class BookController {
                                @PathVariable long id){
 
 
-        log.info("Question id={}", id);
         Book book = bookService.getBook(id);
         model.addAttribute("book", book);
 
 
         return PREFIX + "/question";
+    }
+
+    /**
+     * 질문 등록
+     * @param model
+     * @param bookId
+     * @param bookQuestion
+     * @param error
+     * @return
+     */
+    @PostMapping("/{bookId}/question")
+    public String addBookQuestion(Model model,
+                                  @PathVariable("bookId") long bookId,
+                                  @RequestBody BookQuestion bookQuestion,
+                                  Error error) {
+
+
+        Book book = bookService.getBook(bookId);
+
+        bookQuestion.setBook(book);
+        bookService.addQuestion(bookQuestion);
+        model.addAttribute("questions", bookService.getQuestion(book));
+
+        return PREFIX + "/view :: #questionTable";
+    }
+
+    @PostMapping("/{bookId}/like/{bookQuestionId}")
+    public String addQuestionRecommend(Model model,
+                                  @PathVariable("bookId") long bookId,
+                                  @PathVariable("bookQuestionId") long bookQuestionId,
+                                  Error error) {
+
+
+        Book book = bookService.getBook(bookId);
+
+        bookService.addQuestionRecommend(bookQuestionId);
+
+        model.addAttribute("questions", bookService.getQuestion(book));
+
+        return PREFIX + "/view :: #questionTable";
     }
 }

@@ -1,6 +1,7 @@
 package com.nakanara.book.entity;
 
 import com.nakanara.core.entity.BaseEntity;
+import lombok.Data;
 
 import javax.persistence.*;
 
@@ -13,12 +14,17 @@ import javax.persistence.*;
  *
  **/
 
+@Data
 @Entity(name = "BOOK_QUESTION")
 public class BookQuestion extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long bookQuestionId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id")
+    private Book book;
 
     /**
      * 질문
@@ -30,4 +36,9 @@ public class BookQuestion extends BaseEntity {
      * 추천
      */
     private int recommend = 0;
+
+
+    public void addRecommend() {
+        recommend++;
+    }
 }

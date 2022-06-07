@@ -1,9 +1,9 @@
-var $news = {};
+var $app = {};
 
-(function($news){
+(function($app){
 
-    
-    $news.initForm = function(){
+
+    $app.initForm = function(){
         // btn link 공통 스타일
         $('.btn.news-btn-link').click(function(e){
             var $e = $(e.target);
@@ -13,4 +13,4 @@ var $news = {};
     }
 
 
-})($news);
+})($app);

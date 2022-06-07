@@ -12,15 +12,17 @@
                     <thead>
                     <th>도서명</th>
                     <th>저자</th>
+                    <th>출판사</th>
                     </thead>
                     <tbody>
                     <tr th:each="item: ${resultVo}" class="news-link">
                         <td>
                             <a th:href="@{/book/__${item.bookId}__}">
-                                <span th:text="${item.title}"></span>
+                                <p th:utext="${item.title}"></p>
                             </a>
                         </td>
                         <td th:text="${item.author}"></td>
+                        <td th:text="${item.publisher}"></td>
                     </tr>
                     </tbody>
                 </table>

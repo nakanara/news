@@ -13,8 +13,8 @@
             <div th:object="${news}" class="news">
                 <input type="hidden" id="newsId" th:value="*{newsId}" />
 
-                <div class="news-article-head">
-                    <div class="row news-view-title-area">
+                <div class="box-article-head">
+                    <div class="row box-view-title-area">
                         <div class="offset-md-12">
                             <label class="news-view-title" th:text="*{title}"></label>
                         </div>
@@ -60,11 +60,11 @@
 
     <!-- 댓글 View -->
     <div class="row">
-        <div class="offset-md-12 wf-comment news-comment">
-            <div id="commentTable" class="news-commnet-list ">
+        <div class="offset-md-12 box-comment">
+            <div id="commentTable" class="box-comment-list ">
                 <ul>
                     <li th:each="item : ${comments}" >
-                        <div class="news-comment-meta">
+                        <div class="box-comment-meta">
                             <span class="nickname">NickName</span>
                         </div>
                         <p th:utext="${#strings.replace(#strings.escapeXml(item.comment),'&#10;','<br>')}"></p>
@@ -87,7 +87,7 @@
   <script type="text/javascript">
     (function($){
 
-        $news.initForm();
+        $app.initForm();
 
         $('#btn-delete').click(function(){
 
@@ -138,7 +138,7 @@
             $('#commentTable').replaceWith(fragment);
         });
 
-      })
+      });
 
 
       function init(){
