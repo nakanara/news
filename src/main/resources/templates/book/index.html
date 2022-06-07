@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="/common/header :: headFragment" ></th:block>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <table class="table">
+                    <thead>
+                    <th>도서명</th>
+                    <th>저자</th>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item: ${resultVo}" class="news-link">
+                        <td>
+                            <a th:href="@{/journallist/__${item.bookId}__}">
+                                <span th:text="${item.title}"></span>
+                            </a>
+                        </td>
+                        <td th:text="${item.author}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="offset-md-12">
+                <div class="btn btn-primary" id="btn-write">등록</div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            (function(){
+
+                $('#btn-write').click(function(){
+                    location.href = '/book/write';
+                });
+
+
+
+            })();
+        </script>
+    </div>
+
+
+<th:block th:replace="/common/footer :: footerFragment"></th:block>
+</html>

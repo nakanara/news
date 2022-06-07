@@ -1,4 +1,4 @@
-package com.nakanara.news.repogitory;
+package com.nakanara.news.repository;
 
 import com.nakanara.news.entity.News;
 import org.springframework.data.domain.Page;

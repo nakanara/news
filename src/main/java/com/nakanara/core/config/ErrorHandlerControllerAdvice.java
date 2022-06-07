@@ -1,4 +1,4 @@
-package com.nakanara.news.config;
+package com.nakanara.core.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

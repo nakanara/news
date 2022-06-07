@@ -1,10 +1,8 @@
-package com.nakanara.news.repogitory;
+package com.nakanara.news.repository;
 
 import com.nakanara.news.entity.Comment;
 import com.nakanara.news.entity.News;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 

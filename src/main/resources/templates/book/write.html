@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="/common/header :: headFragment" ></th:block>
+<style>
+
+</style>
+<div class="container">
+
+  <div class="row">
+    <div class="offset-md-12">
+      <form id="f" method="post" action="/book/write">
+
+        <div class="row">
+          <div class="offset-md-12">
+
+            <label for="frm-name">제목</label>
+            <input type="text" class="form-control" id="frm-name" name="title" placeholder="제목을 입력하세요">
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="offset-md-12">
+            <label for="frm-email">저자</label>
+            <input type="email" class="form-control" id="frm-email" name="author" placeholder="저자를 입력하세요">
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <div class="row new-btn-group">
+    <div class="offset-md-12">
+      <div class="btn btn-primary" id="btn-write">저장</div>
+      <a href="/news">
+        <div class="btn btn-primary" >목록</div>
+      </a>
+
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    (function($){
+
+      $('#btn-write').click(function(){
+        $('#f').submit();
+      });
+
+    })(jQuery);
+  </script>
+</div>
+
+
+<th:block th:replace="/common/footer :: footerFragment"></th:block>
+</html>

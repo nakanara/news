@@ -1,7 +1,7 @@
 package com.nakanara.news.service;
 
 import com.nakanara.news.entity.Journallist;
-import com.nakanara.news.repogitory.JournallistRepository;
+import com.nakanara.news.repository.JournallistRepository;
 import com.sun.istack.NotNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

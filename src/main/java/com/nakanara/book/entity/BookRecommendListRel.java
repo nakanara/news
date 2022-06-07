@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity(name = "BOOK_LIST_REL")
 @Data
-public class BookListRel {
+public class BookRecommendListRel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,5 +16,5 @@ public class BookListRel {
     private Book book;
 
     @ManyToOne
-    private BookList bookList;
+    private BookRecommend bookRecommend;
 }

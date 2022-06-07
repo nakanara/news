@@ -1,9 +1,11 @@
 package com.nakanara.book.entity;
 
 import com.nakanara.core.entity.BaseEntity;
+import lombok.Data;
 
 import javax.persistence.*;
 
+@Data
 @Entity(name = "BOOK")
 public class Book extends BaseEntity {
 
@@ -26,7 +28,7 @@ public class Book extends BaseEntity {
     /**
      * 저자
      */
-    private String atuhor;
+    private String author;
 
     /**
      * 가격

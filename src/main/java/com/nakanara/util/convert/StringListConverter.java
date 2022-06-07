@@ -1,4 +1,4 @@
-package com.nakanara.news.convert;
+package com.nakanara.util.convert;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

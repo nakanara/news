@@ -10,8 +10,8 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 @EnableJpaAuditing
 @SpringBootApplication
 @Slf4j
-@ComponentScan(value = "com.nakanara.*")
-public class NewsApplication {
+@ComponentScan(value = "com.nakanara.*.*")
+public class ApplicationConfig {
 
     private static final int TX_METHOD_TIMEOUT = 3;
 
@@ -82,7 +82,7 @@ public class NewsApplication {
 //    }
 
     public static void main(String[] args) {
-        SpringApplication.run(NewsApplication.class, args);
+        SpringApplication.run(ApplicationConfig.class, args);
     }
 
 

@@ -1,4 +1,4 @@
-package com.nakanara.news.convert;
+package com.nakanara.util.convert;
 
 import com.nakanara.news.entity.NewsTag;
 

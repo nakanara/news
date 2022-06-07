@@ -1,6 +1,5 @@
-package com.nakanara.news.repogitory;
+package com.nakanara.news.repository;
 
-import com.nakanara.news.entity.Journallist;
 import com.nakanara.news.entity.News;
 import com.nakanara.news.entity.NewsJournallistRel;
 import org.springframework.data.repository.CrudRepository;

@@ -1,4 +1,4 @@
-package com.nakanara.news.vo;
+package com.nakanara.core.vo;
 
 import lombok.Builder;
 import lombok.Data;

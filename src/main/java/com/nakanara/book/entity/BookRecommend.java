@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Data
 @Entity(name = "BOOK_LIST")
-public class BookList extends BaseEntity {
+public class BookRecommend extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
