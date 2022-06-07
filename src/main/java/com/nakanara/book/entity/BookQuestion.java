@@ -23,7 +23,7 @@ public class BookQuestion extends BaseEntity {
     /**
      * 질문
      */
-    @Column(length = 4000)
+    @Lob
     private String question;
 
     /**

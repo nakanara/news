@@ -8,58 +8,67 @@
 </style>
 <div class="container">
     <div class="row">
-    <div class="offset-md-12">
+        <div class="offset-md-12">
 
-        <div th:object="${news}" class="news">
-            <input type="hidden" id="newsId" th:value="*{newsId}" />
+            <div th:object="${news}" class="news">
+                <input type="hidden" id="newsId" th:value="*{newsId}" />
 
-            <div class="news-article-head">
-                <div class="row news-view-title-area">
-                    <div class="offset-md-12">
-                        <label class="news-view-title" th:text="*{title}"></label>
+                <div class="news-article-head">
+                    <div class="row news-view-title-area">
+                        <div class="offset-md-12">
+                            <label class="news-view-title" th:text="*{title}"></label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="offset-md-12 news-view-journallist">
+                            <label th:each="item : ${journallistRels}"
+                                   th:text="${item.journallist.nickname} + '기자'"></label>
+                        </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="offset-md-12 news-view-journallist">
-                        <label th:each="item : ${journallistRels}"
-                               th:text="${item.journallist.nickname} + '기자'"></label>
+                <!-- 본문 -->
+                <div class="news-article-body">
+                    <div class="row">
+                        <div class="offset-md-12">
+                            <div th:utext="*{content}"></div>
+                        </div>
                     </div>
+                    <div class="row">
+                        <div class="offset-md-12">
+                            <label th:text="*{tag}"></label>
+                        </div>
+                    </div>
+
                 </div>
+                <!-- //본문 -->
+
             </div>
-
-            <!-- 본문 -->
-            <div class="news-article-body">
-                <div class="row">
-                    <div class="offset-md-12">
-                        <div th:utext="*{content}"></div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="offset-md-12">
-                        <label th:text="*{tag}"></label>
-                    </div>
-                </div>
-
-            </div>
-            <!-- //본문 -->
 
         </div>
-
     </div>
-  </div>
 
 
-  <!-- 댓글 -->
-  <div class="row">
-    <div class="offset-md-12 wf-comment">
-      <textarea name="comment" class="comment" id="news-comment" placeholder="댓글을 입력해 주세요."></textarea>
-      <div class="btn btn-primary" id="btn-add-comment">등록</div>
+    <!-- 댓글 -->
+    <div class="row">
+        <div class="offset-md-12 wf-comment">
+          <textarea name="comment" class="comment" id="news-comment" placeholder="댓글을 입력해 주세요."></textarea>
+          <div class="btn btn-primary" id="btn-add-comment">등록</div>
+        </div>
     </div>
-  </div>
 
     <!-- 댓글 View -->
-
+    <div class="row">
+        <div class="offset-md-12 wf-comment">
+            <div id="commentTable">
+                <label>aaa</label>
+                <div th:each="item : ${comments}">
+                    <label th:text="${item.comment}"></label>
+                </div>
+            </div>
+        </div>
+    </div>
 
   <div class="row">
     <div class="offset-md-12">
@@ -106,18 +115,24 @@
 
         var newsId = $('#newsId').val();
         $.ajax({
-            url: '/api/news/comment/' + newsId,
+            url: '/news/'+ newsId + '/comment',
             type: 'POST',
-            dataType: 'json',
+            //dataType: 'json',
             contentType: 'application/json',
-          data: JSON.stringify ({
-              comment: $('#news-comment').val(),
-          }),
-          success: function(e){
-            console.log(e);
-            // 새로고침
-          }
-        })
+            data: JSON.stringify ({
+                comment: $('#news-comment').val(),
+            }),
+            success: function(e){
+                console.log('22222222');
+                console.log(e);
+                // 새로고침
+            }
+        }).done(function(fragment){
+            console.log('-----------');
+            console.log(fragment);
+            $('#commentTable').replaceWith(fragment);
+        });
+
       })
 
 

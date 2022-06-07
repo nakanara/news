@@ -5,6 +5,15 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+/**
+ * package : com.nakanara.book.entity
+ * class : BookRecommend.java
+ * date: 2022-06-07 오후 3:04
+ * user : jwpark
+ * descr : 추천 도서
+ *
+ **/
+
 @Data
 @Entity(name = "BOOK_LIST")
 public class BookRecommend extends BaseEntity {

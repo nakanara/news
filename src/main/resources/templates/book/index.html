@@ -16,7 +16,7 @@
                     <tbody>
                     <tr th:each="item: ${resultVo}" class="news-link">
                         <td>
-                            <a th:href="@{/journallist/__${item.bookId}__}">
+                            <a th:href="@{/book/__${item.bookId}__}">
                                 <span th:text="${item.title}"></span>
                             </a>
                         </td>

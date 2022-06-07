@@ -1,5 +1,6 @@
 package com.nakanara.news.controller;
 
+import com.nakanara.news.entity.Comment;
 import com.nakanara.news.entity.News;
 import com.nakanara.news.entity.NewsTag;
 import com.nakanara.news.service.JournallistService;
@@ -26,6 +27,7 @@ import java.util.List;
 @Slf4j
 public class NewsController {
 
+    private static final String PRE_FIX = "/news";
 
     /**
      * 뉴스 조회
@@ -85,6 +87,7 @@ public class NewsController {
         News news = newsService.view(id);
         model.addAttribute("news", news);
         model.addAttribute("journallistRels", newsService.getNewsJournallist(news));
+        model.addAttribute("comments", newsService.getCommentList(id));
 
         return "/news/view";
     }
@@ -122,5 +125,26 @@ public class NewsController {
     public @ResponseBody
     List<NewsTag> getTagList(@PathVariable(name = "tag") String tag) {
         return newsService.getTagList(tag);
+    }
+
+    /**
+     * 댓글 쓰기
+     * @param newsId
+     * @param comment
+     * @param error
+     * @return
+     */
+    @PostMapping("/{newsId}/comment")
+    public String saveNewsComment(Model model,
+                                  @PathVariable("newsId") long newsId,
+                                  @RequestBody Comment comment,
+                                  Error error) {
+
+        comment.setNews(newsService.getNews(newsId));
+        newsService.saveComment(comment);
+
+        model.addAttribute("comments", newsService.getCommentList(newsId));
+
+        return PRE_FIX + "/view :: #commentTable";
     }
 }

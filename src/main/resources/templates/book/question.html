@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="/common/header :: headFragment"></th:block>
+
+<style>
+
+</style>
+<div class="container">
+    <div class="row">
+    <div class="offset-md-12">
+
+        <div th:object="${book}" class="news">
+            <input type="hidden" id="bookId" th:value="*{bookId}" />
+
+            <div class="news-article-head">
+                <div class="row news-view-title-area">
+                    <div class="offset-md-12">
+                        <label class="news-view-title" th:text="*{title}"></label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="offset-md-12 news-view-journallist">
+                        <label class="news-view-title" th:text="*{author}"></label>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+  </div>
+
+    <!-- 댓글 -->
+    <div class="row">
+        <div class="offset-md-12 wf-comment">
+            <textarea name="comment" class="comment" id="news-comment" placeholder="질문을 입력해 주세요."></textarea>
+            <div class="btn btn-primary" id="btn-add-comment">등록</div>
+        </div>
+    </div>
+
+  <div class="row">
+    <div class="offset-md-12">
+        <div class="btn btn-primary news-btn-link" data-href="/news" >목록</div>
+        <div class="btn btn-primary" id="btn-modify">수정</div>
+        <div class="btn btn-primary" id="btn-delete">삭제</div>
+        <div class="btn btn-primary" id="btn-question">질문</div>
+        <div class="btn btn-primary" id="btn-answer">답변보기</div>
+        <div class="btn btn-primary" id="btn-answer">출력하기</div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    (function($){
+
+        $news.initForm();
+
+        $('#btn-delete').click(function(){
+
+          if(confirm('[[#{label.del.message}]]')) {
+            let id = $('#bookId').val();
+
+            $.ajax({
+              url: '/book/' + id,
+              method: 'delete',
+              success: function (e) {
+                // 삭제/성공
+                window.location.href = '/book';
+              }
+
+            });
+          }
+        });
+
+
+      $('#btn-modify').click(function(){
+
+        if(confirm('[[#{label.modify.message}]]')) {
+          let id = $('#newsId').val();
+
+          window.location.href ="/book/edit/" + id;
+        }
+      });
+
+      $('#btn-add-comment').click(function(){
+
+        var newsId = $('#newsId').val();
+        $.ajax({
+            url: '/api/news/comment/' + newsId,
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+          data: JSON.stringify ({
+              comment: $('#news-comment').val(),
+          }),
+          success: function(e){
+            console.log(e);
+            // 새로고침
+          }
+        })
+      })
+
+
+      function init(){
+
+        $.ajax({
+            url: '/api/news/comments/' + $('#newsId').val(),
+            contentType: 'application/json',
+            success: function(e) {
+              console.log(e);
+            }
+        })
+      }
+
+      init();
+    })(jQuery);
+  </script>
+</div>
+
+
+<th:block th:replace="/common/footer :: footerFragment"></th:block>
+</html>

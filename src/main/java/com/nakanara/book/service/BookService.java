@@ -37,4 +37,8 @@ public class BookService {
 
         return book;
     }
+
+    public Book getBook(long bookId) {
+        return bookRepository.getById(bookId);
+    }
 }

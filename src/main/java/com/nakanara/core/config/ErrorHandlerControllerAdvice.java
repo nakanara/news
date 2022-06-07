@@ -18,4 +18,12 @@ public class ErrorHandlerControllerAdvice {
         return "redirect:/error/500";
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String errNotFound(final Exception e) {
+        log.error("errNotFound", e);
+        return "redirect:/error/404";
+    }
+
+
+
 }

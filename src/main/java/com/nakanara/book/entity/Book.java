@@ -7,6 +7,11 @@ import javax.persistence.*;
 
 @Data
 @Entity(name = "BOOK")
+@Table(
+        indexes = {
+                @Index(columnList = "isbn")
+        }
+)
 public class Book extends BaseEntity {
 
     @Id

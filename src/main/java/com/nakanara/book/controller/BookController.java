@@ -48,4 +48,28 @@ public class BookController {
 
         return "redirect:" + PREFIX;
     }
+
+    @GetMapping("/{id}")
+    public String viewNews(Model model,
+                           @PathVariable long id) {
+
+
+        Book book = bookService.getBook(id);
+        model.addAttribute("book", book);
+
+        return PREFIX + "/view";
+    }
+
+    @GetMapping("/{id}/question")
+    public String viewQuestion(Model model,
+                               @PathVariable long id){
+
+
+        log.info("Question id={}", id);
+        Book book = bookService.getBook(id);
+        model.addAttribute("book", book);
+
+
+        return PREFIX + "/question";
+    }
 }
