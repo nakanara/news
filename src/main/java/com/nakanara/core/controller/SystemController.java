@@ -1,13 +1,11 @@
 package com.nakanara.core.controller;
 
 
-import com.nakanara.core.annotation.ApiDescr;
+import com.nakanara.core.annotation.ApiInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.core.MethodParameter;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.method.HandlerMethod;
@@ -32,7 +30,7 @@ public class SystemController {
     }
 
     @RequestMapping("/endpoint")
-    @ApiDescr(descr = "EndPoint 출력")
+    @ApiInfo("EndPoint 출력")
     public List getEndPoint(){
 
         List<Map<String, Object>> pages = new ArrayList<>();
@@ -48,7 +46,7 @@ public class SystemController {
 
             HandlerMethod method = elem.getValue();
 
-            ApiDescr apiDescr = method.getMethod().getAnnotation(ApiDescr.class);
+            ApiInfo apiInfo = method.getMethod().getAnnotation(ApiInfo.class);
 
 
 
@@ -73,9 +71,9 @@ public class SystemController {
                 item.put("rtn", method.getMethod().getReturnType().getSimpleName());
             }
 
-            if(apiDescr != null) {
-                log.info("{}", apiDescr.descr());
-                item.put("descr", apiDescr.descr());
+            if(apiInfo != null) {
+                log.info("{} //value={}", apiInfo.name(), apiInfo.value());
+                item.put("descr", apiInfo.value());
             }
 
             pages.add(item);
