@@ -18,14 +18,14 @@
     </appender>
 
     <!-- log 위부터 상속. additivity 중복 로그 표시 제거 -->
-    <root level="info" additivity="false">
-        <appender-ref ref="STDOUT" />
-    </root>
 
-    <logger name="com.nakanara" level="debug">
+    <logger name="com.nakanara" level="debug" additivity="false">
         <appender-ref ref="STDOUT" />
     </logger>
 
+    <root level="info">
+        <appender-ref ref="STDOUT" />
+    </root>
 
 
 </configuration>
