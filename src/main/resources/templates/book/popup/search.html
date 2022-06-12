@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="/common/header :: headFragment"></th:block>
+
+<div class="container">
+    <div class="row">
+        <div class="offset-md-12">
+
+            <input name="keyworkd" placeholder="검색어를 입력해주세요">
+
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <table class="table">
+                <thead>
+                <th>제목</th>
+                <th>저자</th>
+                <th>발행일</th>
+                </thead>
+                <tbody>
+                <tr th:each="i: ${item}" class="news-link">
+                    <td>
+                        <input type="hidden" name="isbn" th:value="${i.isbn}" />
+                        <input type="hidden" name="isbn13" th:value="${i.isbn13}" />
+                        <img th:src="@{i.cover}"/>
+                        <label th:label="${i.title}" />
+                    </td>
+                    <td>
+                        <label th:text="${i.author}" />
+                    </td>
+                    <td th:text="${i.pubDate}" />
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+<th:block th:replace="/common/footer :: footerFragment"></th:block>
+</html>

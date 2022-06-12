@@ -3,6 +3,7 @@ package com.nakanara.book.controller;
 import com.nakanara.book.entity.Book;
 import com.nakanara.book.entity.BookQuestion;
 import com.nakanara.book.service.BookService;
+import com.nakanara.support.api.service.SearchAladinBookAPI;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,10 +18,8 @@ public class BookController {
     private static String PREFIX = "/book";
     private BookService bookService;
 
-    @Autowired
-    public void setBookService(BookService bookService) {
-        this.bookService = bookService;
-    }
+    private SearchAladinBookAPI searchAladinBookAPI;
+
 
     @GetMapping("")
     public String getList(Model model,
@@ -112,5 +111,27 @@ public class BookController {
         model.addAttribute("questions", bookService.getQuestion(book));
 
         return PREFIX + "/view :: #questionTable";
+    }
+
+    @RequestMapping("/search")
+    public String getSearchBook(Model model,
+                                @PathVariable("keyword") String keyword){
+
+
+        model.addAttribute("item", searchAladinBookAPI.searchBook(keyword));
+
+        return PREFIX + "/popup/search";
+    }
+
+
+
+    @Autowired
+    public void setSearchAladinBookAPI(SearchAladinBookAPI searchAladinBookAPI) {
+        this.searchAladinBookAPI = searchAladinBookAPI;
+    }
+
+    @Autowired
+    public void setBookService(BookService bookService) {
+        this.bookService = bookService;
     }
 }
