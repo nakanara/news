@@ -1,12 +1,11 @@
 package com.nakanara.support.api.service;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.nakanara.support.api.service.vo.AladinResultVO;
 import com.nakanara.util.http.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -31,7 +30,7 @@ public class SearchAladinBookAPI {
     @Value("${aladinapi.ttb}")
     private String ttbKey;
 
-    public JsonObject searchBook(String keyword){
+    public AladinResultVO searchBook(String keyword){
 
         Map<String, String> params = new HashMap<>();
 
@@ -47,7 +46,9 @@ public class SearchAladinBookAPI {
         String responseBody = HttpUtil.get(urlQuery, null);
 
 
-        return JsonParser.parseString(responseBody).getAsJsonObject();
+        Gson gson = new Gson();
+        AladinResultVO aladinResultVO =  gson.fromJson(responseBody, AladinResultVO.class);
 
+        return aladinResultVO;
     }
 }

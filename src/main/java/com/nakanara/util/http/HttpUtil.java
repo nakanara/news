@@ -1,5 +1,7 @@
 package com.nakanara.util.http;
 
+import org.springframework.util.StringUtils;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -85,6 +87,9 @@ public class HttpUtil {
         while(it.hasNext()) {
             String k = it.next();
             String v = params.get(k);
+
+
+            if(!StringUtils.hasLength(v)) continue;;
 
             buf.append( (b)? "?" : "&" )
                     .append(k)

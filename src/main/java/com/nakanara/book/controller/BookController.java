@@ -115,10 +115,10 @@ public class BookController {
 
     @RequestMapping("/search")
     public String getSearchBook(Model model,
-                                @PathVariable("keyword") String keyword){
+                                @RequestParam(name = "keyword", required = false) String keyword){
 
 
-        model.addAttribute("item", searchAladinBookAPI.searchBook(keyword));
+        model.addAttribute("result", searchAladinBookAPI.searchBook(keyword));
 
         return PREFIX + "/popup/search";
     }

@@ -12,7 +12,6 @@
         </div>
     </div>
 
-
     <div class="row">
         <div class="col-md-12">
 
@@ -21,22 +20,45 @@
                 <th>제목</th>
                 <th>저자</th>
                 <th>발행일</th>
+                <th>설명</th>
                 </thead>
                 <tbody>
-                <tr th:each="i: ${item}" class="news-link">
+                <tr th:each="i: ${result.item}" class="news-link">
                     <td>
                         <input type="hidden" name="isbn" th:value="${i.isbn}" />
                         <input type="hidden" name="isbn13" th:value="${i.isbn13}" />
-                        <img th:src="@{i.cover}"/>
+                        <img th:src="${i.cover}"/>
                         <label th:label="${i.title}" />
                     </td>
                     <td>
                         <label th:text="${i.author}" />
                     </td>
                     <td th:text="${i.pubDate}" />
+
+                    <td>
+                        <div th:utext="${i.description}"></div>
+                    </td>
                 </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+
+
+    <div>
+        <div class="news-pagination">
+
+            <a th:if="${ result.startIndex > 10 }" class="btn btn-success">이전</a>
+
+            <th:block th:each="i : ${#numbers.sequence(1, 10)}">
+
+                <label th:label="${(result.startIndex/10)}"></label>
+                <a th:if="${((result.totalResults % 10) >= i) && (result.startIndex % 10) == i}" class="active" th:href="@{/news?page=__${i}__}" th:text="${i}"></a>
+                <a th:if="${((result.totalResults % 10) >= i) && (result.startIndex % 10) != i}" class="" th:href="@{/news?page=__${i}__}" th:text="${i}"></a>
+
+            </th:block>
+            <!-- 현재 페이지보다 클 경우 -->
+            <a th:if="${ (result.startIndex / 10) < (result.totalResults/10) }" class="btn btn-success">다음</a>
         </div>
     </div>
 
