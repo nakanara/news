@@ -4,6 +4,7 @@ import com.nakanara.book.entity.Book;
 import com.nakanara.book.entity.BookQuestion;
 import com.nakanara.book.service.BookService;
 import com.nakanara.support.api.service.SearchAladinBookAPI;
+import com.nakanara.support.api.service.vo.AladinResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -116,11 +117,18 @@ public class BookController {
 
     @RequestMapping("/search")
     public String getSearchBook(Model model,
-                                @RequestParam(name = "keyword", required = false) String keyword){
+                                @RequestParam(name = "keyword", required = false) String keyword,
+                                @RequestParam(name = "start", defaultValue = "1") String start){
 
+
+        model.addAttribute("keyword", keyword);
 
         if(StringUtils.hasLength(keyword)) {
-            model.addAttribute("result", searchAladinBookAPI.searchBook(keyword));
+            AladinResultVO aladinResultVO = searchAladinBookAPI.searchBook(keyword, start);
+            bookService.addBookResult(aladinResultVO);
+            model.addAttribute("result", aladinResultVO);
+        } else {
+            model.addAttribute("result", new AladinResultVO());
         }
 
         return PREFIX + "/popup/search";

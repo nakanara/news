@@ -14,6 +14,6 @@ class SearchAladinBookAPITest {
 
     @Test
     void searchAPI(){
-        searchAladinBookAPI.searchBook("미움받을 용기");
+        searchAladinBookAPI.searchBook("미움받을 용기", "1");
     }
 }

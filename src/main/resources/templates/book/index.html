@@ -50,9 +50,10 @@
                     var $modal = $("#modal");
 
                     $modal.dialog({
+                        title: "검색",
                         autoOpen: false,
                         height: 800,
-                        width: 800,
+                        width: 1200,
                         modal: true,
                         buttons: {
                             "Close": function () {
@@ -60,11 +61,17 @@
                             }
                         },
                     });
-                    $modal.load('/book/search?keyword=미움받을');
+                    $modal.load('/book/search', function(res, status, xhr) {
+
+                    });
                     //$('.modal-body', $modal).load('/book/search?keyword=미움받을');
                     $modal.dialog('open');
 
-                })
+
+
+                });
+
+
 
 
 

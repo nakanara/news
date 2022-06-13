@@ -30,13 +30,13 @@ public class SearchAladinBookAPI {
     @Value("${aladinapi.ttb}")
     private String ttbKey;
 
-    public AladinResultVO searchBook(String keyword){
+    public AladinResultVO searchBook(String keyword, String start){
 
         Map<String, String> params = new HashMap<>();
 
         params.put("TTBKey", ttbKey);
         params.put("Query", keyword);
-        params.put("start", "1");
+        params.put("start", start);
         params.put("MaxResults", "10");
         params.put("Output", "JS");
         params.put("Version", "20131101");

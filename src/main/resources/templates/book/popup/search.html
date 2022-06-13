@@ -4,10 +4,8 @@
 <div class="container">
     <div class="row">
         <div class="offset-md-12">
-            <form method="GET" action="/book/search">
-                <input name="keyworkd" placeholder="검색어를 입력해주세요">
-            </form>
 
+            <input name="keyword" class="form-control" placeholder="검색어를 입력해주세요" th:value="${keyword}">
 
         </div>
     </div>
@@ -16,10 +14,12 @@
         <div class="col-md-12">
 
             <table class="table">
+                <colgroup>
+                    <col width="150">
+                    <col>
+                </colgroup>
                 <thead>
                 <th>제목</th>
-                <th>저자</th>
-                <th>발행일</th>
                 <th>설명</th>
                 </thead>
                 <tbody>
@@ -27,16 +27,20 @@
                     <td>
                         <input type="hidden" name="isbn" th:value="${i.isbn}" />
                         <input type="hidden" name="isbn13" th:value="${i.isbn13}" />
-                        <img th:src="${i.cover}"/>
-                        <label th:label="${i.title}" />
-                    </td>
-                    <td>
-                        <label th:text="${i.author}" />
-                    </td>
-                    <td th:text="${i.pubDate}" />
+                        <img th:src="${i.cover}" th:title="${i.title}"/>
 
+                    </td>
                     <td>
-                        <div th:utext="${i.description}"></div>
+                        <a href="#"><div th:utext="${i.title}"></div></a>
+
+                        <br/>
+                        <div th:utext="${i.author}"></div>
+                        <br/>
+                        <div th:utext="${i.pubDate}"></div>
+
+                        <p>
+                            <div th:utext="${i.description}"></div>
+                        </p>
                     </td>
                 </tr>
                 </tbody>
@@ -53,8 +57,8 @@
             <th:block th:each="i : ${#numbers.sequence(1, 10)}">
 
                 <label th:label="${(result.startIndex/10)}"></label>
-                <a th:if="${((result.totalResults % 10) >= i) && (result.startIndex % 10) == i}" class="active" th:href="@{/news?page=__${i}__}" th:text="${i}"></a>
-                <a th:if="${((result.totalResults % 10) >= i) && (result.startIndex % 10) != i}" class="" th:href="@{/news?page=__${i}__}" th:text="${i}"></a>
+                <a th:if="${((result.totalResults % 10) >= i) && (result.startIndex % 10) == i}" class="page-link active" th:attr="pageidx=${i}" href="#" th:text="${i}"></a>
+                <a th:if="${((result.totalResults % 10) >= i) && (result.startIndex % 10) != i}" class="page-link" th:attr="pageidx=${i}" href="#" th:text="${i}"></a>
 
             </th:block>
             <!-- 현재 페이지보다 클 경우 -->
@@ -63,6 +67,44 @@
     </div>
 
 </div>
+
+<script type="text/javascript">
+    (function($){
+
+        var
+            $modal = $('#modal'),
+            $keyword = $('input[name=keyword]');
+
+
+        {
+            $keyword.focus();
+        }
+
+        $('input[name=keyword]', $modal).keypress(function(e){
+
+            if(e.keyCode === 13) {
+                e.stopPropagation();
+
+                var $target = $(e.target);
+                var val = $target.val();
+                fnSearch(val, 1);
+            }
+        });
+
+        $('div.news-pagination a.page-link').on('click', function(e){
+
+            var pageidx = $(e.target).attr('pageidx')
+
+            fnSearch($keyword.val(), pageidx);
+        });
+
+        function fnSearch(keyword, start) {
+            $modal.load('/book/search?keyword=' + keyword + '&start=' + start);
+        }
+
+
+    })(jQuery)
+</script>
 
 
 </html>
