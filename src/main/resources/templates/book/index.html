@@ -32,19 +32,43 @@
         <div class="row">
             <div class="offset-md-12">
                 <div class="btn btn-primary" id="btn-write">등록</div>
+                <div class="btn btn-primary" id="btn-searchBook">검색</div>
             </div>
         </div>
 
+        <div id="modal" class=""></div>
+
         <script type="text/javascript">
-            (function(){
+            (function($){
 
                 $('#btn-write').click(function(){
                     location.href = '/book/write';
                 });
 
 
+                $("#btn-searchBook").click(function(){
+                    var $modal = $("#modal");
 
-            })();
+                    $modal.dialog({
+                        autoOpen: false,
+                        height: 800,
+                        width: 800,
+                        modal: true,
+                        buttons: {
+                            "Close": function () {
+                                $modal.dialog("close");
+                            }
+                        },
+                    });
+                    $modal.load('/book/search?keyword=미움받을');
+                    //$('.modal-body', $modal).load('/book/search?keyword=미움받을');
+                    $modal.dialog('open');
+
+                })
+
+
+
+            })(jQuery);
         </script>
     </div>
 

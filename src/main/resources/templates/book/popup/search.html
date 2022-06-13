@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lagn="ko" xmlns:th="http://www.thymeleaf.org">
 
-<th:block th:replace="/common/header :: headFragment"></th:block>
-
 <div class="container">
     <div class="row">
         <div class="offset-md-12">
+            <form method="GET" action="/book/search">
+                <input name="keyworkd" placeholder="검색어를 입력해주세요">
+            </form>
 
-            <input name="keyworkd" placeholder="검색어를 입력해주세요">
 
         </div>
     </div>
@@ -65,5 +65,4 @@
 </div>
 
 
-<th:block th:replace="/common/footer :: footerFragment"></th:block>
 </html>

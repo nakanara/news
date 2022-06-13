@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -118,7 +119,9 @@ public class BookController {
                                 @RequestParam(name = "keyword", required = false) String keyword){
 
 
-        model.addAttribute("result", searchAladinBookAPI.searchBook(keyword));
+        if(StringUtils.hasLength(keyword)) {
+            model.addAttribute("result", searchAladinBookAPI.searchBook(keyword));
+        }
 
         return PREFIX + "/popup/search";
     }
