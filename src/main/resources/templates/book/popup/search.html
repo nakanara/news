@@ -99,7 +99,8 @@
         });
 
         function fnSearch(keyword, start) {
-            $modal.load('/book/search?keyword=' + keyword + '&start=' + start);
+            var enKeyword = encodeURIComponent(keyword);
+            $modal.load('/book/search?keyword=' + enKeyword + '&start=' + start);
         }
 
 

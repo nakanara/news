@@ -39,6 +39,7 @@ public class SearchAladinBookAPI {
         params.put("start", start);
         params.put("MaxResults", "10");
         params.put("Output", "JS");
+        params.put("Cover", "Big");
         params.put("Version", "20131101");
 
         String urlQuery = HttpUtil.addQuery(BASE_URL, params);

@@ -71,7 +71,9 @@ public class Book extends BaseEntity {
 
     private String isbn13;
 
-    /**
+    private String categoryName;
+
+   /**
      * 설명
      */
     @Lob
@@ -89,6 +91,7 @@ public class Book extends BaseEntity {
                 .image(aladinResultItemVO.getCover())
                 .isbn(aladinResultItemVO.getIsbn())
                 .isbn13(aladinResultItemVO.getIsbn13())
+                .categoryName(aladinResultItemVO.getCategoryName())
                 .build();
     }
 }

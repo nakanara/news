@@ -31,9 +31,22 @@
             <div>
 
                 <div class="row">
-                    <div class="offset-md-12 book-image-area">
-                        <img th:src="*{image}" class="book-image">
+                    <div class="offset-md-12">
+                        <span class="book-image-area">
+                            <img th:src="*{image}" class="book-image">
+                        </span>
+
+                        <span class="book-star">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star-half-stroke"></i>
+                            <i class="fa-regular fa-star"></i>
+                        </span>
+
                     </div>
+
+
                 </div>
 
                 <div class="row">
@@ -60,11 +73,11 @@
                         <div id="questionTable" class="box-comment-list">
                             <ul>
                                 <li th:each="item : ${questions}" >
-                                    <div class="box-comment-meta btn-question-like" th:data="${item.bookQuestionId}">
+                                    <span class="box-comment-meta btn-question-like" th:data="${item.bookQuestionId}">
                                         <i class="fa-regular fa-thumbs-up" ></i>
 
                                         <span class="nickname">NickName</span>
-                                    </div>
+                                    </span>
                                     <p th:utext="${item.question}"></p>
 
                                 </li>
@@ -84,10 +97,11 @@
 
   <div class="row">
     <div class="offset-md-12">
-        <div class="btn btn-primary news-btn-link" data-href="/news" >목록</div>
+        <div class="btn btn-primary news-btn-link" data-href="/book" >목록</div>
         <div class="btn btn-primary" id="btn-question">질문</div>
         <div class="btn btn-primary" id="btn-answer">답변보기</div>
         <div class="btn btn-primary" id="btn-answer">출력하기</div>
+        <div class="btn btn-primary" id="btn-delete">삭제하기</div>
         <div class="btn btn-primary">읽기시작</div>
     </div>
   </div>
@@ -136,9 +150,11 @@
                 }),
             }).done(function(fragment){
                 $('#questionTable').replaceWith(fragment);
+                $('#book-question').val('');
             });
 
         });
+
 
         $('#questionTable').on('click', '.btn-question-like', function(e){
 

@@ -23,7 +23,7 @@ public class BookQuestion extends BaseEntity {
     private long bookQuestionId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "src_book_id")
     private Book book;
 
     /**

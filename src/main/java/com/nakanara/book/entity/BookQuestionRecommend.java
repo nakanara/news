@@ -23,11 +23,11 @@ public class BookQuestionRecommend {
     private long bookRecommendUserId;
 
     @ManyToOne
-    @JoinColumn(name = "question_id")
+    @JoinColumn(name = "src_question_id")
     private BookQuestion bookQuestion;
 
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "src_user_id")
     private User user;
 }

@@ -22,9 +22,12 @@
 .book-image-area {
     padding: 10px 0px 30px;
 }
+
+.book-star {
+    font-size: 25px;
+    padding: 10px 10px;
+}
 .book-image {
-    width: 140px;
-    min-height: 194px;
     text-align: center;
 }
 

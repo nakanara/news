@@ -105,18 +105,18 @@ a {
     color: #666;
 }
 .box-comment-meta {
-    position: absolute;
+ /*   position: absolute;*/
     overflow: hidden;
     top: 30px;
     height: 48px;
     left: 0;
     right: 0;
-    padding: 4px 0 0 60px;
+    padding: 4px 0 0 10px;
 }
 
 .box-comment-meta .nickname {
     float: left;
-    font-size: 0.875em;
+    font-size: 1em;
     line-height: 20px;
 }
 

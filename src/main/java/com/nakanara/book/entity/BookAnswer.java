@@ -17,7 +17,9 @@ import javax.persistence.*;
  **/
 
 @Data
-@Entity
+@Entity(
+        name = "BOOK_ANSWER"
+)
 public class BookAnswer extends BaseEntity {
 
     @Id
@@ -25,7 +27,7 @@ public class BookAnswer extends BaseEntity {
     private long bookAnswerId;
 
     @ManyToOne
-    @JoinColumn(name = "question_id")
+    @JoinColumn(name = "src_question_id")
     private BookQuestion bookQuestion;
 
     @Lob

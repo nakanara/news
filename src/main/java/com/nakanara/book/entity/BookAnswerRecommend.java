@@ -14,11 +14,11 @@ public class BookAnswerRecommend extends BaseEntity {
     private long bookRecommendUserId;
 
     @ManyToOne
-    @JoinColumn(name = "answer_id")
+    @JoinColumn(name = "src_answer_id")
     private BookAnswer bookAnswer;
 
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "src_user_id")
     private User user;
 }
