@@ -22,10 +22,10 @@
 
 - 알라딘 검색 API
 https://blog.aladin.co.kr/openapi/category/29154402?communitytype=mypaper
-http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey=ttbnakanara1224001&itemIdype=ISBN&ItemId=9788996991342&output=xml
+http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey=TTB&itemIdype=ISBN&ItemId=9788996991342&output=xml
 
 - 상세
-https://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey=ttbnakanara1224001&itemIdType=ISBN13&ItemId=9788996991359&output=xml&Version=20131101&OptResult=ebookList,usedList,reviewList,previewImgList,eventList,authors,reviewList,fulldescription,fulldescription,fulldescription2,Toc,Story,categoryIdList,mdrecommend,phraseList
+https://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey=TTB&itemIdType=ISBN13&ItemId=9788996991359&output=xml&Version=20131101&OptResult=ebookList,usedList,reviewList,previewImgList,eventList,authors,reviewList,fulldescription,fulldescription,fulldescription2,Toc,Story,categoryIdList,mdrecommend,phraseList
 
 - bootstrap style https://github.com/startbootstrap/startbootstrap-clean-blog-jekyll
 
