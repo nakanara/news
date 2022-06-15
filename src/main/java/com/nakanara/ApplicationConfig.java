@@ -78,21 +78,16 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter {
 //        https://kitty-geno.tistory.com/131
         http
                 .authorizeRequests()
-                .antMatchers("/", "/signup").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .successHandler(loginSuccessHandler)
-                .failureHandler(loginFailureHandler)
+                .antMatchers("/", "/signup")
                 .permitAll()
-                .and()
-                .logout()
-                .permitAll();
+                .anyRequest().authenticated()
+                ;
 
         http.formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/")
+                .successHandler(loginSuccessHandler)
+                .failureHandler(loginFailureHandler)
                 .permitAll();
 
         http.logout()
