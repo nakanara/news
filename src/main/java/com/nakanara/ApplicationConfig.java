@@ -6,12 +6,23 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableJpaAuditing
+@EnableWebSecurity
 @SpringBootApplication
 @Slf4j
 @ComponentScan(value = "com.nakanara.*.*")
-public class ApplicationConfig {
+public class ApplicationConfig extends WebSecurityConfigurerAdapter {
 
     private static final int TX_METHOD_TIMEOUT = 3;
 
@@ -19,7 +30,57 @@ public class ApplicationConfig {
 
 
     private DataSourceTransactionManager transactionManager;
-//
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/assets/**");
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        // https://bamdule.tistory.com/53
+        http
+                .authorizeRequests()
+                .antMatchers("/", "/home").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and()
+                .logout()
+                .permitAll();
+
+        http.formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/")
+                .permitAll();
+
+        http.logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true);
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
+        super.configure(auth);
+    }
+
+    @Override
+    protected UserDetailsService userDetailsService() {
+        UserDetails user =
+                User.withDefaultPasswordEncoder()
+                        .username("user")
+                        .password("password")
+                        .roles("USER")
+                        .build();
+
+        return new InMemoryUserDetailsManager(user);
+    }
+
+    //
 //    @Autowired
 //    public void setTransactionManager(DataSourceTransactionManager transactionManager) {
 //        this.transactionManager = transactionManager;
