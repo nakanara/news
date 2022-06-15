@@ -30,4 +30,7 @@ public class MyBook extends BaseEntity {
     private LocalDateTime readStartDt;
 
     private LocalDateTime readEndDt;
+    
+    // 평점
+    private int rating;
 }

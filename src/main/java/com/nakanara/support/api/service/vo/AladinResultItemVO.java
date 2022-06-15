@@ -5,6 +5,9 @@ import lombok.Data;
 @Data
 public class AladinResultItemVO {
 
+    // 외부 Item ID
+    private long bookId;
+
     private String title;
     private String link;
     private String author;

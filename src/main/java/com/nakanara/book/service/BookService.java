@@ -79,10 +79,12 @@ public class BookService {
 
             Book book = Book.convertAladinItem(itemVO);
 
-            if( bookRepository.findByIsbn13(book.getIsbn13()) == null ) {
-                bookRepository.save(book);
+            Book searchBook = bookRepository.findByIsbn13(book.getIsbn13());
+            if( searchBook == null ) {
+                searchBook = bookRepository.save(book);
             }
 
+            itemVO.setBookId(searchBook.getBookId());
 
         }
     }

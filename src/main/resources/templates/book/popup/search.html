@@ -15,7 +15,7 @@
 
             <table class="table">
                 <colgroup>
-                    <col width="150">
+                    <col>
                     <col>
                 </colgroup>
                 <thead>
@@ -25,13 +25,14 @@
                 <tbody>
                 <tr th:each="i: ${result.item}" class="news-link">
                     <td>
+                        <input type="hidden" name="bookId" th:value="${i.bookId}" />
                         <input type="hidden" name="isbn" th:value="${i.isbn}" />
                         <input type="hidden" name="isbn13" th:value="${i.isbn13}" />
                         <img th:src="${i.cover}" th:title="${i.title}"/>
 
                     </td>
                     <td>
-                        <a href="#"><div th:utext="${i.title}"></div></a>
+                        <a th:href="@{/book/__${i.bookId}__}"><div th:utext="${i.title}"></div></a>
 
                         <br/>
                         <div th:utext="${i.author}"></div>
