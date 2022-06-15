@@ -1,8 +1,14 @@
 package com.nakanara;
 
+import com.nakanara.core.component.NormalPasswordEncoder;
+import com.nakanara.core.config.LoginFailureHandler;
+import com.nakanara.core.config.LoginSuccessHandler;
+import com.nakanara.core.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -14,6 +20,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -31,21 +39,52 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter {
 
     private DataSourceTransactionManager transactionManager;
 
+    private MemberService memberService;
+
+    private NormalPasswordEncoder normalPasswordEncoder;
+
+    private LoginSuccessHandler loginSuccessHandler;
+
+    private LoginFailureHandler loginFailureHandler;
+
+    @Autowired
+    public void setMemberService(MemberService memberService) {
+        this.memberService = memberService;
+    }
+
+    @Autowired
+    public void setNormalPasswordEncoder(NormalPasswordEncoder normalPasswordEncoder) {
+        this.normalPasswordEncoder = normalPasswordEncoder;
+    }
+
+    @Autowired
+    public void setLoginSuccessHandler(LoginSuccessHandler loginSuccessHandler) {
+        this.loginSuccessHandler = loginSuccessHandler;
+    }
+
+    @Autowired
+    public void setLoginFailureHandler(LoginFailureHandler loginFailureHandler) {
+        this.loginFailureHandler = loginFailureHandler;
+    }
+
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/assets/**");
+        web.ignoring().antMatchers("/assets/**", "/h2-console/**");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // https://bamdule.tistory.com/53
+//        https://kitty-geno.tistory.com/131
         http
                 .authorizeRequests()
-                .antMatchers("/", "/home").permitAll()
+                .antMatchers("/", "/signup").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
+                .successHandler(loginSuccessHandler)
+                .failureHandler(loginFailureHandler)
                 .permitAll()
                 .and()
                 .logout()
@@ -64,21 +103,21 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(memberService).passwordEncoder(passwordEncoder());
-        super.configure(auth);
+        auth.userDetailsService(memberService).passwordEncoder(normalPasswordEncoder);
+
     }
 
-    @Override
-    protected UserDetailsService userDetailsService() {
-        UserDetails user =
-                User.withDefaultPasswordEncoder()
-                        .username("user")
-                        .password("password")
-                        .roles("USER")
-                        .build();
-
-        return new InMemoryUserDetailsManager(user);
-    }
+//    @Override
+//    protected UserDetailsService userDetailsService() {
+//        UserDetails user =
+//                User.withDefaultPasswordEncoder()
+//                        .username("user")
+//                        .password("password")
+//                        .roles("USER")
+//                        .build();
+//
+//        return new InMemoryUserDetailsManager(user);
+//    }
 
     //
 //    @Autowired

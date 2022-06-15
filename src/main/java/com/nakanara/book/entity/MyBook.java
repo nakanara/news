@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
-@Entity(name = "MY_BOOK")
+@Entity(name = "TB_MY_BOOK")
 public class MyBook extends BaseEntity {
 
     @Id
@@ -23,14 +23,14 @@ public class MyBook extends BaseEntity {
     @JoinColumn(name = "src_book_id")
     private Book bookId;
 
-    private boolean like;
+    private boolean bookLike;
 
-    private String status;
+    private String bookStatus;
 
     private LocalDateTime readStartDt;
 
     private LocalDateTime readEndDt;
     
     // 평점
-    private int rating;
+    private int bookRating;
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <th:block th:replace="/common/header :: headFragment"></th:block>
 
@@ -35,13 +35,19 @@
                                     <a href="#" class="nav-link"><i class="mdi mdi-magnify"></i></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">[[#{news.login}]]</a>
+                                    <a th:href="@{/login}" class="nav-link">[[#{news.login}]]</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">[[#{news.signin}]]</a>
+                                    <a th:href="@{/signup}" class="nav-link">[[#{news.signup}]]</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">구독신청</a>
+                                    <a th:href="@{/logout}" class="nav-link">[[#{news.logout}]]</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a th:href="@{/myinfo}" class="nav-link">내정보</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link"><span sec:authentication="name"></span> </a>
                                 </li>
                             </ul>
                         </div>

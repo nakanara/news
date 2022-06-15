@@ -21,7 +21,7 @@ public class AppErrorController implements ErrorController {
         if (status != null) {
             Integer statusCode = Integer.valueOf(status.toString());
 
-            log.error("{}", status);
+            log.error("uri={}, status={}", request.getRequestURI(), status);
             if(statusCode == HttpStatus.NOT_FOUND.value()) {
                 return "/error/404";
             }

@@ -1,5 +1,6 @@
 /* Web Font Load */
-@import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css);
+/*@import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css);*/
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
 /* Type Selector Reset */
 body {
