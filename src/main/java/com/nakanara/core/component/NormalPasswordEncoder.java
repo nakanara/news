@@ -5,7 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
+@Component("passwordEncoder")
 public class NormalPasswordEncoder implements PasswordEncoder {
 
     @Override

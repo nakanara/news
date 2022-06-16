@@ -1,7 +1,7 @@
 package com.nakanara.core.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.nakanara.user.entity.User;
+import com.nakanara.user.entity.UserEntity;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -24,7 +24,7 @@ public abstract class BaseEntity {
     @CreatedBy
     @ManyToOne
     @JoinColumn(name = "reg_emp_id")
-    private User regEmpId;
+    private UserEntity regEmpId;
 
     @CreatedDate
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
@@ -33,7 +33,7 @@ public abstract class BaseEntity {
     @LastModifiedBy
     @ManyToOne
     @JoinColumn(name = "mod_emp_id")
-    private User modEmpId;
+    private UserEntity modEmpId;
 
     @LastModifiedDate
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")

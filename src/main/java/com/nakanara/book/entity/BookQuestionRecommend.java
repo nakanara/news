@@ -1,6 +1,6 @@
 package com.nakanara.book.entity;
 
-import com.nakanara.user.entity.User;
+import com.nakanara.user.entity.UserEntity;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -29,5 +29,5 @@ public class BookQuestionRecommend {
 
     @ManyToOne
     @JoinColumn(name = "src_user_id")
-    private User user;
+    private UserEntity userEntity;
 }

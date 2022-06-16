@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lagn="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <th:block th:replace="/common/header :: headFragment"></th:block>
 
@@ -7,8 +9,29 @@
 
   <h1>내 정보</h1>
   <hr>
+  <textarea th:text="${vo}"></textarea>
+  <textarea th:text="${auth}"></textarea>
+
+  ...
+  <label sec:authorize="hasAuthority('XXX')">XXX</label>
+
+  <label sec:authentication="isAuthenticated()">1로그인된 상태</label>
+  <label sec:authentication=" !isAuthenticated()">2로그인 안된 상태</label>
+
   <span sec:authentication="name"></span> 님 반갑습니다.
+
+
   <div sec:authentication="principal.authorities"></div>
+  <textarea sec:authentication="principal"></textarea>
+
+
+  Logged user: <span sec:authentication="name">Bob</span>
+  Roles: <span sec:authentication="principal.authorities">[ROLE_USER, ROLE_ADMIN]</span>
+
+  ------------
+  <div sec:authentication="name"></div>
+  <div sec:authentication="principal.authorities"></div>
+  <span class="hidden-xs" sec:authentication="name"></span>
 
   <a th:href="@{/}">홈으로 가기</a>
 

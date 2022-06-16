@@ -1,7 +1,7 @@
 package com.nakanara.book.entity;
 
 import com.nakanara.core.entity.BaseEntity;
-import com.nakanara.user.entity.User;
+import com.nakanara.user.entity.UserEntity;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,5 +20,5 @@ public class BookAnswerRecommend extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "src_user_id")
-    private User user;
+    private UserEntity userEntity;
 }

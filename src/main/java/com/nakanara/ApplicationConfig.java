@@ -41,7 +41,7 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter {
 
     private MemberService memberService;
 
-    private NormalPasswordEncoder normalPasswordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     private LoginSuccessHandler loginSuccessHandler;
 
@@ -53,9 +53,11 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void setNormalPasswordEncoder(NormalPasswordEncoder normalPasswordEncoder) {
-        this.normalPasswordEncoder = normalPasswordEncoder;
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
+
+
 
     @Autowired
     public void setLoginSuccessHandler(LoginSuccessHandler loginSuccessHandler) {
@@ -78,8 +80,7 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter {
 //        https://kitty-geno.tistory.com/131
         http
                 .authorizeRequests()
-                .antMatchers("/", "/signup")
-                .permitAll()
+                .antMatchers("/", "/signup").permitAll()
                 .anyRequest().authenticated()
                 ;
 
@@ -98,7 +99,7 @@ public class ApplicationConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(memberService).passwordEncoder(normalPasswordEncoder);
+        auth.userDetailsService(memberService).passwordEncoder(passwordEncoder);
 
     }
 

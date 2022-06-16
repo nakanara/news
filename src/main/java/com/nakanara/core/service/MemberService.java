@@ -1,11 +1,12 @@
 package com.nakanara.core.service;
 
-import com.nakanara.user.entity.User;
+import com.nakanara.user.entity.UserEntity;
 import com.nakanara.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,19 +23,21 @@ public class MemberService implements UserDetailsService  {
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        User user = userRepository.findByUserId(userId);
+        UserEntity userEntity = userRepository.findByUsername(userId);
 
-        List<GrantedAuthority> authorities = new ArrayList<>();
+//        List<GrantedAuthority> authorities = new ArrayList<>();
+//        authorities.add(new SimpleGrantedAuthority("ROLE_MEMBER"));
 
-        authorities.add(new SimpleGrantedAuthority("ROLE_MEMBER"));
-
-        return new org.springframework.security.core.userdetails.User(user.getUserId(), user.getPassword(), authorities);
+        return User.builder().username(userEntity.getUsername())
+                .password(userEntity.getPassword())
+                .authorities("USER")
+                .build();
 
     }
 
-    public User saveUser(User user){
+    public UserEntity saveUser(UserEntity userEntity){
 
-        return userRepository.save(user);
+        return userRepository.save(userEntity);
     }
 
     @Autowired

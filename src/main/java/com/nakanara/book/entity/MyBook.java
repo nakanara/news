@@ -1,7 +1,7 @@
 package com.nakanara.book.entity;
 
 import com.nakanara.core.entity.BaseEntity;
-import com.nakanara.user.entity.User;
+import com.nakanara.user.entity.UserEntity;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,7 +17,7 @@ public class MyBook extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "src_user_id")
-    private User userId;
+    private UserEntity userEntityId;
 
     @ManyToOne
     @JoinColumn(name = "src_book_id")
