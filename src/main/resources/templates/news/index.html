@@ -31,21 +31,8 @@
         </div>
     </div>
 
-    <div>
-        <div class="news-pagination">
-
-            <a th:if="${ resultVo.curPage > 10 }" class="btn btn-success">이전</a>
-
-            <th:block th:each="i : ${#numbers.sequence(1, 10)}">
-
-                <label th:label="${(resultVo.curPage/10)}"></label>
-                <a th:if="${((resultVo.totalPage % 10) >= i) && (resultVo.curPage % 10) == i}" class="active" th:href="@{/news?page=__${i}__}" th:text="${i}"></a>
-                <a th:if="${((resultVo.totalPage % 10) >= i) && (resultVo.curPage % 10) != i}" class="" th:href="@{/news?page=__${i}__}" th:text="${i}"></a>
-
-            </th:block>
-            <!-- 현재 페이지보다 클 경우 -->
-            <a th:if="${ (resultVo.curPage / 10) < (resultVo.totalPage/10) }" class="btn btn-success">다음</a>
-        </div>
+    <div th:with="pagename='news'">
+        <th:block th:replace="/common/listpaging :: paggingFragment"}></th:block>
     </div>
 
     <div class="row">

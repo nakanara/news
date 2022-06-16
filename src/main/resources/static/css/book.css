@@ -38,3 +38,7 @@
 .btn-question-like {
     cursor: pointer;
 }
+
+.book-thumbnail {
+    width: 200px;
+}

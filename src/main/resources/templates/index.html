@@ -40,15 +40,19 @@
                                 <li class="nav-item">
                                     <a th:href="@{/signup}" class="nav-link">[[#{news.signup}]]</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a th:href="@{/logout}" class="nav-link">[[#{news.logout}]]</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a th:href="@{/myinfo}" class="nav-link">내정보</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link"><span sec:authentication="name"></span> </a>
-                                </li>
+
+                                <th:block sec:authorize="isAuthenticated()">
+                                    <li class="nav-item">
+                                        <a th:href="@{/logout}" class="nav-link">[[#{news.logout}]]</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a th:href="@{/myinfo}" class="nav-link">내정보</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link"><span sec:authentication="name"></span> </a>
+                                    </li>
+                                </th:block>
+
                             </ul>
                         </div>
                     </div>
@@ -83,10 +87,10 @@
                                             <a class="nav-link" th:href="@{/}">Home</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="pages/magazine.html">동네뉴스</a>
+                                            <a class="nav-link" th:href="@{/news}">동네뉴스</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="pages/business.html">산업</a>
+                                            <a class="nav-link" th:href="@{/book}">도서</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="pages/sports.html">스포츠</a>

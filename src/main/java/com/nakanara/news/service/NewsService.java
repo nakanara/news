@@ -98,19 +98,8 @@ public class NewsService {
     }
 
     public ResultVO getNewsPage(int page, int size){
-//
-//        Page<EmployeeEntity> pagedResult = repository.findAll(paging);
-//
-//        if(pagedResult.hasContent()) {
-//            return pagedResult.getContent();
-//        } else {
-//            return new ArrayList<EmployeeEntity>();
-//        }
-
 
         Page<News> pagedResult = newsRepository.findAll(PageRequest.of(page-1, size, Sort.by("regDttm").descending()));
-
-        log.debug("{}", pagedResult);
 
         if(pagedResult.hasContent()) {
             return ResultVO.builder().data(pagedResult.getContent())
@@ -124,9 +113,8 @@ public class NewsService {
                     .curPage(0)
                     .build();
         }
-
-
     }
+
     public News view(long id) {
 
         News news = getNews(id);

@@ -69,6 +69,7 @@ public class Book extends BaseEntity {
      */
     private String isbn;
 
+    @Column(nullable = false, unique = true)
     private String isbn13;
 
     private String categoryName;

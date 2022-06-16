@@ -29,7 +29,7 @@ public class BookController {
                           @RequestParam(name = "size", defaultValue = "10") int size){
 
 
-        model.addAttribute("resultVo", bookService.getBookList());
+        model.addAttribute("resultVo", bookService.getBookPage(page, size));
 
         return PREFIX + "/index";
     }
@@ -51,12 +51,12 @@ public class BookController {
         return "redirect:" + PREFIX;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{isbn13}")
     public String viewNews(Model model,
-                           @PathVariable long id) {
+                           @PathVariable(name = "isbn13") String isbn13) {
 
 
-        Book book = bookService.getBook(id);
+        Book book = bookService.getBookIsbn13(isbn13);
         model.addAttribute("book", book);
         model.addAttribute("questions", bookService.getQuestion(book));
 

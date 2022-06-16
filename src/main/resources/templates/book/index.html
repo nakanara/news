@@ -15,9 +15,9 @@
                     <th>출판사</th>
                     </thead>
                     <tbody>
-                    <tr th:each="item: ${resultVo}" class="news-link">
+                    <tr th:each="item: ${resultVo.data}" class="news-link">
                         <td>
-                            <a th:href="@{/book/__${item.bookId}__}">
+                            <a th:href="@{/book/__${item.isbn13}__}">
                                 <p th:utext="${item.title}"></p>
                             </a>
                         </td>
@@ -27,6 +27,10 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+
+        <div th:with="pagename='book'">
+            <th:block th:replace="/common/listpaging :: paggingFragment"></th:block>
         </div>
 
         <div class="row">
