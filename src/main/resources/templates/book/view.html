@@ -15,15 +15,17 @@
 
             <div class="box-article-head">
                 <div class="row box-view-title-area">
-                    <div class="offset-md-12">
+                    <div class="col-md-12">
                         <a th:href="@{__*{link}__}" target="_blank"><p class="book-title" th:utext="*{title}"></p></a>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="offset-md-12">
+                    <div class="col-md-12">
                         <label class="book-author" th:text="*{author}"></label>
                         <label class="book-publisher" th:text="*{publisher}"></label>
+                        <label class="book-publisher">구매하기</label>
+                        <label class="book-publisher">현재 읽고 있는 사람(12명)</label>
                     </div>
                 </div>
             </div>
@@ -31,14 +33,23 @@
             <div>
 
                 <div class="row">
-                    <div class="offset-md-12">
+                    <div class="col-md-8">
                         <span class="book-image-area">
                             <img th:src="*{image}" class="book-image">
                         </span>
 
                     </div>
 
-                    <div class="offset-md-12">
+                    <div class="col-md-4">
+                        <div style="width: 100%; height: 400px;">
+                            <canvas id="bookchart" aria-label="Hello ARIA World" role="img"></canvas>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
 
                         <span class="book-star">
                             <i class="fa-solid fa-star"></i>
@@ -54,7 +65,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="offset-md-12 book-description">
+                    <div class="col-md-12 book-description">
                         <p th:utext="*{description}"></p>
                     </div>
                 </div>
@@ -64,7 +75,7 @@
             <!-- 질문 -->
             <div>
                 <div class="row">
-                    <div class="offset-md-12 wf-comment">
+                    <div class="col-md-12 wf-comment">
                         <textarea name="question" class="comment" id="book-question" placeholder="질문을 입력해 주세요."></textarea>
                         <div class="btn btn-primary" id="btn-add-question">등록</div>
                     </div>
@@ -73,7 +84,7 @@
 
                 <!-- 질문 View -->
                 <div class="row">
-                    <div class="offset-md-12 wf-comment box-comment">
+                    <div class="col-md-12 wf-comment box-comment">
                         <div id="questionTable" class="box-comment-list">
                             <ul>
                                 <li th:each="item : ${questions}" >
@@ -104,7 +115,8 @@
         <div class="btn btn-primary news-btn-link" data-href="/book" >목록</div>
         <div class="btn btn-primary" id="btn-question">질문</div>
         <div class="btn btn-primary" id="btn-answer">답변보기</div>
-        <div class="btn btn-primary" id="btn-answer">출력하기</div>
+        <div class="btn btn-primary" id="btn-print">출력하기</div>
+        <div class="btn btn-primary" id="btn-sendmail">메일발송</div>
         <div class="btn btn-primary" id="btn-delete">삭제하기</div>
         <div class="btn btn-primary">읽기시작</div>
     </div>
@@ -179,8 +191,65 @@
         });
 
 
+        function drawChart(){
+            const ctx = document.getElementById('bookchart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['1월', '2월', '3월', '4월', '5월', '6월'],
+                    datasets: [{
+                        label: '함께 추억을 공유한 사람',
+                        data: [12, 19, 3, 5, 2, 3],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    },{
+                        label: '좋아요',
+                        data: [6, 12, 14, 19, 2, 3],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
       function init(){
-
+          drawChart();
       }
 
       init();

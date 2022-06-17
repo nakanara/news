@@ -9,6 +9,7 @@
 - https://www.bootstrapdash.com/bootstrap-news-website-templates/
 - https://www.bootstrapdash.com/demo/world-time/index.html
 - fontawesome https://fontawesome.com/
+- https://www.chartjs.org/docs/latest/
 
 ### Backend
 

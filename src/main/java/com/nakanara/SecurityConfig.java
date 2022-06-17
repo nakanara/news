@@ -59,6 +59,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // https://bamdule.tistory.com/53
 //        https://kitty-geno.tistory.com/131
+
+        http.csrf().disable();
+
         http
                 .authorizeRequests()
                 .antMatchers("/**").permitAll()
