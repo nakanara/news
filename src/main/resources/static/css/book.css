@@ -42,3 +42,8 @@
 .book-thumbnail {
     width: 200px;
 }
+
+.book-icon {
+    font-size: 30px;
+    cursor: pointer;
+}
