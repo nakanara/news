@@ -9,17 +9,14 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.EntityListeners;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.util.Date;
 
 @Setter
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class BaseEntity {
+public abstract class BaseEntity  {
 
     @CreatedBy
     @ManyToOne
@@ -38,4 +35,18 @@ public abstract class BaseEntity {
     @LastModifiedDate
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date modDttm;
+
+
+    /* 해당 엔티티를 저장하기 이전에 실행 */
+    @PrePersist
+    public void onPrePersist(){
+//        this.createdDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+//        this.modifiedDate = this.createdDate;
+    }
+
+    /* 해당 엔티티를 업데이트 하기 이전에 실행*/
+    @PreUpdate
+    public void onPreUpdate(){
+//        this.modifiedDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"));
+    }
 }

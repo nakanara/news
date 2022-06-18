@@ -2,7 +2,9 @@ package com.nakanara;
 
 import com.nakanara.core.config.LoginFailureHandler;
 import com.nakanara.core.config.LoginSuccessHandler;
+import com.nakanara.core.service.CustomOAuth2UserService;
 import com.nakanara.core.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -15,40 +17,21 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+@RequiredArgsConstructor
 @EnableWebSecurity
 @Slf4j
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private MemberService memberService;
+    private final MemberService memberService;
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    private LoginSuccessHandler loginSuccessHandler;
+    private final LoginSuccessHandler loginSuccessHandler;
 
-    private LoginFailureHandler loginFailureHandler;
+    private final LoginFailureHandler loginFailureHandler;
 
-    @Autowired
-    public void setMemberService(MemberService memberService) {
-        this.memberService = memberService;
-    }
-
-    @Autowired
-    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
-
-
-
-    @Autowired
-    public void setLoginSuccessHandler(LoginSuccessHandler loginSuccessHandler) {
-        this.loginSuccessHandler = loginSuccessHandler;
-    }
-
-    @Autowired
-    public void setLoginFailureHandler(LoginFailureHandler loginFailureHandler) {
-        this.loginFailureHandler = loginFailureHandler;
-    }
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -79,6 +62,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true);
+
+        http.oauth2Login()
+                .userInfoEndpoint()  // OAuth2 로그인 성공 후 가져올 설정들
+                .userService(customOAuth2UserService); // 서버에서 사용자 정보를 가져온 상태에서 추가로 진행하고자 하는 기능 명시
     }
 
     @Override

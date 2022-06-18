@@ -1,6 +1,8 @@
 package com.nakanara.core.service;
 
+import com.nakanara.user.entity.SNSUserEntity;
 import com.nakanara.user.entity.UserEntity;
+import com.nakanara.user.repository.SNSUserRepository;
 import com.nakanara.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class MemberService implements UserDetailsService  {
 
     private UserRepository userRepository;
 
+    private SNSUserRepository snsUserRepository;
+
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
         UserEntity userEntity = userRepository.findByUsername(userId);
@@ -37,8 +41,23 @@ public class MemberService implements UserDetailsService  {
         return userRepository.save(userEntity);
     }
 
+    public UserEntity saveSnsUser(UserEntity userEntity, SNSUserEntity snsUserEntity) {
+
+        userEntity = userRepository.save(userEntity);
+        snsUserEntity.setUser(userEntity);
+
+        snsUserRepository.save(snsUserEntity);
+
+        return userEntity;
+    }
+
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    @Autowired
+    public void setSnsUserRepository(SNSUserRepository snsUserRepository) {
+        this.snsUserRepository = snsUserRepository;
     }
 }

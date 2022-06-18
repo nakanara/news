@@ -1,22 +1,16 @@
 package com.nakanara.user.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.nakanara.core.config.Role;
 import com.nakanara.core.entity.BaseEntity;
-import lombok.*;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+import lombok.Builder;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Date;
 
 @Entity(name = "TB_USER")
 @Data
+@Builder
 public class UserEntity extends BaseEntity {
 
     @Id
@@ -31,8 +25,17 @@ public class UserEntity extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    private String mail;
+    private String nickname;
+
+    private String email;
 
     private LocalDateTime lastAccessDt;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
+    public String getRoleValue() {
+        return this.role.getValue();
+    }
 }

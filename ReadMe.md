@@ -38,5 +38,7 @@ https://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey=TTB&itemIdType=ISBN13&It
 
 mvnw spring-boot:run -Dspring.profiles.active=real
 
+- SNS로그인 : https://dev-coco.tistory.com/128
+
 - 테이블 삭제
 drop table tab CASCADE CONSTRAINTS
