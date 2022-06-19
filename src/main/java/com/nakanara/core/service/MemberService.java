@@ -1,21 +1,17 @@
 package com.nakanara.core.service;
 
+import com.nakanara.core.config.Role;
 import com.nakanara.user.entity.SNSUserEntity;
 import com.nakanara.user.entity.UserEntity;
 import com.nakanara.user.repository.SNSUserRepository;
 import com.nakanara.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @Slf4j
@@ -31,7 +27,7 @@ public class MemberService implements UserDetailsService  {
 
         return User.builder().username(userEntity.getUsername())
                 .password(userEntity.getPassword())
-                .authorities("USER")
+                .authorities(Role.USER.getValue())
                 .build();
 
     }
@@ -43,12 +39,20 @@ public class MemberService implements UserDetailsService  {
 
     public UserEntity saveSnsUser(UserEntity userEntity, SNSUserEntity snsUserEntity) {
 
-        userEntity = userRepository.save(userEntity);
-        snsUserEntity.setUser(userEntity);
+        UserEntity selUserEntity = userRepository.findByUsername(userEntity.getUsername());
 
-        snsUserRepository.save(snsUserEntity);
+        if( selUserEntity == null) {
+            userEntity.setRole(Role.SOCIAL);
+            userEntity = userRepository.save(userEntity);
+            snsUserEntity.setUser(userEntity);
 
-        return userEntity;
+            snsUserRepository.save(snsUserEntity);
+            selUserEntity = userEntity;
+
+        }
+
+
+        return selUserEntity;
     }
 
     @Autowired

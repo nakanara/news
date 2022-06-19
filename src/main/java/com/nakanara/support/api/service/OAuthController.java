@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,13 +43,14 @@ public class OAuthController {
     }
 
     @PostMapping("/sns/login/naver")
-    public String naverLoginPost(Model model, UserEntity userEntity, SNSUserEntity snsUserEntity) {
+    public String naverLoginPost(Model model, @ModelAttribute("user") UserEntity userEntity, @ModelAttribute("snsUser") SNSUserEntity snsUserEntity) {
+
 
         log.info("userEntity {}", userEntity.toString());
         log.info("snsUserEntity {}", snsUserEntity.toString());
 
         memberService.saveSnsUser(userEntity, snsUserEntity);
 
-        return "/";
+        return "redirect:/";
     }
 }

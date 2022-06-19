@@ -2,8 +2,10 @@ package com.nakanara.user.entity;
 
 import com.nakanara.core.config.Role;
 import com.nakanara.core.entity.BaseEntity;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,6 +13,8 @@ import java.time.LocalDateTime;
 @Entity(name = "TB_USER")
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserEntity extends BaseEntity {
 
     @Id
