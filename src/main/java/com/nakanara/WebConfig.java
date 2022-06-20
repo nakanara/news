@@ -1,7 +1,14 @@
 package com.nakanara;
 
+import ch.qos.logback.access.tomcat.LogbackValve;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.embedded.tomcat.TomcatContextCustomizer;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.http.CacheControl;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -16,6 +23,25 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
+    private ResourceLoader resourceLoader;
+
+    @Autowired
+    public void setResourceLoader(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
+
+    @Bean
+    public WebServerFactoryCustomizer embeddedServletContainerCustomizer() {
+        return container -> {
+            if (container instanceof TomcatServletWebServerFactory) {
+                ((TomcatServletWebServerFactory) container).addContextCustomizers((TomcatContextCustomizer) context -> {
+                    LogbackValve valve = new LogbackValve();
+                    valve.setFilename(resourceLoader.getResource(ResourceLoader.CLASSPATH_URL_PREFIX + "logback.xml").getFilename());
+                    context.getPipeline().addValve(valve);
+                });
+            }
+        };
+    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
