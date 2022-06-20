@@ -12,6 +12,7 @@
 
         <div th:object="${book}" class="news">
             <input type="hidden" id="bookId" th:value="*{bookId}" />
+            <input type="hidden" id="bookIsbn13" th:value="*{isbn13}" />
 
             <div class="box-article-head">
                 <div class="row box-view-title-area">
@@ -64,16 +65,8 @@
 
                             <div class="col-md-12">
                                 <div class="btn btn-primary"><a th:href="@{/book/read}">읽기시작</a></div>
-                                <span class="book-icon" title="찜하기"><i class="fa-regular fa-heart"></i></span>
-                                <!--
-                                <span class="book-icon" title="찜하기"><i class="fa-solid fa-heart"></i></span>
-                                -->
-
-                                <span class="book-icon" title="좋아요"><i class="fa-regular fa-thumbs-up"></i></span>
-                                <!--
-                                <span class="book-icon" title="좋아요"><i class="fa-solid fa-thumbs-up"></i></span>
-                                -->
-                                <span> 51,234</span>
+                                <span class="book-icon" id="btn-book-like" title="좋아요"><i class="fa-regular fa-heart"></i></span>
+                                <span id="book-like-count" th:text="*{likeCount}"></span>
 
                                 <div class="btn btn-primary">구매하기</div>
                                 <span class="book-icon" title="출력하기"><i class="fa-solid fa-print"></i></span>
@@ -148,15 +141,17 @@
   <script type="text/javascript">
     (function($){
 
+        var bookId = $('#bookId').val();
+        var bookIsbn13 = $('#bookIsbn13').val();
+
         $app.initForm();
 
         $('#btn-delete').click(function(){
 
           if(confirm('[[#{label.del.message}]]')) {
-            let id = $('#bookId').val();
 
             $.ajax({
-              url: '/book/' + id,
+              url: '/book/' + bookId,
               method: 'delete',
               success: function (e) {
                 // 삭제/성공
@@ -168,18 +163,9 @@
         });
 
 
-      $('#btn-modify').click(function(){
-
-        if(confirm('[[#{label.modify.message}]]')) {
-          let id = $('#newsId').val();
-
-          window.location.href ="/book/edit/" + id;
-        }
-      });
 
         $('#btn-add-question').click(function(){
 
-            var bookId = $('#bookId').val();
             $.ajax({
                 url: '/book/'+ bookId + '/question',
                 type: 'POST',
@@ -197,7 +183,6 @@
 
         $('#questionTable').on('click', '.btn-question-like', function(e){
 
-            var bookId = $('#bookId').val();
             var e = $(e.currentTarget);
             var questionId = e.attr('data');
 
@@ -213,6 +198,20 @@
             });
         });
 
+        $('#btn-book-like').on('click', function(){
+
+            $.ajax({
+                url: '/api/book/like/'+ bookIsbn13,
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify ({
+                    likeBook: false
+                }),
+                success: function(resp){
+                   $('#book-like-count').html(resp.data);
+                }
+            });
+        });
 
         function drawChart(){
             const ctx = document.getElementById('bookchart').getContext('2d');

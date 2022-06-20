@@ -2,11 +2,15 @@ package com.nakanara.book.service;
 
 import com.nakanara.book.entity.Book;
 import com.nakanara.book.entity.BookQuestion;
+import com.nakanara.book.entity.MyBook;
 import com.nakanara.book.repository.BookQuestionRepository;
 import com.nakanara.book.repository.BookRepository;
+import com.nakanara.book.repository.MyBookRepository;
 import com.nakanara.core.vo.ResultVO;
 import com.nakanara.support.api.service.vo.AladinResultItemVO;
 import com.nakanara.support.api.service.vo.AladinResultVO;
+import com.nakanara.user.entity.UserEntity;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,21 +24,13 @@ import java.util.List;
 
 @Service
 @Slf4j
+@AllArgsConstructor
 public class BookService {
 
-    private BookRepository bookRepository;
-    private BookQuestionRepository bookQuestionRepository;
+    private final BookRepository bookRepository;
+    private final BookQuestionRepository bookQuestionRepository;
+    private final MyBookRepository myBookRepository;
 
-
-    @Autowired
-    public void setBookRepository(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
-    }
-
-    @Autowired
-    public void setBookQuestionRepository(BookQuestionRepository bookQuestionRepository) {
-        this.bookQuestionRepository = bookQuestionRepository;
-    }
 
     /**
      * 도서 검색
@@ -121,4 +117,45 @@ public class BookService {
 
         }
     }
+
+    /**
+     * 책 좋아요 업데이트
+     * @param isbn13
+     * @return
+     */
+    @Transactional
+    public long likeBook(UserEntity userEntity, String isbn13, boolean bookLike) {
+        Book book = getBookIsbn13(isbn13);
+
+        List<MyBook> myBooks = myBookRepository.findAllByUserEntityIdAndBookId(userEntity, book);
+
+        MyBook myBook;
+        if(myBooks.isEmpty()) {
+            myBook = MyBook.builder()
+                    .userEntityId(userEntity)
+                    .bookId(book)
+                    .build();
+        } else {
+            myBook = myBooks.get(0);
+        }
+
+        myBook.setBookLike(bookLike);
+
+        long likeCount = book.getLikeCount();
+
+        if(bookLike) {
+            likeCount++;
+        } else {
+            likeCount--;
+        }
+
+        book.setLikeCount(likeCount);
+
+        myBookRepository.save(myBook);
+        bookRepository.save(book);
+
+        return likeCount;
+
+    }
+
 }

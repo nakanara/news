@@ -2,11 +2,17 @@ package com.nakanara.book.entity;
 
 import com.nakanara.core.entity.BaseEntity;
 import com.nakanara.user.entity.UserEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity(name = "TB_MY_BOOK")
 public class MyBook extends BaseEntity {

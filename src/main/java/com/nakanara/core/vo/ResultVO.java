@@ -1,5 +1,6 @@
 package com.nakanara.core.vo;
 
+import com.nakanara.core.config.ResultCode;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,7 +11,7 @@ import lombok.Data;
 @Builder
 public class ResultVO {
 
-    private String code;
+    private ResultCode code;
 
     private Object data;
 

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
@@ -18,6 +19,7 @@ import javax.persistence.*;
                 @Index(columnList = "isbn")
         }
 )
+@DynamicUpdate
 public class Book extends BaseEntity {
 
     @Id
@@ -73,6 +75,12 @@ public class Book extends BaseEntity {
     private String isbn13;
 
     private String categoryName;
+
+
+    /**
+     * 좋아요 수
+     */
+    private long likeCount;
 
    /**
      * 설명

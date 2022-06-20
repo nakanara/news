@@ -1,5 +1,6 @@
 package com.nakanara.support.api.service;
 
+import com.nakanara.core.annotation.ApiInfo;
 import com.nakanara.core.service.MemberService;
 import com.nakanara.user.entity.SNSUserEntity;
 import com.nakanara.user.entity.UserEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @Slf4j
@@ -43,7 +45,10 @@ public class OAuthController {
     }
 
     @PostMapping("/sns/login/naver")
-    public String naverLoginPost(Model model, @ModelAttribute("user") UserEntity userEntity, @ModelAttribute("snsUser") SNSUserEntity snsUserEntity) {
+    @ApiInfo("SNS-Naver 정보를 통한 로그인")
+    public String naverLoginPost(Model model, HttpServletRequest request,
+                                 HttpSession session,
+                                 @ModelAttribute("user") UserEntity userEntity, @ModelAttribute("snsUser") SNSUserEntity snsUserEntity) {
 
 
         log.info("userEntity {}", userEntity.toString());
@@ -51,6 +56,16 @@ public class OAuthController {
 
         memberService.saveSnsUser(userEntity, snsUserEntity);
 
-        return "redirect:/";
+        memberService.login(request, session, userEntity);
+
+        return "redirect:/sns/loginSuccess";
+    }
+
+    @GetMapping("/sns/loginSuccess")
+    public String snsLoginSuccess() {
+
+        log.info("Login Success");
+
+        return "/oauth/snsLoginSuccess";
     }
 }
