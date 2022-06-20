@@ -37,6 +37,11 @@ public class BookQuestion extends BaseEntity {
      */
     private int recommend = 0;
 
+    /**
+     * 책 페이지
+     */
+    private long page=0;
+
 
     public void addRecommend() {
         recommend++;

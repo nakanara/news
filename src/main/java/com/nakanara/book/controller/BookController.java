@@ -3,6 +3,7 @@ package com.nakanara.book.controller;
 import com.nakanara.book.entity.Book;
 import com.nakanara.book.entity.BookQuestion;
 import com.nakanara.book.service.BookService;
+import com.nakanara.core.annotation.ApiInfo;
 import com.nakanara.support.api.service.SearchAladinBookAPI;
 import com.nakanara.support.api.service.vo.AladinResultVO;
 import lombok.extern.slf4j.Slf4j;
@@ -36,14 +37,14 @@ public class BookController {
 
 
     @GetMapping("/write")
-    public String goNewsWrite(Model model){
+    public String goBookWrite(Model model){
 
         return PREFIX +  "/write";
     }
 
 
     @PostMapping("/write")
-    public String saveNews(@ModelAttribute("book") Book book) {
+    public String saveBook(@ModelAttribute("book") Book book) {
 
         log.debug("{}", book.toString());
         bookService.addBook(book);
@@ -52,7 +53,8 @@ public class BookController {
     }
 
     @GetMapping("/{isbn13}")
-    public String viewNews(Model model,
+    @ApiInfo(name = "책 ")
+    public String viewBook(Model model,
                            @PathVariable(name = "isbn13") String isbn13) {
 
 
@@ -134,6 +136,13 @@ public class BookController {
         return PREFIX + "/popup/search";
     }
 
+    @RequestMapping("/read/{isbn13}")
+    @ApiInfo(name = "책 읽기 페이지 전환")
+    public String goReadBook(){
+
+
+        return PREFIX + "/readBook";
+    }
 
 
     @Autowired
