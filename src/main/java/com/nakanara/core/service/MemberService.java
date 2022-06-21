@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+import java.beans.Transient;
 
 @Service
 @Slf4j
@@ -29,6 +30,8 @@ public class MemberService implements UserDetailsService  {
     private UserRepository userRepository;
 
     private SNSUserRepository snsUserRepository;
+
+    public static final String SESSION_USER = "user";
 
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
@@ -71,6 +74,7 @@ public class MemberService implements UserDetailsService  {
         return userRepository.save(userEntity);
     }
 
+    @Transactional
     public UserEntity saveSnsUser(UserEntity userEntity, SNSUserEntity snsUserEntity) {
 
         UserEntity selUserEntity = userRepository.findByUsername(userEntity.getUsername());
@@ -86,6 +90,10 @@ public class MemberService implements UserDetailsService  {
         }
 
         return selUserEntity;
+    }
+
+    public UserEntity getUser(long userId) {
+        return userRepository.getById(userId);
     }
 
     @Autowired

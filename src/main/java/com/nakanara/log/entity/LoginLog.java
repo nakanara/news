@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 @AllArgsConstructor
 @Getter
 @Setter
-@Entity(name = "LOG_LOGIN")
+@Entity(name = "ELG_LOGIN")
 public class LoginLog extends BaseEntity {
 
     @Id

@@ -8,7 +8,8 @@ import lombok.RequiredArgsConstructor;
 public enum ResultCode {
 
     SUCCESS("SUCCESS"),
-    FAIL("FAIL");
+    FAIL("FAIL"),
+    GUEST("GUEST");
 
     private final String value;
 }

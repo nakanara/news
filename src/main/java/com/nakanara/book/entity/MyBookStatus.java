@@ -1,5 +1,7 @@
 package com.nakanara.book.entity;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -11,6 +13,8 @@ import java.time.LocalDateTime;
  * @version: 1.0.0
  * @modifyed: 책을 일고 있는 상태
  **/
+@Data
+@Entity(name = "TB_MY_BOOK_STATUS")
 public class MyBookStatus {
 
     @Id

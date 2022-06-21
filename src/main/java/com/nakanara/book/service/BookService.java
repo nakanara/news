@@ -118,6 +118,25 @@ public class BookService {
         }
     }
 
+
+    /**
+     * 도서 상태
+     * @param userEntity
+     * @param book
+     * @return
+     */
+    public MyBook getMyBook(UserEntity userEntity, Book book) {
+        List<MyBook> myBooks = myBookRepository.findAllByUserEntityIdAndBookId(userEntity, book);
+
+        MyBook myBook = null;
+        if(myBooks.isEmpty()){
+            myBook = new MyBook();
+        }else {
+            myBook = myBooks.get(0);
+        }
+
+        return myBook;
+    }
     /**
      * 책 좋아요 업데이트
      * @param isbn13

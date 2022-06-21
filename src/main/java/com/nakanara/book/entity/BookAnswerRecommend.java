@@ -7,7 +7,9 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Data
-@Entity
+@Entity(
+        name = "TB_BOOK_ANSWER_RECOMMEND"
+)
 public class BookAnswerRecommend extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

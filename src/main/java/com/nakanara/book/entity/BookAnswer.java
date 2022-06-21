@@ -18,7 +18,7 @@ import javax.persistence.*;
 
 @Data
 @Entity(
-        name = "BOOK_ANSWER"
+        name = "TB_BOOK_ANSWER"
 )
 public class BookAnswer extends BaseEntity {
 

@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 @Data
 @Builder
-@Entity
+@Entity(name = "TB_NEWS_JOURNAL_LIST_REL")
 @NoArgsConstructor
 @AllArgsConstructor
 public class NewsJournallistRel extends BaseEntity {

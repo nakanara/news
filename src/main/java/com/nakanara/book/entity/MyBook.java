@@ -21,11 +21,11 @@ public class MyBook extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long myBookId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "src_user_id")
     private UserEntity userEntityId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "src_book_id")
     private Book bookId;
 

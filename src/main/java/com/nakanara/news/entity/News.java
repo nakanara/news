@@ -22,7 +22,7 @@ import java.util.List;
  **/ 
 @Data
 @Builder
-@Entity
+@Entity(name = "TB_NEWS")
 @NoArgsConstructor
 @AllArgsConstructor
 public class News extends BaseEntity {

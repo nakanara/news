@@ -13,7 +13,7 @@ import javax.persistence.*;
  *
  **/
 
-@Entity(name = "BOOK_LIST_REL")
+@Entity(name = "TB_BOOK_LIST_REL")
 @Data
 public class BookRecommendListRel {
 

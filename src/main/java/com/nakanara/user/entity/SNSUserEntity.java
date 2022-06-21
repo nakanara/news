@@ -13,7 +13,7 @@ public class SNSUserEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long snsUserUid;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "src_user_uid", unique = true, nullable = false)
     private UserEntity user;
 

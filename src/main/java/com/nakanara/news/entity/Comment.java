@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Data
 @Builder
-@Entity
+@Entity(name = "TB_NEWS_COMMENT")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Comment extends BaseEntity {

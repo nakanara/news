@@ -15,7 +15,7 @@ import javax.persistence.*;
  **/
 
 @Data
-@Entity(name = "BOOK_LIST")
+@Entity(name = "TB_BOOK_RECOMMEND")
 public class BookRecommend extends BaseEntity {
 
     @Id

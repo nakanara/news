@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Builder
 @Data
 @AllArgsConstructor @NoArgsConstructor
-@Entity(name = "BOOK")
+@Entity(name = "TB_BOOK")
 @Table(
         indexes = {
                 @Index(columnList = "isbn")

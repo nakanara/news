@@ -17,7 +17,7 @@ import javax.persistence.*;
  *
  **/
 
-@Entity
+@Entity(name = "TB_NEWS_TAGS")
 @Data
 @Builder
 @NoArgsConstructor

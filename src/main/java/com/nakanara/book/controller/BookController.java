@@ -2,10 +2,18 @@ package com.nakanara.book.controller;
 
 import com.nakanara.book.entity.Book;
 import com.nakanara.book.entity.BookQuestion;
+import com.nakanara.book.entity.MyBook;
 import com.nakanara.book.service.BookService;
 import com.nakanara.core.annotation.ApiInfo;
+import com.nakanara.core.service.MemberService;
 import com.nakanara.support.api.service.SearchAladinBookAPI;
 import com.nakanara.support.api.service.vo.AladinResultVO;
+import com.nakanara.user.entity.UserEntity;
+import com.nakanara.util.http.HttpRequestUtil;
+import com.nakanara.util.http.HttpUtil;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,15 +21,20 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 @RequestMapping("/book")
+@RequiredArgsConstructor
 @Slf4j
 public class BookController {
 
     private static String PREFIX = "/book";
-    private BookService bookService;
+    private final BookService bookService;
 
-    private SearchAladinBookAPI searchAladinBookAPI;
+    private final SearchAladinBookAPI searchAladinBookAPI;
+
+    private final MemberService memberService;
 
 
     @GetMapping("")
@@ -55,10 +68,24 @@ public class BookController {
     @GetMapping("/{isbn13}")
     @ApiInfo(name = "책 ")
     public String viewBook(Model model,
+                           HttpServletRequest request,
                            @PathVariable(name = "isbn13") String isbn13) {
 
 
         Book book = bookService.getBookIsbn13(isbn13);
+
+        // 사용자가 없다면.
+        UserEntity userEntity = HttpRequestUtil.getUser(request);
+        MyBook myBook = null;
+
+        if(userEntity != null) {
+            UserEntity u = memberService.getUser(userEntity.getUserUid());
+            myBook = bookService.getMyBook(u, book);
+        } else {
+            myBook = new MyBook();
+        }
+
+        model.addAttribute("myBook", myBook);
         model.addAttribute("book", book);
         model.addAttribute("questions", bookService.getQuestion(book));
 
@@ -144,14 +171,4 @@ public class BookController {
         return PREFIX + "/readBook";
     }
 
-
-    @Autowired
-    public void setSearchAladinBookAPI(SearchAladinBookAPI searchAladinBookAPI) {
-        this.searchAladinBookAPI = searchAladinBookAPI;
-    }
-
-    @Autowired
-    public void setBookService(BookService bookService) {
-        this.bookService = bookService;
-    }
 }

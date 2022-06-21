@@ -971,5 +971,21 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    (function($){
+
+
+        function init(){
+
+            var page = sessionStorage.getItem('page');
+            if(page) {
+                sessionStorage.setItem('page', '');
+                window.location.href = page;
+            }
+        }
+
+        init();
+    })(jQuery);
+</script>
 <th:block th:replace="/common/footer :: footerFragment"></th:block>
 </html>
