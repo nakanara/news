@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+
+<div class="container">
+    <div class="row">
+        <div class="offset-md-12">
+
+            <input name="keyword" class="form-control" placeholder="검색어를 입력해주세요" th:value="${keyword}">
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <table class="table">
+                <colgroup>
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                <th>제목</th>
+                <th>설명</th>
+                </thead>
+                <tbody>
+                <tr th:each="i: ${result.item}" class="news-link">
+                    <td>
+                        <input type="hidden" name="bookId" th:value="${i.bookId}" />
+                        <input type="hidden" name="isbn" th:value="${i.isbn}" />
+                        <input type="hidden" name="isbn13" th:value="${i.isbn13}" />
+                        <img class="book-thumbnail" th:src="${i.cover}" th:title="${i.title}"/>
+
+                    </td>
+                    <td>
+                        <a th:href="@{/book/__${i.isbn13}__}"><div th:utext="${i.title}"></div></a>
+
+                        <br/>
+                        <div th:utext="${i.author}"></div>
+                        <br/>
+                        <div th:utext="${i.pubDate}"></div>
+
+                        <p>
+                            <div th:utext="${i.description}"></div>
+                        </p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div>
+        <div class="news-pagination">
+
+            <a th:if="${ result.startIndex > 10 }" class="btn btn-success">이전</a>
+
+            <th:block th:each="i : ${#numbers.sequence(1, 10)}">
+
+                <label th:label="${(result.startIndex/10)}"></label>
+                <a th:if="${((result.totalResults % 10) >= i) && (result.startIndex % 10) == i}" class="page-link active" th:attr="pageidx=${i}" href="#" th:text="${i}"></a>
+                <a th:if="${((result.totalResults % 10) >= i) && (result.startIndex % 10) != i}" class="page-link" th:attr="pageidx=${i}" href="#" th:text="${i}"></a>
+
+            </th:block>
+            <!-- 현재 페이지보다 클 경우 -->
+            <a th:if="${ (result.startIndex / 10) < (result.totalResults/10) }" class="btn btn-success">다음</a>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    (function($){
+
+        var
+            $modal = $('#modal'),
+            $keyword = $('input[name=keyword]');
+
+
+        {
+            $keyword.focus();
+        }
+
+        $('input[name=keyword]', $modal).keypress(function(e){
+
+            if(e.keyCode === 13) {
+                e.stopPropagation();
+
+                var $target = $(e.target);
+                var val = $target.val();
+                fnSearch(val, 1);
+            }
+        });
+
+        $('div.news-pagination a.page-link').on('click', function(e){
+
+            var pageidx = $(e.target).attr('pageidx')
+
+            fnSearch($keyword.val(), pageidx);
+        });
+
+        function fnSearch(keyword, start) {
+            var enKeyword = encodeURIComponent(keyword);
+            $modal.load('/book/search?keyword=' + enKeyword + '&start=' + start);
+        }
+
+
+    })(jQuery)
+</script>
+
+
+</html>
