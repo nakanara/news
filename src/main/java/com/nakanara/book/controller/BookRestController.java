@@ -63,6 +63,7 @@ public class BookRestController {
 
 
     @RequestMapping("/search")
+    @ApiInfo(name = "알라딘 도서 검색")
     public ResultVO getSearchBook(Model model,
                                 @RequestParam(name = "keyword", required = false) String keyword,
                                 @RequestParam(name = "start", defaultValue = "1") String start){

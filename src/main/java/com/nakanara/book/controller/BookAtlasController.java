@@ -1,9 +1,8 @@
 package com.nakanara.book.controller;
 
 import com.google.gson.JsonObject;
-import com.nakanara.book.entity.Book;
-import com.nakanara.book.entity.BookQuestion;
-import com.nakanara.book.entity.MyBook;
+import com.nakanara.book.entity.*;
+import com.nakanara.book.service.BookAtlasService;
 import com.nakanara.book.service.BookService;
 import com.nakanara.core.annotation.ApiInfo;
 import com.nakanara.core.service.MemberService;
@@ -19,6 +18,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -27,13 +27,25 @@ import java.util.Map;
 @Slf4j
 public class BookAtlasController {
 
-    private static String PREFIX = "/book/atlas";
+    private static String PREFIX = "/bookatlas";
 
     private final BookService bookService;
 
     private final SearchAladinBookAPI searchAladinBookAPI;
 
     private final MemberService memberService;
+
+    private final BookAtlasService bookAtlasService;
+
+    @GetMapping("")
+    public String getList(Model model,
+                          @RequestParam(name = "page", defaultValue = "1") int page,
+                          @RequestParam(name = "size", defaultValue = "10") int size){
+
+        model.addAttribute("resultVo", bookAtlasService.getBookAtlasList(page, size));
+
+        return PREFIX + "/index";
+    }
 
     @GetMapping("/write")
     public String goBookAtlasWrite(Model model){
@@ -42,10 +54,13 @@ public class BookAtlasController {
     }
 
     @PostMapping("/write")
-    public String goBookAtlasWrite(Model model,
-                                   @RequestBody Map map){
+    public String saveBookAtlasWrite(Model model,
+                                     @ModelAttribute BookAtlas bookAtlas
+                                     ){
 
-        log.info("{}", map);
+        //todo
+        bookAtlasService.saveBookAtlas(bookAtlas);
+
         return PREFIX +  "/write";
     }
 

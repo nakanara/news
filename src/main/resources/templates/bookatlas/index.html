@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="/common/header :: headFragment" ></th:block>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <table class="table">
+                    <thead>
+                    <th>지도명</th>
+                    <th>도서권수</th>
+                    <th>보물수</th>
+                    <th>달성자수</th>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item: ${resultVo.data}" class="news-link">
+                        <td th:text="${item.title}"></td>
+                        <td th:text="${item.bookSize}"></td>
+                        <td th:text="${item.limitCount}"></td>
+                        <td th:text="${item.succCount}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div th:with="pagename='bookAtlas'">
+            <th:block th:replace="/common/listpaging :: paggingFragment"></th:block>
+        </div>
+
+        <div class="row">
+            <div class="offset-md-12">
+                <div class="btn btn-primary" id="btn-write">등록</div>
+                <div class="btn btn-primary" id="btn-searchBook">검색</div>
+            </div>
+        </div>
+
+        <div id="modal" class=""></div>
+
+        <script type="text/javascript">
+            (function($){
+
+
+                $('#btn-write').click(function(){
+                    location.href = '/bookatlas/write';
+                });
+
+            })(jQuery);
+        </script>
+    </div>
+
+
+<th:block th:replace="/common/footer :: footerFragment"></th:block>
+</html>

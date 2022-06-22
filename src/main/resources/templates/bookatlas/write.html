@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="/common/header :: headFragment" ></th:block>
+<style>
+
+</style>
+<div class="container">
+
+  <div id="vueapp">
+
+
+
+    <h1>지도만들기</h1>
+    <div class="row">
+      <div class="offset-md-12">
+        <form id="f" method="post" action="/bookatlas/write">
+
+          <div class="row">
+            <div class="offset-md-12">
+
+              <label for="frm-name">제목</label>
+              <input type="text" class="form-control" id="frm-name" name="batTitle" placeholder="보물지도 이름을 입력하세요">
+
+            </div>
+          </div>
+
+          <div class="row">
+
+            <div class="col-md-8">
+
+              <div class="row">
+
+                <div class="col-md-4" v-for="item in bookAtlasRel">
+                  <p>
+                    <input type="hidden" name="src_book_atlas_id" v-bind:value="item.bookId">
+                    <img v-bind:src="item.cover" v-bind:title="item.title" v-bind:alt="item.title">
+                  </p>
+
+                </div>
+
+                <div class="col-md-3">
+                  <div class="item">Add</div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div>
+
+
+                <div style="height: 100%;">
+
+                  <div style="height: 400px;">
+
+                    <input v-model="searchKeyword" @keyup.enter="fnSearch" placeholder="도서를 검색하세요" class="form-control">
+
+                    <ul style="height: 350px; overflow-y: auto;">
+                      <li v-for="item in items">
+                        <div>
+                          <p>
+                            <span v-bind:title="item.title">{{item.title}}</span><br/>
+                            <img v-bind:src="item.cover" v-bind:title="item.title" v-bind:alt="item.title" @click="fnAddBook(item)">
+                          </p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+
+
+                </div>
+
+              </div>
+            </div>
+
+
+          </div>
+
+
+        </form>
+      </div>
+    </div>
+
+    <div class="row new-btn-group">
+      <div class="offset-md-12">
+        <div class="btn btn-primary" id="btn-write">저장</div>
+        <a href="/news">
+          <div class="btn btn-primary" >목록</div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    const { createApp } = Vue
+
+    createApp({
+      data() {
+        return {
+          message: 'Hello Vue!',
+          count: 0,
+          searchKeyword: '',
+          searchPage: 1,
+          items: [],
+          bookAtlasRel: []
+        }
+      },
+      methods: {
+        callFn(){
+          this.count++;
+        },
+        fnSearch(){
+
+          axios.get('/api/book/search?keyword=' +  encodeURIComponent(this.searchKeyword) ). then (response => {
+            var resultVo = response.data;
+
+          this.items = Array.from(resultVo.data.item);
+
+        });
+        },
+        fnAddBook(item){
+          console.log(item.title);
+
+          var selItem = {
+            title: item.title,
+            cover: item.cover,
+            bookId: item.bookId
+          }
+          this.bookAtlasRel.push(selItem);
+        }
+      }
+    }).mount('#vueapp');
+  </script>
+
+  <script type="text/javascript">
+    (function($){
+      $('#btn-write').click(function(){
+        $('#f').submit();
+      });
+    })(jQuery)
+  </script>
+</div>
+
+
+<th:block th:replace="/common/footer :: footerFragment"></th:block>
+</html>
