@@ -28,7 +28,7 @@ public class AladinResultItemVO {
     private int salesPoint;
     private boolean adult;
     private boolean fixedPrice;
-    private int customerReviewRank;
+    private int customerReviewRank; // 별점
 
     private SeriesInfoVO seriesInfo;
     private SubInfoVO subInfo;

@@ -31,4 +31,21 @@ public class BookRecommend extends BaseEntity {
     private String descr;
 
 
+    /**
+     * 제한 수
+     */
+    private long limitCnt;
+
+    /**
+     * 달성 수
+     */
+    private long succCnt;
+
+    /**
+     * 관련 도서 수
+     */
+    private int bookSize;
+
+
+
 }

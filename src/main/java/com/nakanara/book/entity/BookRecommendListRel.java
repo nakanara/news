@@ -13,7 +13,7 @@ import javax.persistence.*;
  *
  **/
 
-@Entity(name = "TB_BOOK_LIST_REL")
+@Entity(name = "TB_BOOK_RECOMMEND_REL")
 @Data
 public class BookRecommendListRel {
 
@@ -22,8 +22,10 @@ public class BookRecommendListRel {
     private long bookListRelId;
 
     @ManyToOne
+    @JoinColumn(name = "src_book_id")
     private Book book;
 
     @ManyToOne
+    @JoinColumn(name = "src_book_list_id")
     private BookRecommend bookRecommend;
 }

@@ -6,9 +6,13 @@ import com.nakanara.core.annotation.ApiInfo;
 import com.nakanara.core.config.ResultCode;
 import com.nakanara.core.service.MemberService;
 import com.nakanara.core.vo.ResultVO;
+import com.nakanara.support.api.service.SearchAladinBookAPI;
+import com.nakanara.support.api.service.vo.AladinResultVO;
 import com.nakanara.user.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +28,8 @@ public class BookRestController {
 
 
     private final BookService bookService;
+
+    private final SearchAladinBookAPI searchAladinBookAPI;
 
     private final MemberService memberService;
 
@@ -53,6 +59,27 @@ public class BookRestController {
                 .data(likeCount)
                 .build();
 
+    }
+
+
+    @RequestMapping("/search")
+    public ResultVO getSearchBook(Model model,
+                                @RequestParam(name = "keyword", required = false) String keyword,
+                                @RequestParam(name = "start", defaultValue = "1") String start){
+
+        AladinResultVO aladinResultVO = null;
+
+        if(StringUtils.hasLength(keyword)) {
+            aladinResultVO = searchAladinBookAPI.searchBook(keyword, start);
+            bookService.addBookResult(aladinResultVO);
+        } else {
+            aladinResultVO = new AladinResultVO();
+        }
+
+        return ResultVO.builder()
+                .data(aladinResultVO)
+                .code(ResultCode.SUCCESS)
+                .build();
     }
 
 }
