@@ -1,6 +1,7 @@
 package com.nakanara.book.service;
 
 import com.nakanara.book.entity.BookAtlas;
+import com.nakanara.book.entity.BookAtlasRel;
 import com.nakanara.book.repository.BookAtlasRelRepo;
 import com.nakanara.book.repository.BookAtlasRepo;
 import com.nakanara.core.vo.ResultVO;
@@ -34,9 +35,14 @@ public class BookAtlasService {
     }
 
     @Transactional
-    public BookAtlas saveBookAtlas(BookAtlas bookAtlas) {
+    public BookAtlas saveBookAtlas(BookAtlas bookAtlas, List<BookAtlasRel> bookAtlasRels) {
 
         bookAtlasRepo.save(bookAtlas);
+
+        bookAtlasRels.stream().forEach( item -> {
+            item.setBookAtlas(bookAtlas);
+            bookAtlasRelRepo.save(item);
+        });
 
         return bookAtlas;
     }

@@ -53,18 +53,4 @@ public class BookAtlasController {
         return PREFIX +  "/write";
     }
 
-    @PostMapping("/write")
-    public String saveBookAtlasWrite(Model model,
-                                     @ModelAttribute BookAtlas bookAtlas
-                                     ){
-
-        //todo
-        bookAtlasService.saveBookAtlas(bookAtlas);
-
-        return PREFIX +  "/write";
-    }
-
-
-
-
 }

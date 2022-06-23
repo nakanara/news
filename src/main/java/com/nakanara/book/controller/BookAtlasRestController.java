@@ -1,6 +1,10 @@
 package com.nakanara.book.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.JsonObject;
+import com.nakanara.book.entity.Book;
+import com.nakanara.book.entity.BookAtlas;
+import com.nakanara.book.entity.BookAtlasRel;
 import com.nakanara.book.service.BookAtlasService;
 import com.nakanara.book.service.BookService;
 import com.nakanara.core.service.MemberService;
@@ -10,6 +14,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/bookatlas")
@@ -38,11 +46,34 @@ public class BookAtlasRestController {
 
 
     @PostMapping("/write")
-    public String goBookAtlasWrite(Model model,
-                                   @RequestBody JsonObject jsonObject){
+    public ResultVO doBookAtlasWrite(Model model,
+                                   @RequestBody JsonNode jsonNode){
 
-        log.info("{}", jsonObject);
-        return PREFIX +  "/write";
+        log.info("{}", jsonNode);
+
+        Iterator<JsonNode> it = jsonNode.get("bookAtlasRel").iterator();
+
+        List<BookAtlasRel> bookAtlasRels = new ArrayList<>();
+
+        while(it.hasNext()) {
+            long bookId = it.next().get("bookId").asLong();
+
+            bookAtlasRels.add(BookAtlasRel.builder()
+                    .book(Book.builder().bookId(bookId).build())
+                    .build());
+        }
+
+        bookAtlasService.saveBookAtlas(
+                BookAtlas.builder()
+                        .batTitle(jsonNode.get("batTitle").asText())
+                        .batDescr(jsonNode.get("batDescr").asText())
+                        .succCount(jsonNode.get("succCount").asLong())
+                        .limitCount(jsonNode.get("limitCount").asLong())
+                        .bookSize(jsonNode.get("bookSize").asInt())
+                        .build()
+                , bookAtlasRels
+        );
+        return ResultVO.builder().build();
     }
 
 

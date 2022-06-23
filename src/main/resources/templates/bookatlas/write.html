@@ -20,8 +20,15 @@
             <div class="offset-md-12">
 
               <label for="frm-name">제목</label>
-              <input type="text" class="form-control" id="frm-name" name="batTitle" placeholder="보물지도 이름을 입력하세요">
+              <input type="text" class="form-control" id="frm-name" v-model="batTitle" placeholder="보물지도 이름을 입력하세요">
 
+              <input type="text" class="form-control" name="batBadge" placeholder="Badge 업로드해주세요.">
+
+
+              <input type="number" class="form-control" v-model="limitCount" placeholder="보물수를 입력하세요0일 경우 무제한입니다.">
+              <input type="number" class="form-control" v-model="bookSize" placeholder="책수를 입력하세요.">
+
+              <textarea v-model="btnDescr" ></textarea>
             </div>
           </div>
 
@@ -33,14 +40,12 @@
 
                 <div class="col-md-4" v-for="item in bookAtlasRel">
                   <p>
-                    <input type="hidden" name="src_book_atlas_id" v-bind:value="item.bookId">
-                    <img v-bind:src="item.cover" v-bind:title="item.title" v-bind:alt="item.title">
+                    <div>
+                      <input type="hidden" name="src_book_atlas_id" v-bind:value="item.bookId">
+                      <img v-bind:src="item.cover" v-bind:title="item.title" v-bind:alt="item.title">
+                    </div>
                   </p>
 
-                </div>
-
-                <div class="col-md-3">
-                  <div class="item">Add</div>
                 </div>
 
               </div>
@@ -84,7 +89,7 @@
 
     <div class="row new-btn-group">
       <div class="offset-md-12">
-        <div class="btn btn-primary" id="btn-write">저장</div>
+        <div class="btn btn-primary" @click="fnSave()">저1장</div>
         <a href="/news">
           <div class="btn btn-primary" >목록</div>
         </a>
@@ -95,41 +100,63 @@
 
 
   <script>
+
     const { createApp } = Vue
 
     createApp({
       data() {
         return {
-          message: 'Hello Vue!',
-          count: 0,
           searchKeyword: '',
           searchPage: 1,
           items: [],
+
+          batTitle: '',
+          batDescr: '',
+          succCount: 0,
+          limitCount: 0,
+          bookSize: 0,
           bookAtlasRel: []
         }
       },
       methods: {
-        callFn(){
-          this.count++;
-        },
         fnSearch(){
 
           axios.get('/api/book/search?keyword=' +  encodeURIComponent(this.searchKeyword) ). then (response => {
             var resultVo = response.data;
-
-          this.items = Array.from(resultVo.data.item);
-
-        });
+            this.items = Array.from(resultVo.data.item);
+          });
         },
         fnAddBook(item){
-          console.log(item.title);
-
           var selItem = {
             title: item.title,
             cover: item.cover,
             bookId: item.bookId
-          }
+          };
+
           this.bookAtlasRel.push(selItem);
+          this.bookSize = this.bookAtlasRel.length;
+
+        },
+        fnSave(){
+
+          var data = {
+            batTitle: this.batTitle,
+            batDescr: this.batDescr,
+            bookAtlasRel : this.bookAtlasRel,
+            succCount: this.succCount,
+            limitCount: this.limitCount,
+            bookSize: this.bookSize
+
+          };
+
+
+          axios.post('/api/bookatlas/write', data)
+            .then(response => {
+              var resultVo = response.data;
+            })
+            .catch((err) => {
+              console.log(err);
+            })
         }
       }
     }).mount('#vueapp');
@@ -137,9 +164,7 @@
 
   <script type="text/javascript">
     (function($){
-      $('#btn-write').click(function(){
-        $('#f').submit();
-      });
+
     })(jQuery)
   </script>
 </div>
