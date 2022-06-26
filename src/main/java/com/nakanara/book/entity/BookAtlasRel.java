@@ -19,7 +19,7 @@ public class BookAtlasRel extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long bookAtlasRelId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "src_book_atlas_id")
     private BookAtlas bookAtlas;
 

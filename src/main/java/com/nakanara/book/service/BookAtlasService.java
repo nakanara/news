@@ -66,4 +66,9 @@ public class BookAtlasService {
                     .build();
         }
     }
+
+    public List<BookAtlasRel> getBookAtlasRel(BookAtlas bookAtlas) {
+
+        return bookAtlasRelRepo.getBookAtlasRelsByBookAtlas(bookAtlas);
+    }
 }

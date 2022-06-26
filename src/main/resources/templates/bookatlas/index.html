@@ -17,11 +17,22 @@
                     </thead>
                     <tbody>
                     <tr th:each="item: ${resultVo.data}" class="news-link">
-                        <td th:text="${item.title}"></td>
-                        <td th:text="${item.bookSize}"></td>
-                        <td th:text="${item.limitCount}"></td>
-                        <td th:text="${item.succCount}"></td>
+                        <td>
+                            <a th:href="@{/bookatlas/__${item.bookAtlasUid}__}">
+                                <span th:text="${item.batTitle} == null? '<무제>': ${item.batTitle}"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <label th:text="${item.bookSize}" />
+                        </td>
+                        <td>
+                            <label th:text="${item.limitCount}" />
+                        </td>
+                        <td>
+                            <label th:text="${item.succCount}" />
+                        </td>
                     </tr>
+
                     </tbody>
                 </table>
             </div>

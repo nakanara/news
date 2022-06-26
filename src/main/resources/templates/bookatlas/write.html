@@ -20,15 +20,16 @@
             <div class="offset-md-12">
 
               <label for="frm-name">제목</label>
-              <input type="text" class="form-control" id="frm-name" v-model="batTitle" placeholder="보물지도 이름을 입력하세요">
+              <input type="text" class="form-control" id="frm-name" v-model="batTitle" name="batTitle" placeholder="보물지도 이름을 입력하세요">
 
               <input type="text" class="form-control" name="batBadge" placeholder="Badge 업로드해주세요.">
 
 
-              <input type="number" class="form-control" v-model="limitCount" placeholder="보물수를 입력하세요0일 경우 무제한입니다.">
-              <input type="number" class="form-control" v-model="bookSize" placeholder="책수를 입력하세요.">
+              <input type="number" class="form-control" v-model="limitCount" name="limitCount" placeholder="보물수를 입력하세요0일 경우 무제한입니다.">
+              <input type="hidden" class="form-control" v-model="bookSize" name="bookSize" placeholder="책수를 입력하세요.">
 
-              <textarea v-model="btnDescr" ></textarea>
+              <textarea id="editor" name="batDescr"></textarea>
+
             </div>
           </div>
 
@@ -41,7 +42,7 @@
                 <div class="col-md-4" v-for="item in bookAtlasRel">
                   <p>
                     <div>
-                      <input type="hidden" name="src_book_atlas_id" v-bind:value="item.bookId">
+                      <input type="hidden" name="src_book_id[]" v-bind:value="item.bookId">
                       <img v-bind:src="item.cover" v-bind:title="item.title" v-bind:alt="item.title">
                     </div>
                   </p>
@@ -89,7 +90,7 @@
 
     <div class="row new-btn-group">
       <div class="offset-md-12">
-        <div class="btn btn-primary" @click="fnSave()">저1장</div>
+        <div class="btn btn-primary" id="btn-write">저장</div>
         <a href="/news">
           <div class="btn btn-primary" >목록</div>
         </a>
@@ -149,6 +150,8 @@
 
           };
 
+          console.log(data);
+/*
 
           axios.post('/api/bookatlas/write', data)
             .then(response => {
@@ -157,6 +160,7 @@
             .catch((err) => {
               console.log(err);
             })
+          */
         }
       }
     }).mount('#vueapp');
@@ -164,6 +168,13 @@
 
   <script type="text/javascript">
     (function($){
+      var editor = ClassicEditor.create( document.querySelector( '#editor' ), {} );
+
+
+      $('#btn-write').click(function(){
+        $('#f').submit();
+      });
+
 
     })(jQuery)
   </script>

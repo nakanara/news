@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="/common/header :: headFragment" ></th:block>
+<style>
+
+</style>
+<div class="container">
+
+  <div id="vueapp">
+
+
+
+    <h1>지도만들기</h1>
+    <div class="row">
+      <div class="offset-md-12">
+        <div th:object="${bookAtlas}" class="news">
+          <input type="hidden" id="bookAtlasUid" th:value="*{bookAtlasUid}" />
+
+          <div class="row">
+            <div class="offset-md-12">
+
+              <div class="box-article-head">
+                <div class="row box-view-title-area">
+                  <div class="offset-md-12">
+                    <label class="news-view-title" th:text="*{batTitle}"></label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6">
+                    보물 수 <label th:text="*{limitCount}"></label>
+                  </div>
+
+                  <div class="col-md-6">
+                    달성자 수 <label th:text="*{succCount}"></label>
+                  </div>
+                </div>
+              </div>
+
+
+              <!-- 본문 -->
+              <div class="news-article-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div th:utext="*{batDescr}"></div>
+                  </div>
+                </div>
+              </div>
+              <!-- //본문 -->
+
+              <div class="row">
+
+                <div class="col-md-8">
+
+                  <div class="row">
+
+                    <div class="col-md-4" th:each="item : ${bookAtlasRels}">
+                      <p>
+                      <div>
+                        <img th:src="${item.book.image}" th:title="${item.book.title}">
+                      </div>
+                      </p>
+
+                    </div>
+
+                  </div>
+                </div>
+
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="row new-btn-group">
+      <div class="offset-md-12">
+        <a href="/bookatlas">
+          <div class="btn btn-primary" >목록</div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+
+  <script type="text/javascript">
+    (function($){
+
+    })(jQuery)
+  </script>
+</div>
+
+
+<th:block th:replace="/common/footer :: footerFragment"></th:block>
+</html>

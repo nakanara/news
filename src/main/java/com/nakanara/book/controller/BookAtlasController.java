@@ -1,23 +1,20 @@
 package com.nakanara.book.controller;
 
-import com.google.gson.JsonObject;
-import com.nakanara.book.entity.*;
+import com.nakanara.book.entity.Book;
+import com.nakanara.book.entity.BookAtlas;
+import com.nakanara.book.entity.BookAtlasRel;
 import com.nakanara.book.service.BookAtlasService;
 import com.nakanara.book.service.BookService;
-import com.nakanara.core.annotation.ApiInfo;
 import com.nakanara.core.service.MemberService;
+import com.nakanara.news.entity.News;
 import com.nakanara.support.api.service.SearchAladinBookAPI;
-import com.nakanara.support.api.service.vo.AladinResultVO;
-import com.nakanara.user.entity.UserEntity;
-import com.nakanara.util.http.HttpRequestUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -47,10 +44,49 @@ public class BookAtlasController {
         return PREFIX + "/index";
     }
 
+    @GetMapping("/{bookAtlasUid}")
+    public String viewBookAtlas(Model model,
+                           @PathVariable long bookAtlasUid) {
+
+        BookAtlas bookAtlas = bookAtlasService.getBookAtlas(bookAtlasUid);
+
+        List<BookAtlasRel> bookAtlasRels = bookAtlasService.getBookAtlasRel(bookAtlas);
+
+        model.addAttribute("bookAtlas", bookAtlas);
+        model.addAttribute("bookAtlasRels", bookAtlasRels);
+
+        return PREFIX + "/view";
+    }
+
+
+
     @GetMapping("/write")
     public String goBookAtlasWrite(Model model){
 
         return PREFIX +  "/write";
+    }
+
+    @PostMapping("/write")
+    public String doBookAtlasWrite(Model model,
+                                   @ModelAttribute(name = "bookatlas") BookAtlas bookAtlas,
+                                   @RequestParam(value = "src_book_id[]") List<Long> srcBookIds){
+
+        log.info("{}", bookAtlas);
+        List<BookAtlasRel> bookAtlasRels = new ArrayList<>();
+
+        srcBookIds.stream().forEach( s -> {
+            bookAtlasRels.add(BookAtlasRel.builder()
+                    .book(Book.builder().bookId(s).build())
+                    .build());
+        });
+
+
+        bookAtlasService.saveBookAtlas(
+                bookAtlas
+                , bookAtlasRels
+        );
+
+        return "redirect:" + PREFIX;
     }
 
 }
