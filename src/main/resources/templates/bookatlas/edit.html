@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="/common/header :: headFragment" ></th:block>
+<style>
+
+</style>
+<div class="container">
+
+  <div id="vueapp">
+
+
+    <h1>지도만들기</h1>
+    <div class="row">
+      <div class="offset-md-12">
+        <form id="f" method="post" action="/bookatlas/write" th:object="${bookAtlas}">
+
+          <input type="hidden" name="bookAtlasUid" class="form-control" th:field="*{bookAtlasUid}">
+
+          <div class="row">
+            <div class="offset-md-12">
+
+              <label for="frm-name">제목</label>
+              <input type="text" class="form-control" id="frm-name" th:value="*{batTitle}" name="batTitle" placeholder="보물지도 이름을 입력하세요">
+
+              <input type="text" class="form-control" name="batBadge" placeholder="Badge 업로드해주세요.">
+
+
+              <input type="number" class="form-control" v-model="limitCount" th:value="*{limitCount}" name="limitCount" placeholder="보물수를 입력하세요0일 경우 무제한입니다.">
+              <input type="hidden" class="form-control" v-model="bookSize" th:value="*{bookSize}" name="bookSize" placeholder="책수를 입력하세요.">
+
+              <textarea id="editor" name="batDescr" th:utext="*{batDescr}"></textarea>
+
+            </div>
+          </div>
+
+          <div class="row">
+
+            <div class="col-md-8">
+
+              <div class="row">
+
+                <div class="col-md-4" v-for="item in bookAtlasRel">
+                  <p>
+                    <div>
+                      <input type="hidden" name="src_book_id[]" v-bind:value="item.bookId">
+                      <img v-bind:src="item.cover" v-bind:title="item.title" v-bind:alt="item.title">
+                    </div>
+                  </p>
+
+                </div>
+
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div>
+
+
+                <div style="height: 100%;">
+
+                  <div style="height: 400px;">
+
+                    <input v-model="searchKeyword" @keyup.enter="fnSearch" placeholder="도서를 검색하세요" class="form-control">
+
+                    <ul style="height: 350px; overflow-y: auto;">
+                      <li v-for="item in items">
+                        <div>
+                          <p>
+                            <span v-bind:title="item.title">{{item.title}}</span><br/>
+                            <img v-bind:src="item.cover" v-bind:title="item.title" v-bind:alt="item.title" @click="fnAddBook(item)">
+                          </p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+
+
+                </div>
+
+              </div>
+            </div>
+
+
+          </div>
+
+
+        </form>
+      </div>
+    </div>
+
+    <div class="row new-btn-group">
+      <div class="offset-md-12">
+        <div class="btn btn-primary" id="btn-write">저장</div>
+        <a href="/news">
+          <div class="btn btn-primary" >목록</div>
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+
+    const { createApp } = Vue
+
+    createApp({
+      data() {
+        return {
+          searchKeyword: '',
+          searchPage: 1,
+          items: [],
+
+          batTitle: '',
+          batDescr: '',
+          succCount: 0,
+          limitCount: 0,
+          bookSize: 0,
+          bookAtlasRel: []
+        }
+      },
+      methods: {
+        fnSearch(){
+
+          axios.get('/api/book/search?keyword=' +  encodeURIComponent(this.searchKeyword) ). then (response => {
+            var resultVo = response.data;
+            this.items = Array.from(resultVo.data.item);
+          });
+        },
+        fnAddBook(item){
+          var selItem = {
+            title: item.title,
+            cover: item.cover,
+            bookId: item.bookId
+          };
+
+          this.bookAtlasRel.push(selItem);
+          this.bookSize = this.bookAtlasRel.length;
+
+        },
+        fnSave(){
+
+          var data = {
+            batTitle: this.batTitle,
+            batDescr: this.batDescr,
+            bookAtlasRel : this.bookAtlasRel,
+            succCount: this.succCount,
+            limitCount: this.limitCount,
+            bookSize: this.bookSize
+
+          };
+
+          console.log(data);
+/*
+
+          axios.post('/api/bookatlas/write', data)
+            .then(response => {
+              var resultVo = response.data;
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+          */
+        }
+      }
+    }).mount('#vueapp');
+  </script>
+
+  <script type="text/javascript">
+    (function($){
+      var editor = ClassicEditor.create( document.querySelector( '#editor' ), {} );
+
+
+      $('#btn-write').click(function(){
+        $('#f').submit();
+      });
+
+
+    })(jQuery)
+  </script>
+</div>
+
+
+<th:block th:replace="/common/footer :: footerFragment"></th:block>
+</html>

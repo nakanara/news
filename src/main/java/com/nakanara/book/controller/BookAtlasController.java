@@ -71,7 +71,6 @@ public class BookAtlasController {
                                    @ModelAttribute(name = "bookatlas") BookAtlas bookAtlas,
                                    @RequestParam(value = "src_book_id[]") List<Long> srcBookIds){
 
-        log.info("{}", bookAtlas);
         List<BookAtlasRel> bookAtlasRels = new ArrayList<>();
 
         srcBookIds.stream().forEach( s -> {
@@ -87,6 +86,20 @@ public class BookAtlasController {
         );
 
         return "redirect:" + PREFIX;
+    }
+
+    @GetMapping("/edit/{bookAtlasUid}")
+    public String editNews(Model model,
+                           @PathVariable(name = "bookAtlasUid") long bookAtlasUid){
+
+        BookAtlas bookAtlas = bookAtlasService.getBookAtlas(bookAtlasUid);
+
+        List<BookAtlasRel> bookAtlasRels = bookAtlasService.getBookAtlasRel(bookAtlas);
+
+        model.addAttribute("bookAtlas", bookAtlas);
+        model.addAttribute("bookAtlasRels", bookAtlasRels);
+
+        return PREFIX + "/edit";
     }
 
 }
