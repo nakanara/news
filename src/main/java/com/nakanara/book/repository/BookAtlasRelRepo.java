@@ -9,4 +9,6 @@ import java.util.List;
 public interface BookAtlasRelRepo extends JpaRepository<BookAtlasRel, Long> {
 
     List<BookAtlasRel> getBookAtlasRelsByBookAtlas(BookAtlas BookAtlas);
+
+    int deleteBookAtlasRelsByBookAtlas(BookAtlas bookAtlas);
 }

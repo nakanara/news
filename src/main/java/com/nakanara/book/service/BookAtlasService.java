@@ -71,4 +71,18 @@ public class BookAtlasService {
 
         return bookAtlasRelRepo.getBookAtlasRelsByBookAtlas(bookAtlas);
     }
+
+    /**
+     * 도서 지도 - 삭제
+     * @param bookAtlasUid
+     */
+    @Transactional
+    public void deleteAtlas(long bookAtlasUid) {
+
+        BookAtlas bookAtlas = bookAtlasRepo.getById(bookAtlasUid);
+
+        bookAtlasRelRepo.deleteBookAtlasRelsByBookAtlas(bookAtlas);
+        bookAtlasRepo.delete(bookAtlas);
+
+    }
 }

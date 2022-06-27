@@ -2,6 +2,7 @@ package com.nakanara.support.api.service;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
+import com.nakanara.support.api.service.vo.AladinResultItemVO;
 import com.nakanara.support.api.service.vo.AladinResultVO;
 import com.nakanara.util.http.HttpUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * package : com.nakanara.support.api.service
@@ -49,6 +52,12 @@ public class SearchAladinBookAPI {
 
         Gson gson = new Gson();
         AladinResultVO aladinResultVO =  gson.fromJson(responseBody, AladinResultVO.class);
+
+        aladinResultVO.setItem(
+                aladinResultVO.getItem().stream()
+                .filter(aladinResultItemVO -> aladinResultItemVO.isIsbn13() ).collect(Collectors.toList())
+        );
+
 
         return aladinResultVO;
     }

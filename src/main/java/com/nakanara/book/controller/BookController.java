@@ -165,7 +165,25 @@ public class BookController {
 
     @RequestMapping("/read/{isbn13}")
     @ApiInfo(name = "책 읽기 페이지 전환")
-    public String goReadBook(){
+    public String goReadBook(Model model,
+                             HttpServletRequest request,
+                             @PathVariable(name = "isbn13") String isbn13){
+
+        Book book = bookService.getBookIsbn13(isbn13);
+
+        // 사용자가 없다면.
+        UserEntity userEntity = HttpRequestUtil.getUser(request);
+        MyBook myBook = null;
+
+        if(userEntity != null) {
+            UserEntity u = memberService.getUser(userEntity.getUserUid());
+            myBook = bookService.getMyBook(u, book);
+        } else {
+            myBook = new MyBook();
+        }
+
+        model.addAttribute("myBook", myBook);
+        model.addAttribute("book", book);
 
 
         return PREFIX + "/readBook";

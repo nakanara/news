@@ -19,7 +19,7 @@
                     <tr th:each="item: ${resultVo.data}" class="news-link">
                         <td>
                             <a th:href="@{/bookatlas/__${item.bookAtlasUid}__}">
-                                <span th:text="${item.batTitle} == null? '<무제>': ${item.batTitle}"></span>
+                                <span th:text="${item.batTitle} == null or ${item.batTitle} == '' ? '<무제>': ${item.batTitle}"></span>
                             </a>
                         </td>
                         <td>

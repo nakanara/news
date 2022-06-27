@@ -76,6 +76,14 @@ public class BookAtlasRestController {
         return ResultVO.builder().build();
     }
 
+    @DeleteMapping("/{bookAtlasUid}")
+    public @ResponseBody ResultVO deleteAtlas(@PathVariable long bookAtlasUid) {
+
+        bookAtlasService.deleteAtlas(bookAtlasUid);
+
+        return ResultVO.builder().build();
+
+    }
 
 
 

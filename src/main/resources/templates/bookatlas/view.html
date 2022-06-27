@@ -57,8 +57,10 @@
 
                     <div class="col-md-4" th:each="item : ${bookAtlasRels}">
                       <p>
-                      <div>
-                        <img th:src="${item.book.image}" th:title="${item.book.title}">
+                      <div class="bookatlas-book" data-read="Y" data-readdt="읽음 2022.06.27">
+                        <a th:href="@{/book/__${item.book.isbn13}__}">
+                          <img th:src="${item.book.image}" th:title="${item.book.title}">
+                        </a>
                       </div>
                       </p>
 
@@ -79,6 +81,7 @@
       <div class="offset-md-12">
         <div class="btn btn-primary news-btn-link" data-href="/bookatlas" >목록</div>
         <div class="btn btn-primary" id="btn-modify">수정</div>
+        <div class="btn btn-primary" id="btn-delete">삭제</div>
       </div>
 
     </div>
@@ -88,6 +91,23 @@
   <script type="text/javascript">
     (function($){
       $app.initForm();
+
+      $('#btn-delete').click(function(){
+
+        if(confirm('[[#{label.del.message}]]')) {
+          let id = $('#bookAtlasUid').val();
+
+          $.ajax({
+            url: '/api/bookatlas/' + id,
+            method: 'delete',
+            success: function (e) {
+              // 삭제/성공
+              window.location.href = '/bookatlas';
+            }
+
+          });
+        }
+      });
 
       $('#btn-modify').click(function(){
 

@@ -1,6 +1,7 @@
 package com.nakanara.support.api.service.vo;
 
 import lombok.Data;
+import org.springframework.util.StringUtils;
 
 @Data
 public class AladinResultItemVO {
@@ -32,4 +33,8 @@ public class AladinResultItemVO {
 
     private SeriesInfoVO seriesInfo;
     private SubInfoVO subInfo;
+
+    public boolean isIsbn13() {
+        return StringUtils.hasLength(this.isbn13);
+    }
 }
