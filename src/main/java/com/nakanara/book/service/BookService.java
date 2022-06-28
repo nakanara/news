@@ -90,6 +90,10 @@ public class BookService {
         return bookQuestionRepository.findAllByBookOrderByRecommendDesc(book);
     }
 
+    public List<BookQuestion> getQuestion(Book book, long page) {
+        return bookQuestionRepository.findAllByBookAndPageGreaterThanOrderByRecommendDesc(book, page);
+    }
+
     public void addQuestionRecommend(long bookQuestionId) {
         BookQuestion bookQuestion = bookQuestionRepository.findById(bookQuestionId).orElse(null);
 

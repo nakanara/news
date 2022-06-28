@@ -62,3 +62,16 @@ div.bookatlas-book[data-read=Y]:after {
     min-width:2em;
     font-weight:bold;
 }
+
+.countdown ul li {
+    display: inline-block;
+    font-size: 1.5em;
+    list-style-type: none;
+    padding: 1em;
+    text-transform: uppercase;
+}
+
+.countdown ul li span {
+    display: block;
+    font-size: 4.5rem;
+}

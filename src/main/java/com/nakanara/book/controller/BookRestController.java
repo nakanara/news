@@ -1,6 +1,8 @@
 package com.nakanara.book.controller;
 
 import com.google.gson.JsonObject;
+import com.nakanara.book.entity.Book;
+import com.nakanara.book.entity.BookQuestion;
 import com.nakanara.book.service.BookService;
 import com.nakanara.core.annotation.ApiInfo;
 import com.nakanara.core.config.ResultCode;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.lang.reflect.Member;
+import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -81,6 +84,32 @@ public class BookRestController {
                 .data(aladinResultVO)
                 .code(ResultCode.SUCCESS)
                 .build();
+    }
+
+
+    /**
+     * 질문 등록
+     * @param model
+     * @param bookId
+     * @param page
+     * @param error
+     * @return
+     */
+    @GetMapping("/{bookId}/question/{page}")
+    public ResultVO addBookQuestion(Model model,
+                                  @PathVariable(name = "bookId", required = true) long bookId,
+                                  @PathVariable(name = "page", required = false, value = "0") long page,
+                                  Error error) {
+
+
+        Book book = bookService.getBook(bookId);
+        List<BookQuestion> bookQuestions = bookService.getQuestion(book, page);
+
+        return ResultVO.builder()
+                .data(bookQuestions)
+                .code(ResultCode.SUCCESS)
+                .build();
+
     }
 
 }

@@ -13,6 +13,7 @@
 
             <div th:object="${book}" class="news">
                 <input type="hidden" id="bookId" th:value="*{bookId}" />
+                <input type="hidden" id="isbn13" th:value="*{isbn13}" />
 
                 <div class="box-article-head">
                     <div class="row box-view-title-area">
@@ -64,32 +65,34 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    <div id="countdown" style="height: 100px;">
+                                    <div class="countdown">
                                         <ul>
-                                            <li><span id="days">{{days}}</span></li>
-                                            <li><span id="hours">{{hours}}</span></li>
-                                            <li><span id="minutes">{{minutes}}</span></li>
-                                            <li><span id="seconds" v-bind="seconds" read>{{seconds}}</span></li>
-                                            <input v-model="seconds">
+                                            <li><span id="hours">{{hours}}</span>시간</li>
+                                            <li><span id="minutes">{{minutes}}</span>분</li>
+                                            <li><span id="seconds">{{seconds}}</span>초</li>
+
                                         </ul>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12">
-                                    <div class="btn btn-primary" @click="fnStart()">읽기시작</div>
-                                    <div class="btn btn-primary" @click="fnStop()">읽기종료</div>
+                                    <span v-if="reading == 'Y'">
+                                        <input name="endPage" v-model="endPage" placeholder="0 읽기전, 999999 다 읽음, 읽은 페이지를 입력하세요">
+                                        <div class="btn btn-primary" @click="fnStop()">읽기종료</div>
+                                        <div class="btn btn-primary" @click="fnReadFinish()">책 다읽음</div>
+                                    </span>
+                                    <span v-else>
+                                        <input name="endPage" v-model="beforePage" placeholder="이전 페이지">
+                                        <div class="btn btn-primary" @click="fnStart()">읽기시작</div>
+                                    </span>
+
+
                                     <div class="btn btn-primary">구매하기</div>
                                     <span class="book-icon" title="출력하기"><i class="fa-solid fa-print"></i></span>
                                     <span class="book-icon" title="이메일로 공유"><i class="fa-regular fa-envelope"></i></span>
                                 </div>
 
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12 book-description">
-                            <p th:utext="*{description}"></p>
                         </div>
                     </div>
 
@@ -105,13 +108,6 @@
 
                 <!-- 질문 -->
                 <div>
-                    <div class="row">
-                        <div class="col-md-12 wf-comment">
-                            <textarea name="question" class="comment" id="book-question" placeholder="질문을 입력해 주세요."></textarea>
-                            <div class="btn btn-primary" id="btn-add-question">등록</div>
-                        </div>
-                    </div>
-
 
                     <!-- 질문 View -->
                     <div class="row">
@@ -144,7 +140,7 @@
 
     <script>
 
-        const { createApp } = Vue
+        const { createApp } = Vue;
         const second = 1000,
             minute = second * 60,
             hour = minute * 60,
@@ -161,45 +157,56 @@
                     days: '',
                     hours: '',
                     minutes: '',
-                    seconds: '',
+                    seconds: 0,
+                    reading: 'N',
+                    endPage: '',
 
+                    bookId:'',
+                    isbn13:'',
+                    items: [],
                 }
             },
             methods: {
                 fnStart(){
+                    // 이미 시작되었다면
+                    if(this.interval1) return;
 
-                    console.log('start');
+
+                    this.reading = 'Y';
                     let today = new Date().getTime();
-
-                    console.log(today);
                     this.startTime = today;
-                    console.log('start=> ' + this.startTime);
 
                     this.interval1 = setInterval(function() {
 
                         const now = new Date().getTime();
-
-                        console.log('now =' + now);
-                        console.log('startTime =' + today);
-
-                        this.distance = now - today;
+                        let distance = now - today;
+                        this.distance = distance;
                         this.days= Math.floor(distance / (day)),
-                        this.hours = Math.floor((distance % (day)) / (hour)),
+                        // this.hours = Math.floor((distance % (day)) / (hour)), 24시간으로 나누지 않음.
+                        this.hours = Math.floor((distance) / (hour)),
                         this.minutes = Math.floor((distance % (hour)) / (minute)),
                         this.seconds = Math.floor((distance % (minute)) / second);
 
-                        console.log('timer =' + this.distance);
-                        console.log('seconds =' + this.seconds);
                         //
-                    }, 1000)
-
-
-
-
+                    }.bind(this), 1000)
                 },
                 fnStop(){
-                    console.log('stop');
                     clearInterval(this.interval1);
+                    this.reading = 'N';
+                    this.interval1 = null;
+                    this.beforePage = this.endPage;
+                    fnSearchQuest();
+                },
+                fnReadFinish(){
+                    console.log('책 다 읽음');
+                    clearInterval(this.interval1);
+                },
+                fnSearchQuest(){
+                    console.log(this.bookId);
+                //     axios.get('/api/book/{id}/question/{page}'). then (response => {
+                //         var resultVo = response.data;
+                //     this.items = Array.from(resultVo.data.item);
+                // });
                 }
             }
         }).mount('#vueapp');

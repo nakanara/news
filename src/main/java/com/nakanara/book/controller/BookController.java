@@ -128,6 +128,7 @@ public class BookController {
         return PREFIX + "/view :: #questionTable";
     }
 
+
     @PostMapping("/{bookId}/like/{bookQuestionId}")
     public String addQuestionRecommend(Model model,
                                   @PathVariable("bookId") long bookId,
