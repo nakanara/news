@@ -36,6 +36,9 @@ public class BookAtlas extends BaseEntity {
      */
     private long succCount;
 
+
+    // private int likeCount = 0;
+
     /**
      * 책 권수
      */

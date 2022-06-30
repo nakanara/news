@@ -38,10 +38,11 @@ public class BookAtlasRestController {
 
     @RequestMapping("/getList")
     public ResultVO getList(Model model,
+                            @RequestParam(name = "keyword", defaultValue = "") String keyword,
                             @RequestParam(name = "page", defaultValue = "1") int page,
                             @RequestParam(name = "size", defaultValue = "10") int size){
 
-        return bookAtlasService.getBookAtlasList(page, size);
+        return bookAtlasService.getBookAtlasList(keyword, page, size);
     }
 
 

@@ -36,10 +36,12 @@ public class BookAtlasController {
 
     @GetMapping("")
     public String getList(Model model,
+                          @RequestParam(name = "keyword", defaultValue = "") String keyword,
                           @RequestParam(name = "page", defaultValue = "1") int page,
                           @RequestParam(name = "size", defaultValue = "10") int size){
 
-        model.addAttribute("resultVo", bookAtlasService.getBookAtlasList(page, size));
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("resultVo", bookAtlasService.getBookAtlasList(keyword, page, size));
 
         return PREFIX + "/index";
     }

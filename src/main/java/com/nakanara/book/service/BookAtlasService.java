@@ -47,9 +47,10 @@ public class BookAtlasService {
         return bookAtlas;
     }
 
-    public ResultVO getBookAtlasList(int page, int size) {
+    public ResultVO getBookAtlasList(String keyword, int page, int size) {
 
-        Page<BookAtlas> pagedResult = bookAtlasRepo.findAll(PageRequest.of(page-1, size, Sort.by("bookAtlasUid").descending()));
+        Page<BookAtlas> pagedResult = bookAtlasRepo.findAllByBatTitleLike("%"+ keyword + "%", PageRequest.of(page-1, size, Sort.by("bookAtlasUid").descending()));
+//        Page<BookAtlas> pagedResult = bookAtlasRepo.findAll(PageRequest.of(page-1, size, Sort.by("bookAtlasUid").descending()));
 
         log.info("{}", pagedResult.toString());
 
