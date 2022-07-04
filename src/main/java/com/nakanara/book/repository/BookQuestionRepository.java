@@ -22,4 +22,5 @@ public interface BookQuestionRepository extends JpaRepository<BookQuestion, Long
      * @return
      */
     List<BookQuestion> findAllByBookAndPageGreaterThanOrderByRecommendDesc(Book book, long page);
+    List<BookQuestion> findAllByBookAndPageIsLessThanEqualOrderByRecommendDesc(Book book, long page);
 }

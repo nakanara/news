@@ -9,215 +9,180 @@
 <div class="container">
     <div id="vueapp">
         <div class="row">
-        <div class="offset-md-12">
+            <div class="offset-md-12">
 
-            <div th:object="${book}" class="news">
-                <input type="hidden" id="bookId" th:value="*{bookId}" />
-                <input type="hidden" id="isbn13" th:value="*{isbn13}" />
+                <div th:object="${book}" class="news">
+                    <input type="hidden" id="bookId" th:value="*{bookId}" />
+                    <input type="hidden" id="isbn13" th:value="*{isbn13}" />
 
-                <div class="box-article-head">
-                    <div class="row box-view-title-area">
-                        <div class="col-md-12">
-                            <a th:href="@{__*{link}__}" target="_blank"><p class="book-title" th:utext="*{title}"></p></a>
+                    <div class="box-article-head">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="book-author" th:text="*{author}"></label>
+                                <label class="book-publisher" th:text="*{publisher}"></label>
+                                <label class="book-publisher">현재 읽고 있는 사람(12명)</label>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-12">
-                            <label class="book-author" th:text="*{author}"></label>
-                            <label class="book-publisher" th:text="*{publisher}"></label>
-                            <label class="book-publisher">현재 읽고 있는 사람(12명)</label>
-                        </div>
-                    </div>
-                </div>
+                    <div>
 
-                <div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span class="book-image-area">
+                                    <img th:src="*{image}" class="book-image">
+                                </span>
+                            </div>
 
-                    <div class="row">
-                        <div class="col-md-4">
-                            <span class="book-image-area">
-                                <img th:src="*{image}" class="book-image">
-                            </span>
+                            <div class="col-md-8">
+                                <div class="row">
 
-                        </div>
+                                    <div class="col-md-12">
+                                        <div class="countdown">
+                                            <ul>
+                                                <li><span id="hours">0</span>시간</li>
+                                                <li><span id="minutes">0</span>분</li>
+                                                <li><span id="seconds">0</span>초</li>
 
-                        <div class="col-md-8">
-                            <div class="row">
-
-                                <div class="col-md-12">
-                                    <div class="countdown">
-                                        <ul>
-                                            <li><span id="hours">{{hours}}</span>시간</li>
-                                            <li><span id="minutes">{{minutes}}</span>분</li>
-                                            <li><span id="seconds">{{seconds}}</span>초</li>
-
-                                        </ul>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="col-md-12">
-                                    <span v-if="reading == 'Y'">
-                                        <input name="endPage" v-model="endPage" placeholder="0 읽기전, 999999 다 읽음, 읽은 페이지를 입력하세요">
-                                        <div class="btn btn-primary" @click="fnStop()">읽기종료</div>
-                                        <div class="btn btn-primary" @click="fnReadFinish()">책 다읽음</div>
-                                    </span>
-                                    <span v-else>
-                                        <input name="endPage" v-model="beforePage" placeholder="이전 페이지">
-                                        <div class="btn btn-primary" @click="fnStart()">읽기시작</div>
-                                    </span>
+                                    <div class="col-md-12">
+                                        <input name="endPage" placeholder="0 읽기전, 999999 다 읽음, 읽은 페이지를 입력하세요">
+                                        <div class="btn btn-primary btnReadStart">읽기시작</div>
+                                        <div id="btnReadStop" class="btn btn-primary btnReadStop" @click="fnStop()">읽기종료</div>
+                                        <div class="btn btn-primary btnReadFinish" @click="fnReadFinish()">책 다읽음</div>
+                                        <div class="btn btn-primary">공유하기</div>
 
-
-                                    <div class="btn btn-primary">공유하기</div>
+                                    </div>
 
                                 </div>
-
                             </div>
                         </div>
+
                     </div>
 
-                </div>
-
-                <!-- 버튼 -->
-                <div class="row" style="padding-top: 10px;">
-                    <div class="offset-md-12" style="text-align: right;">
-                        <div class="btn btn-primary news-btn-link" data-href="/book" >목록</div>
-                        <div class="btn btn-primary" id="btn-question">질문하기</div>
-                        <div class="btn btn-primary" id="btn-answer">질문보기</div>
-                    </div>
-
-                    <div class="col-md-12 wf-comment">
-                        <input name="page" type="number" class="form-control" id="book-question-page" placeholder="0 책 읽기전, -1 다 읽은 후, 그 외 페이지">
-                        <textarea name="question" class="comment" id="book-question" placeholder="질문을 입력해 주세요."></textarea>
-                        <div class="btn btn-primary" id="btn-add-question">등록</div>
-                    </div>
-
-                </div>
-
-                <!-- 질문 -->
-                <div>
-
-                    <!-- 질문 View -->
-                    <div class="row">
-                        <div class="col-md-12 wf-comment box-comment">
-                            <div id="questionTable" class="box-comment-list">
-                                <ul>
-                                    <li th:each="item : ${questions}" >
-                                        <span class="box-comment-meta btn-question-like" th:data="${item.bookQuestionId}">
-                                            <i class="fa-regular fa-thumbs-up" ></i>
-
-                                            <span class="nickname">NickName</span>
-                                        </span>
-                                        <p th:utext="${item.question}"></p>
-
-                                    </li>
-                                </ul>
-                            </div>
+                    <!-- 버튼 -->
+                    <div class="row" style="padding-top: 10px;">
+                        <div class="offset-md-12" style="text-align: right;">
+                            <div class="btn btn-primary news-btn-link" data-href="/book" >목록</div>
+                            <div class="btn btn-primary" id="btn-question">질문하기</div>
+                            <div class="btn btn-primary" id="btn-answer">질문보기</div>
                         </div>
+
                     </div>
 
-                    <!-- //질문 View -->
-                </div>
 
+                </div>
 
             </div>
-
-        </div>
         </div>
     </div>
+    <div>
+        <!-- 질문 -->
+        <th:block th:replace="/book/fragment/question :: questingFragment"></th:block>
+    </div>
 
-    <script>
-
-        const { createApp } = Vue;
-        const second = 1000,
+  <script type="text/javascript">
+    (function($){
+        var bookId = $('#bookId').val();
+        var bookIsbn13 = $('#bookIsbn13').val();
+        var second = 1000,
             minute = second * 60,
             hour = minute * 60,
             day = hour * 24,
             interval1 = '';
 
+        var $hours = $('#hours'),
+            $minutes = $('#minutes'),
+            $seconds = $('#seconds');
 
-        createApp({
-            data() {
-                return {
-                    timer: '',
-                    startTime: '',
-                    distance: '',
-                    days: '',
-                    hours: '',
-                    minutes: '',
-                    seconds: 0,
-                    reading: 'N',
-                    endPage: '',
+        var data = {
 
-                    bookId:'',
-                    isbn13:'',
-                    items: [],
-                }
-            },
-            methods: {
-                fnStart(){
-                    // 이미 시작되었다면
-                    if(this.interval1) return;
+            timer: '',
+            startTime: '',
+            distance: '',
+            days: '',
+            hours: '',
+            minutes: '',
+            seconds: 0,
+            reading: 'N',
+            endPage: '',
 
+            bookId:'',
+            isbn13:'',
+            items: [],
+        };
 
-                    this.reading = 'Y';
-                    let today = new Date().getTime();
-                    this.startTime = today;
+        $('div.btnReadStart').click(function(e){
+            // 이미 시작되었다면
+            if(data.interval1) return;
 
-                    this.interval1 = setInterval(function() {
+            let today = new Date().getTime();
+            data.reading = 'Y';
+            data.startTime = today;
 
-                        const now = new Date().getTime();
-                        let distance = now - today;
-                        this.distance = distance;
-                        this.days= Math.floor(distance / (day)),
-                        // this.hours = Math.floor((distance % (day)) / (hour)), 24시간으로 나누지 않음.
-                        this.hours = Math.floor((distance) / (hour)),
-                        this.minutes = Math.floor((distance % (hour)) / (minute)),
-                        this.seconds = Math.floor((distance % (minute)) / second);
+            data.interval1 = setInterval(function() {
 
-                        //
-                    }.bind(this), 1000)
-                },
-                fnStop(){
-                    clearInterval(this.interval1);
-                    this.reading = 'N';
-                    this.interval1 = null;
-                    this.beforePage = this.endPage;
-                    fnSearchQuest();
-                },
-                fnReadFinish(){
-                    console.log('책 다 읽음');
-                    clearInterval(this.interval1);
-                },
-                fnSearchQuest(){
-                    console.log(this.bookId);
-                //     axios.get('/api/book/{id}/question/{page}'). then (response => {
-                //         var resultVo = response.data;
-                //     this.items = Array.from(resultVo.data.item);
-                // });
-                }
-            }
-        }).mount('#vueapp');
-    </script>
-  <script type="text/javascript">
-    (function($){
-        $app.initForm();
+                const now = new Date().getTime();
+                let distance = now - today;
+                data.distance = distance;
+                data.days= Math.floor(distance / (day)),
+                // this.hours = Math.floor((distance % (day)) / (hour)), 24시간으로 나누지 않음.
+                data.hours = Math.floor((distance) / (hour)),
+                data.minutes = Math.floor((distance % (hour)) / (minute)),
+                data.seconds = Math.floor((distance % (minute)) / second);
 
-        $('#btn-add-question').click(function(){
+                fnDisplay();
+                //
+            }.bind(this), 1000)
+        })
+
+        // 읽기 종료. 종료 페이지 확인 후 다시 호출
+        $('.btnReadStop').click(function(){
+            clearInterval(data.interval1);
+
+            data.endPage = $('input[name=endPage]').val();
+
+            data.reading = 'N';
+            data.interval1 = null;
+            data.beforePage = data.endPage;
+            fnDisplay();
+            fnSearchQuestion();
+        });
+
+        $('.btnReadFinish').click(function(){
+            clearInterval(data.interval1);
+
+            data.endPage = 999999;
+
+            fnDisplay();
+            fnSearchQuestion();
+        });
+
+        function fnDisplay(){
+            $hours.html(data.hours);
+            $minutes.html(data.minutes);
+            $seconds.html(data.seconds);
+        }
+
+        function fnSearchQuestion(){
 
             $.ajax({
                 url: '/book/'+ bookId + '/question',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify ({
-                    question: $('#book-question').val(),
-                    page: $('#book-question-page').val(),
-                }),
+                type: 'GET',
+                data: {
+                    page: data.endPage,
+                    'key': 'aaa'
+                }
             }).done(function(fragment){
                 $('#questionTable').replaceWith(fragment);
-                $('#book-question').val('');
             });
+        }
 
-        });
+        $app.initForm();
 
     })(jQuery);
   </script>

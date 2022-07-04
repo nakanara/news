@@ -92,17 +92,17 @@ public class BookController {
         return PREFIX + "/view";
     }
 
-    @GetMapping("/{id}/question")
-    public String viewQuestion(Model model,
-                               @PathVariable long id){
-
-
-        Book book = bookService.getBook(id);
-        model.addAttribute("book", book);
-
-
-        return PREFIX + "/question";
-    }
+//    @GetMapping("/{id}/question")
+//    public String viewQuestion(Model model,
+//                               @PathVariable long id){
+//
+//
+//        Book book = bookService.getBook(id);
+//        model.addAttribute("book", book);
+//
+//
+//        return PREFIX + "/question";
+//    }
 
     /**
      * 질문 등록
@@ -125,9 +125,28 @@ public class BookController {
         bookService.addQuestion(bookQuestion);
         model.addAttribute("questions", bookService.getQuestion(book));
 
-        return PREFIX + "/view :: #questionTable";
+        return PREFIX + "/fragment/question :: #questionTable";
     }
 
+    @GetMapping("/{bookId}/question")
+    @ApiInfo("책 질문 조회 API")
+    public String getBookQuestionList(Model model,
+                                      @PathVariable("bookId") long bookId,
+                                      @RequestParam(name = "page", defaultValue = "", required = false) String strPage,
+                                      Error error) {
+
+        Book book = bookService.getBook(bookId);
+
+        if(StringUtils.hasLength(strPage)) {
+
+            int page = Integer.parseInt(strPage);
+            model.addAttribute("questions", bookService.getQuestion(book, page));
+        } else {
+            model.addAttribute("questions", bookService.getQuestion(book));
+        }
+
+        return PREFIX + "/fragment/question :: #questionTable";
+    }
 
     @PostMapping("/{bookId}/like/{bookQuestionId}")
     public String addQuestionRecommend(Model model,
@@ -139,10 +158,9 @@ public class BookController {
         Book book = bookService.getBook(bookId);
 
         bookService.addQuestionRecommend(bookQuestionId);
-
         model.addAttribute("questions", bookService.getQuestion(book));
 
-        return PREFIX + "/view :: #questionTable";
+        return PREFIX + "/fragment/question :: #questionTable";
     }
 
     @RequestMapping("/search")

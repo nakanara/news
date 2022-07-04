@@ -102,40 +102,9 @@
                 </div>
             </div>
 
+
             <!-- 질문 -->
-            <div>
-                <div class="row">
-                    <div class="col-md-12 wf-comment">
-                        <input name="page" type="number" class="form-control" id="book-question-page" placeholder="0 책 읽기전, -1 다 읽은 후, 그 외 페이지">
-                        <textarea name="question" class="comment" id="book-question" placeholder="질문을 입력해 주세요."></textarea>
-                        <div class="btn btn-primary" id="btn-add-question">등록</div>
-                    </div>
-                </div>
-
-
-                <!-- 질문 View -->
-                <div class="row">
-                    <div class="col-md-12 wf-comment box-comment">
-                        <div id="questionTable" class="box-comment-list">
-                            <ul>
-                                <li th:each="item : ${questions}" >
-                                    <span class="box-comment-meta btn-question-like" th:data="${item.bookQuestionId}">
-                                        <i class="fa-regular fa-thumbs-up" ></i>
-                                        <span class="nickname">NickName</span>
-                                        <span>페이지
-                                            <span th:text="${item.page}"></span>
-                                        </span>
-                                    </span>
-                                    <p th:utext="${item.question}"></p>
-
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- //질문 View -->
-            </div>
+            <th:block th:replace="/book/fragment/question :: questingFragment"></th:block>
 
             <!-- 연관 책 -->
             <div class="row">
@@ -172,54 +141,6 @@
 
             });
           }
-        });
-
-
-
-        $('#btn-add-question').click(function(){
-
-            $.ajax({
-                url: '/book/'+ bookId + '/question',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify ({
-                    question: $('#book-question').val(),
-                    page: $('#book-question-page').val(),
-                }),
-            }).done(function(fragment){
-                $('#questionTable').replaceWith(fragment);
-                $('#book-question').val('');
-            });
-
-        });
-
-
-        $('#questionTable').on('click', '.btn-question-like', function(e){
-
-            var e = $(e.currentTarget);
-            var questionId = e.attr('data');
-
-            $.ajax({
-                url: '/book/'+ bookId + '/like/' + questionId,
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify ({
-                    question: $('#book-question').val(),
-                }),
-            }).done(function(fragment){
-                $('#questionTable').replaceWith(fragment);
-            });
-        });
-
-        $('#btn-book-like').on('click', function(){
-
-            $.service.post(
-                '/api/book/like/'+ bookIsbn13,
-                {likeBook: true},
-                function(resp){
-                    $('#book-like-count').html(resp.data);
-                });
-
         });
 
         function drawChart(){

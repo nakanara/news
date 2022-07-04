@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="questingFragment">
+
+    <!-- 질문 -->
+    <div id="questionBody">
+        <div class="row">
+            <div class="col-md-12 wf-comment">
+                <select id="book-readType" name="readType" class="form-group">
+                    <option value="READ_BEF">읽기전</option>
+                    <option value="READING">읽는 중</option>
+                    <option value="READ_AFT">읽고난 후</option>
+                </select>
+                <input name="page" type="number" class="form-control" id="book-question-page" value="0" placeholder="읽은 페이지를 입력해주세요">
+                <textarea name="question" class="comment" id="book-question" placeholder="질문을 입력해 주세요."></textarea>
+                <div class="btn btn-primary" id="btn-add-question">등록</div>
+                <div class="btn btn-primary" id="btn-search-question">조회</div>
+            </div>
+        </div>
+
+
+        <!-- 질문 View -->
+        <div class="row">
+            <div class="col-md-12 wf-comment box-comment">
+                <div id="questionTable" class="box-comment-list">
+                    <ul>
+                        <li th:each="item : ${questions}" >
+                            <span class="box-comment-meta btn-question-like" th:data="${item.bookQuestionId}">
+                                <i class="fa-regular fa-thumbs-up" ></i>
+                                <span th:text="${item.recommend}"></span>
+                                <span class="nickname">NickName</span>
+                                <span>페이지
+                                    <span th:text="${item.page}"></span>
+                                </span>
+                            </span>
+                            <p th:utext="${item.question}"></p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- //질문 View -->
+    </div>
+
+    <script type="text/javascript">
+        (function($){
+
+            $('#btn-add-question').click(function(){
+
+                var bookId = $('#bookId').val();
+
+                $.ajax({
+                    url: '/book/'+ bookId + '/question',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify ({
+                        question: $('#book-question').val(),
+                        page: $('#book-question-page').val(),
+                    }),
+                }).done(function(fragment){
+                    $('#questionTable').replaceWith(fragment);
+                    $('#book-question').val('');
+                });
+
+            });
+
+            $('#questionBody').on('click', '.btn-question-like', function(e){
+                var bookId = $('#bookId').val();
+
+                var e = $(e.currentTarget);
+                var questionId = e.attr('data');
+
+                $.ajax({
+                    url: '/book/'+ bookId + '/like/' + questionId,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify ({
+                        question: $('#book-question').val(),
+                    }),
+                }).done(function(fragment){
+                    $('#questionTable').replaceWith(fragment);
+                });
+            });
+
+            $('#book-readType').change(function(e){
+                var $e = $(e.target);
+                var val = $e.val();
+                var $page = $('#book-question-page');
+
+                console.log(val);
+                if(val == 'READ_BEF') {
+                    $page.val('0');
+                } else if(val == 'READ_AFT') {
+                    $page.val('999999');
+                }
+
+                console.log($page.val());
+
+            });
+
+            $('#btn-search-question').click(function(e){
+                fnSearchQuestion();
+            });
+
+
+            function fnSearchQuestion(){
+                var bookId = $('#bookId').val();
+
+                $.ajax({
+                    url: '/book/'+ bookId + '/question',
+                    type: 'GET',
+                    contentType: 'application/json',
+                }).done(function(fragment){
+                    $('#questionTable').replaceWith(fragment);
+                });
+            }
+
+            $('body').on('click', '.btnReadStop', function(e){
+                console.log('stop');
+            })
+
+            function init(){
+                fnSearchQuestion();
+            }
+
+            init();
+        })(jQuery);
+    </script>
+</th:block>
+</html>

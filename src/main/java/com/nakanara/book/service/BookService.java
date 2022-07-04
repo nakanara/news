@@ -91,7 +91,7 @@ public class BookService {
     }
 
     public List<BookQuestion> getQuestion(Book book, long page) {
-        return bookQuestionRepository.findAllByBookAndPageGreaterThanOrderByRecommendDesc(book, page);
+        return bookQuestionRepository.findAllByBookAndPageIsLessThanEqualOrderByRecommendDesc(book, page);
     }
 
     public void addQuestionRecommend(long bookQuestionId) {
