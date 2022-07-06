@@ -2,19 +2,28 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <th:block th:fragment="paggingFragment">
 
-    <div class="news-pagination">
+    <div class="board-page">
 
-        <a th:if="${ resultVo.curPage > 10 }" class="btn btn-success">이전</a>
+        <div class="board-pagination">
 
-        <th:block th:each="i : ${#numbers.sequence(1, 10)}">
+            <a class="page-arrow pre">
+                <i class="fa-solid fa-angle-left"></i>
+            </a>
 
-            <label th:label="${(resultVo.curPage/10)}"></label>
-            <a th:if="${((resultVo.totalPage % 10) >= i) && (resultVo.curPage % 10) == i}" class="active" th:href="@{/__${pagename}__?page=__${i}__}" th:text="${i}"></a>
-            <a th:if="${((resultVo.totalPage % 10) >= i) && (resultVo.curPage % 10) != i}" class="" th:href="@{/__${pagename}__?page=__${i}__}" th:text="${i}"></a>
+            <th:block th:each="i : ${#numbers.sequence(1, 10)}">
 
-        </th:block>
-        <!-- 현재 페이지보다 클 경우 -->
-        <a th:if="${ (resultVo.curPage / 10) < (resultVo.totalPage/10) }" class="btn btn-success">다음</a>
+                <a th:if="${((resultVo.totalPage % 10) >= i) && (resultVo.curPage % 10) == i}" class="active page-number " th:href="@{/__${pagename}__?page=__${i}__}" th:text="${i}"></a>
+                <a th:if="${((resultVo.totalPage % 10) >= i) && (resultVo.curPage % 10) != i}" class="page-number " th:href="@{/__${pagename}__?page=__${i}__}" th:text="${i}"></a>
+
+            </th:block>
+
+            <!-- 현재 페이지보다 클 경우 -->
+            <a th:if="${ (resultVo.curPage / 10) < (resultVo.totalPage/10) }" class="page-arrow nex">
+                <i class="fa-solid fa-angle-right"></i>
+            </a>
+
+        </div>
+
     </div>
 
 </th:block>

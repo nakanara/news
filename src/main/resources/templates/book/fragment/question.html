@@ -34,6 +34,7 @@
                                 </span>
                             </span>
                             <p th:utext="${item.question}"></p>
+                            <span>답변하기</span>
                         </li>
                     </ul>
                 </div>
@@ -45,6 +46,8 @@
 
     <script type="text/javascript">
         (function($){
+
+            console.log('start.........');
 
             $('#btn-add-question').click(function(){
 

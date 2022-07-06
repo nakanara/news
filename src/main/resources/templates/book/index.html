@@ -8,24 +8,22 @@
         <div class="row">
             <div class="col-md-12">
 
-                <table class="table">
-                    <thead>
-                    <th>도서명</th>
-                    <th>저자</th>
-                    <th>출판사</th>
-                    </thead>
-                    <tbody>
-                    <tr th:each="item: ${resultVo.data}" class="news-link">
-                        <td>
+                <ul class="board-content">
+
+                    <li th:each="item: ${resultVo.data}" class="board-list">
+                        <div class="board-title">
                             <a th:href="@{/book/__${item.isbn13}__}">
-                                <p th:utext="${item.title}"></p>
+                                <div class="title" th:utext="${item.title}"></div>
                             </a>
-                        </td>
-                        <td th:text="${item.author}"></td>
-                        <td th:text="${item.publisher}"></td>
-                    </tr>
-                    </tbody>
-                </table>
+                        </div>
+                        <div class="board-writer">
+                            <span class="author" th:text="${item.author}"></span>
+                            <span class="publisher" th:text="${item.publisher}"></span>
+                        </div>
+                    </li>
+
+                </ul>
+
             </div>
         </div>
 

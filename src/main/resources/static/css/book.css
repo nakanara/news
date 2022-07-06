@@ -19,6 +19,9 @@
     color: #444;
 }
 
+.book-image-body {
+    text-align: center;
+}
 .book-image-area {
     padding: 10px 0px 30px;
 }
