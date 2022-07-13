@@ -11,15 +11,24 @@
                 <ul class="board-content">
 
                     <li th:each="item: ${resultVo.data}" class="board-list">
-                        <div class="board-title">
-                            <a th:href="@{/book/__${item.isbn13}__}">
-                                <div class="title" th:utext="${item.title}"></div>
-                            </a>
+                        <div class="row">
+
+                            <div class="col-9">
+                                <div class="board-title">
+                                    <a th:href="@{/book/__${item.isbn13}__}">
+                                        <div class="title" th:utext="${item.title}"></div>
+                                    </a>
+                                </div>
+                                <div class="board-writer">
+                                    <span class="author" th:text="${item.author}"></span>
+                                    <span class="publisher" th:text="${item.publisher}"></span>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <img style="height: 100px; width:100px;" th:src="${item.image}" >
+                            </div>
                         </div>
-                        <div class="board-writer">
-                            <span class="author" th:text="${item.author}"></span>
-                            <span class="publisher" th:text="${item.publisher}"></span>
-                        </div>
+
                     </li>
 
                 </ul>
@@ -55,8 +64,8 @@
                     $modal.dialog({
                         title: "검색",
                         autoOpen: false,
-                        height: 800,
-                        width: 1200,
+                        height: 500,
+                        width: 400,
                         modal: true,
                         buttons: {
                             "Close": function () {
