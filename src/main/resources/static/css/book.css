@@ -27,7 +27,6 @@
 }
 
 .book-star {
-    font-size: 25px;
     padding: 10px 10px;
 }
 .book-image {
@@ -81,4 +80,9 @@ div.bookatlas-book[data-read=Y]:after {
 .countdown ul li span {
     display: block;
     font-size: 4.5rem;
+}
+
+img.book-icon {
+    height: 80px;
+    width: 80px;
 }

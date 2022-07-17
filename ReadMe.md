@@ -11,6 +11,7 @@
 - fontawesome https://fontawesome.com/
 - https://www.chartjs.org/docs/latest/
 - https://icons8.com/
+- https://ui.toast.com/
 -  
 markdown editor
 

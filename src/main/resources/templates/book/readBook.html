@@ -21,7 +21,9 @@
                             <div class="col-md-12">
                                 <label class="book-author" th:text="*{author}"></label>
                                 <label class="book-publisher" th:text="*{publisher}"></label>
+                                <!--
                                 <label class="book-publisher">현재 읽고 있는 사람(12명)</label>
+                                -->
                             </div>
                         </div>
                     </div>
@@ -45,20 +47,28 @@
                                                 <li style="display: none;"><span id="hours">0</span>시간</li>
                                                 <li style="display: none;"><span id="minutes">0</span>분</li>
                                                 <li style="display: none;"><span id="seconds">0</span>초</li>
-                                                <img src="/image/icon/icons8-open-book.gif" style="height: 80px; width: 80px;">
-                                                <img src="/image/icon/icons8-bookmark-64.png" style="height: 80px; width: 80px;">
+
+                                                <img id="img-book-reading"
+                                                     alt="책 읽기 시작"
+                                                     src="/image/icon/icons8-open-book.gif"
+                                                     class="book-icon" style="display: none;">
+
+                                                <img id="img-book-stop"
+                                                     alt="책 읽기 종료"
+                                                     src="/image/icon/icons8-bookmark-64.png"
+                                                     class="book-icon" style="display: inline;">
                                             </ul>
                                         </div>
                                     </div>
+<!--
 
                                     <div class="col-md-12">
                                         <input name="endPage" placeholder="0 읽기전, 999999 다 읽음, 읽은 페이지를 입력하세요">
-                                        <div class="btn btn-primary btnReadStart">읽기시작</div>
-                                        <div id="btnReadStop" class="btn btn-primary btnReadStop" @click="fnStop()">읽기종료</div>
-                                        <div class="btn btn-primary btnReadFinish" @click="fnReadFinish()">책 다읽음</div>
-                                        <div class="btn btn-primary">공유하기</div>
-
+                                        <div id="btn-read-start" class="btn btn-primary btnReadStart">읽기시작</div>
+                                        <div id="btn-read-stop" class="btn btn-primary btnReadStop" style="display: none;">읽기종료</div>
+                                        <div id="btn-read-finish" class="btn btn-primary btnReadFinish">책 다읽음</div>
                                     </div>
+-->
 
                                 </div>
                             </div>
@@ -70,8 +80,10 @@
                     <div class="row" style="padding-top: 10px;">
                         <div class="offset-md-12" style="text-align: right;">
                             <div class="btn btn-primary news-btn-link" data-href="/book" >목록</div>
+                            <!--
                             <div class="btn btn-primary" id="btn-question">질문하기</div>
                             <div class="btn btn-primary" id="btn-answer">질문보기</div>
+                            -->
                         </div>
 
                     </div>
@@ -118,9 +130,12 @@
             items: [],
         };
 
-        $('div.btnReadStart').click(function(e){
+        $('#img-book-stop').click(function(e){
             // 이미 시작되었다면
             if(data.interval1) return;
+
+            $('#img-book-reading').show();
+            $('#img-book-stop').hide();
 
             let today = new Date().getTime();
             data.reading = 'Y';
@@ -143,8 +158,11 @@
         })
 
         // 읽기 종료. 종료 페이지 확인 후 다시 호출
-        $('.btnReadStop').click(function(){
+        $('#img-book-reading').click(function(){
             clearInterval(data.interval1);
+
+            $('#img-book-reading').hide();
+            $('#img-book-stop').show();
 
             data.endPage = $('input[name=endPage]').val();
 
@@ -155,8 +173,11 @@
             fnSearchQuestion();
         });
 
-        $('.btnReadFinish').click(function(){
+        $('#btn-read-finish').click(function(){
             clearInterval(data.interval1);
+
+            $('#img-book-reading').hide();
+            $('#img-book-stop').show();
 
             data.endPage = 999999;
 

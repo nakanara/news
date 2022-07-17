@@ -68,16 +68,6 @@
 
                             </div>
 
-                            <div class="col-md-12">
-                                <div style="width: 300px; height: 200px;">
-                                    <canvas id="bookchart" aria-label="LikeCount" role="img"></canvas>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <div class="btn btn-info"><a th:href="@{/book/read/__*{isbn13}__}">읽기시작</a></div>
-                            </div>
-
                         </div>
                     </div>
                 </div>
@@ -93,6 +83,7 @@
             <!-- 버튼 -->
             <div class="row" style="padding-top: 10px;">
                 <div class="offset-md-12" style="text-align: right;">
+                    <a th:href="@{/book/read/__*{isbn13}__}"><div class="btn btn-primary">읽기시작</div></a>
                     <div class="btn btn-primary news-btn-link" data-href="/book" >목록</div>
                     <div class="btn btn-primary" id="btn-answer">질문보기</div>
                 </div>
@@ -116,7 +107,6 @@
 
   <script type="text/javascript">
     (function($){
-
         var bookId = $('#bookId').val();
         var bookIsbn13 = $('#bookIsbn13').val();
 
@@ -138,68 +128,10 @@
           }
         });
 
-        function drawChart(){
-            const ctx = document.getElementById('bookchart').getContext('2d');
-            const myChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['1월', '2월', '3월', '4월', '5월', '6월'],
-                    datasets: [{
-                        label: '함께 추억을 공유한 사람',
-                        data: [12, 19, 3, 5, 2, 3],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
-                    },{
-                        label: '좋아요',
-                        data: [6, 12, 14, 19, 2, 3],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
+        function init(){
         }
-      function init(){
-          drawChart();
-      }
 
-      init();
+        init();
     })(jQuery);
   </script>
 </div>

@@ -3,16 +3,27 @@
 <th:block th:fragment="questingFragment">
 
     <!-- 질문 -->
-    <div id="questionBody">
+    <div id="questionBody" style="padding-top: 5px; padding-bottom: 5px;">
+
         <div class="row">
-            <div class="col-md-12 wf-comment">
-                <select id="book-readType" name="readType" class="form-group">
+            <div class="col">
+                <select id="book-readType" name="readType" class="form-control">
                     <option value="READ_BEF">읽기전</option>
                     <option value="READING">읽는 중</option>
                     <option value="READ_AFT">읽고난 후</option>
                 </select>
-                <input name="page" type="number" class="form-control" id="book-question-page" value="0" placeholder="읽은 페이지를 입력해주세요">
-                <textarea name="question" class="comment" id="book-question" placeholder="질문을 입력해 주세요."></textarea>
+            </div>
+            <div class="col">
+                <input name="page" type="number" class="form-control"
+                       id="book-question-page" value="0" placeholder="읽은 페이지를 입력해주세요">
+            </div>
+        </div>
+
+
+        <div class="row" style="padding-top: 5px; padding-bottom: 5px;">
+            <div class="col-md-12 wf-comment">
+                <textarea name="question" class="comment form-control"
+                          id="book-question" placeholder="질문을 입력해 주세요."></textarea>
                 <div class="btn btn-primary" id="btn-add-question">등록</div>
                 <div class="btn btn-primary" id="btn-search-question">조회</div>
             </div>
@@ -46,8 +57,6 @@
 
     <script type="text/javascript">
         (function($){
-
-            console.log('start.........');
 
             $('#btn-add-question').click(function(){
 

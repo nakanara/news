@@ -37,7 +37,12 @@
         <div class="row news_editor">
           <div class="offset-md-12">
             <label for="frm-content">기자</label>
-            <textarea id="frm-content" name="content"></textarea>
+            <!--
+            <textarea id="frm-content" name="frm-content"></textarea>
+            -->
+
+            <div id="frm-content"></div>
+
           </div>
         </div>
         <div class="row">
@@ -67,16 +72,34 @@
       });
 
 
-      ClassicEditor
+/*      ClassicEditor
         .create( document.querySelector( '#frm-content' ), {
         } )
         .then( editor => {
-//          editor.ui.view.editable.element.style.height = '500px';
         })
         .catch( error => {
           console.log( error );
         } )
-      ;
+      ;*/
+
+      const editor = new toastui.Editor({
+        el: document.querySelector('#frm-content'),
+        height: '600px',
+        initialEditType: 'markdown',
+        previewStyle: 'vertical',
+        hook: {
+          'addImageBlobHook': function(blob, callback){
+            // blob 텍스트
+            console.log(blob);
+
+            // !!!!! 여기서 이미지를 받아와서 이미지 주소를 받아오고 (ajax 등으로)
+            // callback의 인수로 넣으시면 됩니다.
+            //callback("콜백으로 받아온 이미지 URL")
+          }
+        }
+      });
+
+      console.log('aaa');
 
 
 
