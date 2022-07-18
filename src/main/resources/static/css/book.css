@@ -22,6 +22,11 @@
 .book-image-body {
     text-align: center;
 }
+.book-image-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .book-image-area {
     padding: 10px 0px 30px;
 }

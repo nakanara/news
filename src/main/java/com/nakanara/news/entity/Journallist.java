@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 @Data
 @Builder
-@Entity(name = "TB_JOURNAL_LIST")
+@Entity(name = "TB_JOURNALLIST")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Journallist extends BaseEntity {
@@ -29,7 +29,7 @@ public class Journallist extends BaseEntity {
     private String email;
 
     @Column(length = 1024)
-    private String desc;
+    private String descr;
 
 
 }

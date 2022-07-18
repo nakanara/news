@@ -58,19 +58,6 @@ public class NewsService {
     public News post(@NotNull News news) {
 
 
-        if(StringUtils.hasLength(news.getTag())) {
-            String[] tag_1 = news.getTag().split(",");
-
-            for (String t : tag_1) {
-                NewsTag newsTag = new NewsTag();
-                newsTag.setTag(StringUtils.trimAllWhitespace(t));
-                newsTag.setNews(news);
-
-                newsTagRepository.save(newsTag);
-            }
-        }
-
-
         newsRepository.save(news);
 
         for(long id: news.getJournallist()) {
@@ -82,6 +69,18 @@ public class NewsService {
                     .build()
             );
 
+        }
+
+        if(StringUtils.hasLength(news.getTag())) {
+            String[] tag_1 = news.getTag().split(",");
+
+            for (String t : tag_1) {
+                NewsTag newsTag = new NewsTag();
+                newsTag.setTag(StringUtils.trimAllWhitespace(t));
+                newsTag.setNews(news);
+
+                newsTagRepository.save(newsTag);
+            }
         }
 
         return news;
