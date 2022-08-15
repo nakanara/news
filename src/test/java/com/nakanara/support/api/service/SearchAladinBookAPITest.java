@@ -9,11 +9,5 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class SearchAladinBookAPITest {
 
-    @Autowired
-    private SearchAladinBookAPI searchAladinBookAPI;
 
-    @Test
-    void searchAPI(){
-        searchAladinBookAPI.searchBook("미움받을 용기", "1");
-    }
 }

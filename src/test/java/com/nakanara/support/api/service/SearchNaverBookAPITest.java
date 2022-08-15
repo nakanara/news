@@ -12,9 +12,5 @@ class SearchNaverBookAPITest {
 
     @Autowired
     private SearchNaverBookAPI searchNaverBookAPI;
-    
-    @Test
-    void searchAPI(){
-        searchNaverBookAPI.searchBook("미움받을 용기");
-    }
+
 }
