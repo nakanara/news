@@ -9,6 +9,11 @@
         <div class="col-md-12">
 
             <table class="table">
+                <colgroup>
+                    <col style="width: auto;">
+                    <col style="width: 140px;">
+                    <col style="width: 80px;">
+                </colgroup>
                 <thead>
                     <th>제목</th>
                     <th>등록일</th>
@@ -22,7 +27,7 @@
                         </a>
                     </td>
                     <td>
-                        <label th:text="${item.regDttm}" />
+                        <label th:text="${#dates.format(item.regDttm, 'yyyy.MM.dd')}" />
                     </td>
                     <td th:text="${item.viewCount}" />
                 </tr>

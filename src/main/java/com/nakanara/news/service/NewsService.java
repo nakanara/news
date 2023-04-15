@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -191,5 +192,36 @@ public class NewsService {
 
     public List<NewsJournallistRel> getNewsJournallist(News news) {
         return newsJournallistRelRepository.getAllByNews(news);
+    }
+
+    public void uploadImage(MultipartFile multi){
+
+//        try {
+////            String uploadPath = path;
+//            String originFilename = multi.getOriginalFilename();
+//            String extName = originFilename.substring(originFilename.lastIndexOf("."), originFilename.length());
+//            long size = multi.getSize();
+//
+//
+//            String saveFileName = fileNameModel.GenSaveFileName(extName);
+//
+//            if(!multi.isEmpty()) {
+//                File file = new File(uploadPath, saveFileName);
+//                multi.transferTo(file);
+//
+//                mv.addObject("filename", saveFileName);
+//                mv.addObject("uploadPath", file.getAbsolutePath());
+//                mv.addObject("url", uploadPath+saveFileName);
+//                System.out.println("url : " + uploadPath+saveFileName);
+//
+//                mv.setViewName("image_Url_Json");
+//            } else {
+//                mv.setViewName("toast_UI_writer3");
+//            }
+//        } catch (Exception e) {
+//            // TODO: handle exception
+//            System.out.println("[Error] " + e.getMessage());
+//        }
+//        return mv;
     }
 }
