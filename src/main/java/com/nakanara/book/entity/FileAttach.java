@@ -1,19 +1,16 @@
 package com.nakanara.book.entity;
 
 import com.nakanara.core.entity.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
-@Entity(name = "TB_FILE_ATTACH")
+@Setter @Getter
+@MappedSuperclass
 public class FileAttach extends BaseEntity {
 
     @Id
+    @Column(name = "att_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long fileAttachUid;
 
@@ -24,11 +21,5 @@ public class FileAttach extends BaseEntity {
     private long fileSize;
 
     private String fileType;
-
-    /**
-     * 부모 Key
-     */
-    @Column(name = "src_id")
-    private String srcId;
 
 }

@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
@@ -18,6 +20,7 @@ import java.time.LocalDateTime;
 public class MyBook extends BaseEntity {
 
     @Id
+    @Column(name = "mybook_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long myBookId;
 
@@ -39,4 +42,7 @@ public class MyBook extends BaseEntity {
     
     // 평점
     private int bookRating;
+
+    @OneToMany(mappedBy = "myBook")
+    private List<MyBookFileAttach> files = new ArrayList<>();
 }

@@ -17,6 +17,7 @@ import java.util.List;
 public class BookAtlas extends BaseEntity {
 
     @Id
+    @Column(name = "book_atlas_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long bookAtlasUid;
 
@@ -46,5 +47,5 @@ public class BookAtlas extends BaseEntity {
 
     @OneToMany
     @JoinColumn(name = "src_id")
-    private List<FileAttach> fileAttaches;
+    private List<BookAtlasFileAttach> fileAttaches;
 }
